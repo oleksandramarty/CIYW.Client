@@ -1,0 +1,65 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.flex-container {
+  display: flex;
+  align-items: center;
+}
+
+.flex-item {
+  display: inline;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.t-align-center {
+  text-align: center;
+}
+
+@for $i from 1 through 500 {
+  $formatted-i: if($i < 10, '00' + $i, if($i < 100, '0' + $i, $i));
+  $font-size: $i / 100;
+  .f-#{$formatted-i} { font-size: #{$font-size}rem; }
+}
+@for $i from 1 through 500 {
+  .ml-#{$i} { margin-left: #{$i}px; }
+}
+@for $i from 1 through 500 {
+  .mr-#{$i} { margin-right: #{$i}px; }
+}
+@for $i from 1 through 500 {
+  .mb-#{$i} { margin-bottom: #{$i}px; }
+}
+@for $i from 1 through 500 {
+  .mt-#{$i} { margin-top: #{$i}px; }
+}
+@for $i from 1 through 500 {
+  .m-#{$i} { margin: #{$i}px; }
+}
+@for $i from 1 through 500 {
+  .pl-#{$i} { padding-left: #{$i}px; }
+}
+@for $i from 1 through 500 {
+  .pr-#{$i} { padding-right: #{$i}px; }
+}
+@for $i from 1 through 500 {
+  .pb-#{$i} { padding-bottom: #{$i}px; }
+}
+@for $i from 1 through 500 {
+  .pt-#{$i} { padding-top: #{$i}px; }
+}
+@for $i from 1 through 500 {
+  .p-#{$i} { padding: #{$i}px; }
+}
+@for $i from 1 through 500 {
+  $formatted-i: if($i < 10, '00' + $i, if($i < 100, '0' + $i, $i));
+  .h-#{$formatted-i} { height: #{$i}px; }
+}
+
+

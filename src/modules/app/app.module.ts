@@ -22,6 +22,11 @@ import {AuthModule} from "../auth/auth.module";
 import {AppComponent} from "./app/app.component";
 import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
 import {CommonCiywModule} from "../common/common-ciyw.module";
+import {PersonalAreaModule} from "../personal-area/personal-area.module";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
 
 export const MY_FORMATS = {
   parse: {
@@ -47,6 +52,7 @@ registerLocaleData(localeEN, 'en');
     BrowserModule,
     CommonModule,
     FormsModule,
+
     NgxsModule.forRoot([UserState], {
       developmentMode: isLocalEnv(),
     }),
@@ -54,10 +60,12 @@ registerLocaleData(localeEN, 'en');
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
     NgxsStoragePluginModule.forRoot(),
+
     HttpClientModule,
 
     AuthModule,
     CommonCiywModule,
+    PersonalAreaModule,
   ],
   providers: [
     {

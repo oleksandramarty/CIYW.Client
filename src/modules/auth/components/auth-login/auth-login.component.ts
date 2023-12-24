@@ -12,7 +12,7 @@ import {HomeRedirect, SetToken, SetUser} from "../../../../kernel/store/actions/
   templateUrl: './auth-login.component.html',
   styleUrl: './auth-login.component.scss'
 })
-export class AuthLoginComponent implements OnInit, OnDestroy{
+export class AuthLoginComponent implements OnInit, OnDestroy {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
   loginForm: FormGroup | undefined;
 
@@ -42,8 +42,6 @@ export class AuthLoginComponent implements OnInit, OnDestroy{
   }
 
   onSubmit() {
-    console.log(this.loginForm?.value);
-
     this.apiClient.auth_v1_login({
       login: this.loginForm?.value.login,
       email: this.loginForm?.value.email,

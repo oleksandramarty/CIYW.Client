@@ -10,7 +10,7 @@ import {ICurrentUserResponse} from "../../../kernel/services/api-client";
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent{
+export class HeaderComponent implements OnInit, OnDestroy{
   @Select(UserState.isAuthorized) isAuthorized$: Observable<boolean> | undefined;
   @Select(UserState.getUser) user$: Observable<ICurrentUserResponse> | undefined;
 

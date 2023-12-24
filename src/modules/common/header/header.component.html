@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <span>CIYW</span>
   <span class="example-spacer"></span>
-  <div class="flex-container t-align-center" *ngIf="(isAuthorized$ | async) && !!user">
+  <div class="flex-container t-align-center h-064" *ngIf="(isAuthorized$ | async) && !!user">
     <div class="flex-item m-10 f-075">
       <div class="h-020">{{user.login}}</div>
       <div class="flex-container" *ngIf="user.tariff">

@@ -124,7 +124,7 @@ export class UserState {
       localStorage.clear();
       return null;
     }
-    return temp.user.token ? temp.user.token : token;
+    return temp?.user?.token?.value ?? token;
   }
 
   static get localRememberMeStatus() {

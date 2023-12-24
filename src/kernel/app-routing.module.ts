@@ -1,6 +1,6 @@
 import {RouterModule, Routes} from "@angular/router";
 import {PersonalAreaComponent} from "../modules/personal-area/personal-area/personal-area.component";
-import {HomeComponent} from "../modules/home/home/home.component";
+import {HomeComponent} from "../modules/personal-area/home/home.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {NotFoundComponent} from "../modules/not-found/not-found/not-found.component";
 import {NgModule} from "@angular/core";

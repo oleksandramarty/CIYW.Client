@@ -7,10 +7,11 @@
   </div>
 
   <ciyw-table
-    [sortColumn]="'Date'",
     [displayedColumns]="displayedColumns"
     [total]="balance?.totalCount ?? 0"
     [dataSource]="dataSource"
+    [isBusy]="isBusy"
+    (filterChanged)="filterChanged($event)"
   ></ciyw-table>
 
 

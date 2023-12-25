@@ -1,29 +1,33 @@
-<div class="mat-elevation-z8" *ngIf="dataSource else loadData">
-  <table>
-    <thead>
-    <tr>
-      <th (click)="sort1('column1')">Column 1</th>
-      <th (click)="sort1('column2')">Column 2</th>
-      <!-- Add more columns as needed -->
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let item of displayedColumns">
-      <td>123</td>
-      <td>4234</td>
-      <!-- Add more columns as needed -->
-    </tr>
-    </tbody>
-  </table>
+<div class="mat-elevation-z8">
 
+  <ng-container >
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+           class="mat-elevation-z8">
+
+      <ng-container *ngFor="let item of displayedColumns; let i=index" [matColumnDef]="item">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [sortActionDescription]="'Sort by ' + item">
+          {{ item }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="element[item].type === variableTypes.Default">{{element[item].value}}</ng-container>
+          <ng-container *ngIf="element[item].type === variableTypes.Date">{{element[item].value | date: element[item].pipeParams.format}}</ng-container>
+          <ng-container *ngIf="element[item].type === variableTypes.Currency">{{element[item].value | currency: element[item].pipeParams.currency}}</ng-container>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns!"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns!;"></tr>
+    </table>
+  </ng-container>
+
+
+  <ciyw-paginator
+    #paginatorComp
+    [total]="total"
+    [pageSizeOptions]="pageSizeOptions"
+    (pageChanged)="onPageChange($event)"
+  ></ciyw-paginator>
 
 </div>
 
-<ciyw-paginator
-  #paginatorComp
-  [total]="total"
-  [pageSizeOptions]="pageSizeOptions"
-  (pageChanged)="onPageChange($event)"
-></ciyw-paginator>
 
-<ng-template #loadData>Loading...</ng-template>

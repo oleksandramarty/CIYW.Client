@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable, Subject, Subscription, takeUntil, tap} from "rxjs";
+import {finalize, Observable, Subject, Subscription, takeUntil, tap} from "rxjs";
 import {Select, Store} from "@ngxs/store";
 import {
-  ApiClient, BalanceInvoiceResponse, BasePageableQuery, BaseSortableQuery,
+  ApiClient, BasePageableQuery, BaseSortableQuery,
   IBalanceInvoicePageableResponse, IBasePageableQuery, IBaseSortableQuery,
   ICurrentUserResponse, UserInvoicesQuery
 } from "../../../kernel/services/api-client";
@@ -10,8 +10,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {handleApiError} from "../../../kernel/helpers/rxjs.helper";
 import {UserState} from "../../../kernel/store/state/user.state";
 import {MatTableDataSource} from "@angular/material/table";
-import {Sort} from "@angular/material/sort";
 import {FormBuilder} from "@angular/forms";
+import {ITableFilterHelper, mapInvoiceTable} from "../../../kernel/mappers/table.mapper";
 
 @Component({
   selector: 'ciyw-home',
@@ -23,14 +23,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
   subs = new Subscription();
 
-  displayedColumns: string[] = ['Date', 'CategoryId', 'Name', 'Amount'];
-  dataSource: MatTableDataSource<BalanceInvoiceResponse> | undefined;
+  displayedColumns: string[] = ['date', 'category', 'name', 'amount'];
+  dataSource: MatTableDataSource<any> | undefined;
 
   user: ICurrentUserResponse | undefined;
   balance: IBalanceInvoicePageableResponse | undefined;
 
   paginator: IBasePageableQuery | undefined;
   sort: IBaseSortableQuery | undefined;
+
+  isBusy: boolean | undefined = true;
 
   constructor(
     private fb: FormBuilder,
@@ -60,7 +62,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
+  public filterChanged(event: ITableFilterHelper): void {
+    this.sort = event.sort;
+    this.paginator = event.paginator;
+    this.getInvoices();
+  }
+
   private getInvoices(): void {
+    this.isBusy = true;
     this.apiClient.invoices_v1_history({
       paginator: this.paginator as BasePageableQuery,
       sort: this.sort as BaseSortableQuery
@@ -69,9 +78,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         takeUntil(this.ngUnsubscribe),
         tap((result) => {
           this.balance = result;
-          this.dataSource = new MatTableDataSource(this.balance?.invoices);
+          if (!this.dataSource) {
+            this.dataSource = new MatTableDataSource<any>([]);
+          }
+          this.dataSource!.data = mapInvoiceTable(this.balance!.invoices);
         }),
-        handleApiError(this.snackBar)
+        handleApiError(this.snackBar),
+        finalize(() => this.isBusy = false)
       ).subscribe();
   }
 }
+
+

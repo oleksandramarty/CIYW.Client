@@ -6,51 +6,12 @@
     <p><strong>Balance:</strong> {{ user.balanceAmount || 0 | currency: user.currency?.isoCode }}</p>
   </div>
 
-  <div class="mat-elevation-z8" *ngIf="dataSource else loadData">
-    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
-           class="mat-elevation-z8">
-
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by date">
-          Date
-        </th>
-        <td mat-cell *matCellDef="let element"> {{element.date | date:'yyyy-MM-dd HH:mm:ss'}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="category">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by category">
-          Category
-        </th>
-        <td mat-cell *matCellDef="let element"> {{element.category?.['name']}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-          Name
-        </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by amount">
-          Amount
-        </th>
-        <td mat-cell *matCellDef="let element"> {{element.amount | currency: element.currency?.['isoCode']}} </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-
-    <mat-paginator
-      [length]="balance?.totalCount ?? 0"
-      [pageSize]="paginator?.pageSize ?? 10"
-      [pageSizeOptions]="pageSizeOptions"
-      (page)="onPageChange($event)"
-    ></mat-paginator>
-  </div>
-
-  <ng-template #loadData>Loading...</ng-template>
+  <ciyw-table
+    [sortColumn]="'Date'",
+    [displayedColumns]="displayedColumns"
+    [total]="balance?.totalCount ?? 0"
+    [dataSource]="dataSource"
+  ></ciyw-table>
 
 
 </ng-container>

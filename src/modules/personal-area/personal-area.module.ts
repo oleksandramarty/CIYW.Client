@@ -19,6 +19,7 @@ import {MatTableModule} from "@angular/material/table";
 import {CommonCiywModule} from "../common/common-ciyw.module";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSelectModule} from "@angular/material/select";
+import {CiywTableModule} from "../ciyw-components/ciyw-table/ciyw-table.module";
 
 @NgModule({
   declarations: [
@@ -40,14 +41,14 @@ import {MatSelectModule} from "@angular/material/select";
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
-    MatTableModule,
-    MatSortModule,
 
     RouterModule,
     MatSortModule,
     CommonCiywModule,
     MatPaginatorModule,
     MatSelectModule,
+
+    CiywTableModule,
   ],
   exports: [
     PersonalAreaComponent,

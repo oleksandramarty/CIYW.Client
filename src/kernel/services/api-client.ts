@@ -2354,6 +2354,46 @@ export interface IBasePageableQuery {
   isFull?: boolean | undefined;
 }
 
+export class BaseSortableQuery implements IBaseSortableQuery {
+  column?: string | undefined;
+  direction?: string | undefined;
+
+  constructor(data?: IBaseSortableQuery) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.column = _data["column"];
+      this.direction = _data["direction"];
+    }
+  }
+
+  static fromJS(data: any): BaseSortableQuery {
+    data = typeof data === 'object' ? data : {};
+    let result = new BaseSortableQuery();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["column"] = this.column;
+    data["direction"] = this.direction;
+    return data;
+  }
+}
+
+export interface IBaseSortableQuery {
+  column?: string | undefined;
+  direction?: string | undefined;
+}
+
 export class CategoryResponse implements ICategoryResponse {
   id?: string | undefined;
   name?: string | undefined;
@@ -3374,6 +3414,7 @@ export class UserInvoicesQuery implements IUserInvoicesQuery {
   ids?: BaseIdsListQuery | undefined;
   paginator?: BasePageableQuery | undefined;
   dateRange?: BaseDateRangeQuery | undefined;
+  sort?: BaseSortableQuery | undefined;
 
   constructor(data?: IUserInvoicesQuery) {
     if (data) {
@@ -3389,6 +3430,7 @@ export class UserInvoicesQuery implements IUserInvoicesQuery {
       this.ids = _data["ids"] ? BaseIdsListQuery.fromJS(_data["ids"]) : <any>undefined;
       this.paginator = _data["paginator"] ? BasePageableQuery.fromJS(_data["paginator"]) : <any>undefined;
       this.dateRange = _data["dateRange"] ? BaseDateRangeQuery.fromJS(_data["dateRange"]) : <any>undefined;
+      this.sort = _data["sort"] ? BaseSortableQuery.fromJS(_data["sort"]) : <any>undefined;
     }
   }
 
@@ -3404,6 +3446,7 @@ export class UserInvoicesQuery implements IUserInvoicesQuery {
     data["ids"] = this.ids ? this.ids.toJSON() : <any>undefined;
     data["paginator"] = this.paginator ? this.paginator.toJSON() : <any>undefined;
     data["dateRange"] = this.dateRange ? this.dateRange.toJSON() : <any>undefined;
+    data["sort"] = this.sort ? this.sort.toJSON() : <any>undefined;
     return data;
   }
 }
@@ -3412,6 +3455,7 @@ export interface IUserInvoicesQuery {
   ids?: BaseIdsListQuery | undefined;
   paginator?: BasePageableQuery | undefined;
   dateRange?: BaseDateRangeQuery | undefined;
+  sort?: BaseSortableQuery | undefined;
 }
 
 export class ApiException extends Error {

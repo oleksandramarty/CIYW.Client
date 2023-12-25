@@ -1,0 +1,29 @@
+<div class="mat-elevation-z8" *ngIf="dataSource else loadData">
+  <table>
+    <thead>
+    <tr>
+      <th (click)="sort1('column1')">Column 1</th>
+      <th (click)="sort1('column2')">Column 2</th>
+      <!-- Add more columns as needed -->
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of displayedColumns">
+      <td>123</td>
+      <td>4234</td>
+      <!-- Add more columns as needed -->
+    </tr>
+    </tbody>
+  </table>
+
+
+</div>
+
+<ciyw-paginator
+  #paginatorComp
+  [total]="total"
+  [pageSizeOptions]="pageSizeOptions"
+  (pageChanged)="onPageChange($event)"
+></ciyw-paginator>
+
+<ng-template #loadData>Loading...</ng-template>

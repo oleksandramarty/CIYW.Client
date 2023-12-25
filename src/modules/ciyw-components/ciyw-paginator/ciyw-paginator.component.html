@@ -1,0 +1,6 @@
+<mat-paginator
+  [length]="total"
+  [pageSize]="paginator?.pageSize ?? 10"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onPageChange($event)"
+></mat-paginator>

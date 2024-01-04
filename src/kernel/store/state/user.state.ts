@@ -65,7 +65,7 @@ export class UserState {
 
   @Action(OnLogout)
   OnLogout({setState, dispatch}: StateContext<User>, {}) {
-    this.apiClient.auth_v1_logout()
+    this.apiClient.auth_V1_Logout()
       .pipe(
         tap(() => {
           setState(defaults);

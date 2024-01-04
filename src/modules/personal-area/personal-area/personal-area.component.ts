@@ -44,7 +44,7 @@ export class PersonalAreaComponent implements OnInit, OnDestroy{
   }
 
   getUser(): void {
-    this.apiClient.users_v1_current()
+    this.apiClient.users_V1_CurrentUser()
       .pipe(
         takeUntil(this.ngUnsubscribe),
         tap((result) => {

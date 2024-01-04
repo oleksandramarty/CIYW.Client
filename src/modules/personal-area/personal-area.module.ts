@@ -15,11 +15,11 @@ import {PersonalAreaComponent} from "./personal-area/personal-area.component";
 import {HomeComponent} from "./home/home.component";
 import {MatSortModule} from "@angular/material/sort";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatTableModule} from "@angular/material/table";
 import {CommonCiywModule} from "../common/common-ciyw.module";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSelectModule} from "@angular/material/select";
 import {CiywTableModule} from "../ciyw-components/ciyw-table/ciyw-table.module";
+import {InvoiceDialogModule} from "./invoice-dialog/invoice-dialog.module";
 
 @NgModule({
   declarations: [
@@ -49,6 +49,7 @@ import {CiywTableModule} from "../ciyw-components/ciyw-table/ciyw-table.module";
     MatSelectModule,
 
     CiywTableModule,
+    InvoiceDialogModule,
   ],
   exports: [
     PersonalAreaComponent,

@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
   subs = new Subscription();
 
-  displayedColumns: string[] = ['date', 'category', 'name', 'amount'];
+  displayedColumns: string[] = ['date', 'category', 'name', 'amount', 'edit', 'delete'];
   dataSource: MatTableDataSource<any> | undefined;
 
   user: ICurrentUserResponse | undefined;
@@ -70,7 +70,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private getInvoices(): void {
     this.isBusy = true;
-    this.apiClient.invoices_v1_history({
+    this.dataSource = new MatTableDataSource<any>([]);
+    this.apiClient.invoices_V1_GetUserInvoicesPOST({
       paginator: this.paginator as BasePageableQuery,
       sort: this.sort as BaseSortableQuery
     } as UserInvoicesQuery)

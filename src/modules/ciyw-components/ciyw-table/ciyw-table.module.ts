@@ -8,6 +8,9 @@ import {CiywTableComponent} from "./ciyw-table.component";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {CiywPaginatorModule} from "../ciyw-paginator/ciyw-paginator.module";
+import {MatIconModule} from "@angular/material/icon";
+import {CiywConfirmDialogModule} from "../ciyw-confirm-dialog/ciyw-confirm-dialog.module";
+import {CiywLoaderModule} from "../ciyw-loader/ciyw-loader.module";
 
 @NgModule({
   declarations: [
@@ -23,8 +26,11 @@ import {CiywPaginatorModule} from "../ciyw-paginator/ciyw-paginator.module";
     MatSortModule,
 
     CiywPaginatorModule,
+    CiywConfirmDialogModule,
 
-    RouterModule
+    RouterModule,
+    MatIconModule,
+    CiywLoaderModule
   ],
   exports: [
     CiywTableComponent,

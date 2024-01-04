@@ -1,24 +1,36 @@
 <div class="mat-elevation-z8">
-
-  <ng-container >
-    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
-           class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
 
       <ng-container *ngFor="let item of displayedColumns; let i=index" [matColumnDef]="item">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header [sortActionDescription]="'Sort by ' + item">
-          {{ item }}
-        </th>
+        <ng-container *ngIf="item === 'edit' || item === 'delete' else sortableHeader">
+          <th mat-header-cell *matHeaderCellDef [width]="30"></th>
+        </ng-container>
+        <ng-template #sortableHeader>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header [sortActionDescription]="'Sort by ' + item">
+            {{ item }}
+          </th>
+        </ng-template>
         <td mat-cell *matCellDef="let element">
           <ng-container *ngIf="element[item].type === variableTypes.Default">{{element[item].value}}</ng-container>
           <ng-container *ngIf="element[item].type === variableTypes.Date">{{element[item].value | date: element[item].pipeParams.format}}</ng-container>
           <ng-container *ngIf="element[item].type === variableTypes.Currency">{{element[item].value | currency: element[item].pipeParams.currency}}</ng-container>
+
+          <ng-container *ngIf="element[item].type === variableTypes.Icon">
+            <mat-icon
+              class="pointer"
+              aria-hidden="false"
+              (click)="openDialog(element[item])"
+              [fontIcon]="element[item].icon"></mat-icon>
+          </ng-container>
+
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns!"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns!;"></tr>
     </table>
-  </ng-container>
+
+  <ciyw-loader *ngIf="isBusy"></ciyw-loader>
 
 
   <ciyw-paginator

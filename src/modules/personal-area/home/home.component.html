@@ -3,12 +3,12 @@
 
   <div class="user-details">
     <p><strong>User Name:</strong> {{ user.firstName }} {{user.lastName}}</p>
-    <p><strong>Balance:</strong> {{ user.balanceAmount || 0 | currency: user.currency?.isoCode }}</p>
+    <p *ngIf="balance"><strong>Balance:</strong> {{ balance.amount || 0 | currency: balance.isoCode }}</p>
   </div>
 
   <ciyw-table
     [displayedColumns]="displayedColumns"
-    [total]="balance?.totalCount ?? 0"
+    [total]="invoices?.totalCount ?? 0"
     [dataSource]="dataSource"
     [isBusy]="isBusy"
     (filterChanged)="filterChanged($event)"

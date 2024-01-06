@@ -1,5 +1,5 @@
 import {VariableTypeEnum} from "../enums/variable-type.enum";
-import {IBalanceInvoiceResponse, IBasePageableQuery, IBaseSortableQuery} from "../services/api-client";
+import {IBalanceInvoiceResponse, IPaginator, IBaseSortableQuery} from "../services/api-client";
 import {
   createTableCurrencyItem,
   createTableDateItem,
@@ -11,7 +11,7 @@ import {ComponentType} from "@angular/cdk/overlay";
 import {ICiywConfirmDialogData} from "../models/dialog-input-data.model";
 
 export interface ITableFilterHelper {
-  paginator: IBasePageableQuery | undefined,
+  paginator: IPaginator | undefined,
   sort: IBaseSortableQuery | undefined
 }
 

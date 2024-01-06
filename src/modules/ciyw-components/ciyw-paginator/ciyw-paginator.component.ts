@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {IBasePageableQuery} from "../../../kernel/services/api-client";
+import {IPaginator} from "../../../kernel/services/api-client";
 import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
@@ -11,11 +11,11 @@ export class CiywPaginatorComponent implements OnInit{
   @Input() pageSizeOptions: number[] = [5, 10, 25, 100];
   @Input() total: number = 0;
 
-  @Output() pageChanged: EventEmitter<IBasePageableQuery | undefined> = new EventEmitter<IBasePageableQuery | undefined>();
+  @Output() pageChanged: EventEmitter<IPaginator | undefined> = new EventEmitter<IPaginator | undefined>();
 
   @ViewChild(MatPaginator, { static: true }) paginatorComp: MatPaginator | undefined;
 
-  paginator: IBasePageableQuery | undefined;
+  paginator: IPaginator | undefined;
 
   ngOnInit(): void {
     this.paginator = {

@@ -2,19 +2,24 @@ import {ApiClient, ICurrentUserResponse, ITokenResponse} from "../../services/ap
 import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {Injectable} from "@angular/core";
 import {RoleEnum} from "../../enums/role.enum";
-import {LoginRedirect, OnLogout, SetToken, SetUser, ResetUser, HomeRedirect} from "../actions/user.actions";
+import {
+  LoginRedirect,
+  OnLogout,
+  SetToken,
+  SetUser,
+  ResetUser,
+  HomeRedirect,
+  SetUserBalance
+} from "../actions/user.actions";
 import {Navigate} from "@ngxs/router-plugin";
 import {catchError, EMPTY, switchMap, tap, throwError} from "rxjs";
-
-export class User {
-  user: ICurrentUserResponse | undefined;
-  token: ITokenResponse | undefined;
-}
+import {IUserBalance, User} from "../../models/user.model";
 
 let token: string | null = '';
 const defaults = {
   user: undefined,
   token: undefined,
+  balance: undefined,
 };
 
 @State<User>({
@@ -30,6 +35,10 @@ export class UserState {
   @Selector()
   static getUser(user: User): ICurrentUserResponse | undefined {
     return user.user;
+  }
+  @Selector()
+  static getBalance(user: User): IUserBalance | undefined {
+    return user.balance;
   }
 
   @Selector()
@@ -103,6 +112,10 @@ export class UserState {
   @Action(SetUser)
   SetUser({patchState}: StateContext<User>, {data}: any) {
     patchState({user: data});
+  }
+  @Action(SetUserBalance)
+  SetUserBalance({patchState}: StateContext<User>, {data}: any) {
+    patchState({balance: data});
   }
 
   cleanSessionToken() {

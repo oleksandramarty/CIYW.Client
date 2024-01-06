@@ -2,8 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {finalize, Observable, Subject, Subscription, takeUntil, tap} from "rxjs";
 import {Select, Store} from "@ngxs/store";
 import {
-  ApiClient, BasePageableQuery, BaseSortableQuery,
-  IBalanceInvoicePageableResponse, IBasePageableQuery, IBaseSortableQuery,
+  ApiClient, Paginator, BaseSortableQuery,
+  IBalanceInvoicePageableResponse, IPaginator, IBaseSortableQuery,
   ICurrentUserResponse, UserInvoicesQuery
 } from "../../../kernel/services/api-client";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -12,6 +12,8 @@ import {UserState} from "../../../kernel/store/state/user.state";
 import {MatTableDataSource} from "@angular/material/table";
 import {FormBuilder} from "@angular/forms";
 import {ITableFilterHelper, mapInvoiceTable} from "../../../kernel/mappers/table.mapper";
+import {GraphQLService} from "../../../kernel/graph-ql/graph-ql.service";
+import {IUserBalance} from "../../../kernel/models/user.model";
 
 @Component({
   selector: 'ciyw-home',
@@ -20,6 +22,7 @@ import {ITableFilterHelper, mapInvoiceTable} from "../../../kernel/mappers/table
 })
 export class HomeComponent implements OnInit, OnDestroy {
   @Select(UserState.getUser) user$: Observable<ICurrentUserResponse> | undefined;
+  @Select(UserState.getBalance) balance$: Observable<IUserBalance> | undefined;
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
   subs = new Subscription();
 
@@ -27,9 +30,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<any> | undefined;
 
   user: ICurrentUserResponse | undefined;
-  balance: IBalanceInvoicePageableResponse | undefined;
+  balance: IUserBalance | undefined;
+  invoices: IBalanceInvoicePageableResponse | undefined;
 
-  paginator: IBasePageableQuery | undefined;
+  paginator: IPaginator | undefined;
   sort: IBaseSortableQuery | undefined;
 
   isBusy: boolean | undefined = true;
@@ -38,12 +42,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private readonly store: Store,
     private readonly apiClient: ApiClient,
-    private readonly snackBar: MatSnackBar
+    private readonly snackBar: MatSnackBar,
+    private graphQlService: GraphQLService,
   ) {}
 
   ngOnInit() {
     if (!!this.user$) {
-      this.subs.add(this.user$.subscribe((user) => this.user = user));
+      this.subs.add(this.user$.subscribe((user) => {
+        this.user = user;
+        this.graphQlService.getUserBalance(this.user.id);
+      }));
+    }
+    if (!!this.balance$) {
+      this.subs.add(this.balance$.subscribe((balance) => this.balance = balance ));
     }
     this.paginator = {
       isFull: false,
@@ -72,17 +83,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.isBusy = true;
     this.dataSource = new MatTableDataSource<any>([]);
     this.apiClient.invoices_V1_GetUserInvoicesPOST({
-      paginator: this.paginator as BasePageableQuery,
+      paginator: this.paginator as Paginator,
       sort: this.sort as BaseSortableQuery
     } as UserInvoicesQuery)
       .pipe(
         takeUntil(this.ngUnsubscribe),
         tap((result) => {
-          this.balance = result;
+          this.invoices = result;
           if (!this.dataSource) {
             this.dataSource = new MatTableDataSource<any>([]);
           }
-          this.dataSource!.data = mapInvoiceTable(this.balance!.invoices);
+          this.dataSource!.data = mapInvoiceTable(this.invoices!.invoices);
         }),
         handleApiError(this.snackBar),
         finalize(() => this.isBusy = false)

@@ -23,10 +23,9 @@ import {AppComponent} from "./app/app.component";
 import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
 import {CommonCiywModule} from "../common/common-ciyw.module";
 import {PersonalAreaModule} from "../personal-area/personal-area.module";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatIconModule} from "@angular/material/icon";
-import {MatTableModule} from "@angular/material/table";
-import {MatSortModule} from "@angular/material/sort";
+import {APOLLO_OPTIONS, ApolloModule} from "apollo-angular";
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 export const MY_FORMATS = {
   parse: {
@@ -63,11 +62,24 @@ registerLocaleData(localeEN, 'en');
 
     HttpClientModule,
 
+    ApolloModule,
+
     AuthModule,
     CommonCiywModule,
     PersonalAreaModule,
   ],
-  providers: [
+  providers: [ {
+    provide: APOLLO_OPTIONS,
+    useFactory(httpLink: HttpLink) {
+      return {
+        cache: new InMemoryCache(),
+        link: httpLink.create({
+          uri: environment.graphQLUrl,
+        }),
+      };
+    },
+    deps: [HttpLink],
+  },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: BaseUrlInterceptor,

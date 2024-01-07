@@ -4,16 +4,18 @@ import {Select, Store} from "@ngxs/store";
 import {
   ApiClient, Paginator, BaseSortableQuery,
   IBalanceInvoicePageableResponse, IPaginator, IBaseSortableQuery,
-  ICurrentUserResponse, UserInvoicesQuery
+  ICurrentUserResponse, UserInvoicesQuery, IBalanceInvoiceResponse
 } from "../../../kernel/services/api-client";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {handleApiError} from "../../../kernel/helpers/rxjs.helper";
 import {UserState} from "../../../kernel/store/state/user.state";
 import {MatTableDataSource} from "@angular/material/table";
 import {FormBuilder} from "@angular/forms";
-import {ITableFilterHelper, mapInvoiceTable} from "../../../kernel/mappers/table.mapper";
+import {ITableFilterHelper, mapGraphInvoiceTable, mapInvoiceTable} from "../../../kernel/mappers/table.mapper";
 import {GraphQLService} from "../../../kernel/graph-ql/graph-ql.service";
 import {IUserBalance} from "../../../kernel/models/user.model";
+import {IListWithIncludeHelper} from "../../../kernel/models/common.model";
+import {IInvoiceType} from "../../../kernel/models/invoice.model";
 
 @Component({
   selector: 'ciyw-home',
@@ -26,12 +28,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
   subs = new Subscription();
 
-  displayedColumns: string[] = ['date', 'category', 'name', 'amount', 'edit', 'delete'];
+  displayedColumns: string[] = ['date', 'humanize_date', 'category', 'name', 'amount', 'edit', 'delete'];
   dataSource: MatTableDataSource<any> | undefined;
 
   user: ICurrentUserResponse | undefined;
   balance: IUserBalance | undefined;
   invoices: IBalanceInvoicePageableResponse | undefined;
+
+  graphQLInvoices: IListWithIncludeHelper<IInvoiceType> | undefined;
 
   paginator: IPaginator | undefined;
   sort: IBaseSortableQuery | undefined;
@@ -80,6 +84,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private getInvoices(): void {
+    this.getGraphQLInvoices();
+  }
+  private getApiInvoices(): void {
     this.isBusy = true;
     this.dataSource = new MatTableDataSource<any>([]);
     this.apiClient.invoices_V1_GetUserInvoicesPOST({
@@ -99,6 +106,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         finalize(() => this.isBusy = false)
       ).subscribe();
   }
+  private getGraphQLInvoices(): void {
+    this.isBusy = true;
+    this.dataSource = new MatTableDataSource<any>([]);
+    this.graphQlService.getUserInvoices(this.paginator, this.sort);
+  }
 }
-
-

@@ -1,33 +1,37 @@
-<div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+<div class="mat-elevation-z8" *ngIf="tableSchema && dataSource">
+    <table mat-table [dataSource]="dataSource!" matSort (matSortChange)="announceSortChange($event)">
 
-      <ng-container *ngFor="let item of displayedColumns; let i=index" [matColumnDef]="item">
-        <ng-container *ngIf="item === 'edit' || item === 'delete' else sortableHeader">
-          <th mat-header-cell *matHeaderCellDef [width]="30"></th>
-        </ng-container>
-        <ng-template #sortableHeader>
+      <ng-container *ngFor="let item of tableSchema.items; let i=index" [matColumnDef]="item.value">
+        <ng-container *ngIf="item.isSortable else non_sortableHeader">
           <th mat-header-cell *matHeaderCellDef mat-sort-header [sortActionDescription]="'Sort by ' + item">
-            {{ item }}
+            {{ item.title }}
           </th>
+        </ng-container>
+        <ng-template #non_sortableHeader>
+          <th mat-header-cell *matHeaderCellDef [ciywDynamicStyle]="item.style">{{ item.title }}</th>
         </ng-template>
         <td mat-cell *matCellDef="let element">
-          <ng-container *ngIf="element[item].type === variableTypes.Default">{{element[item].value}}</ng-container>
-          <ng-container *ngIf="element[item].type === variableTypes.Date">{{element[item].value | date: element[item].pipeParams.format}}</ng-container>
-          <ng-container *ngIf="element[item].type === variableTypes.Currency">{{element[item].value | currency: element[item].pipeParams.currency}}</ng-container>
+          <ng-container *ngIf="element[item.value].type === variableTypes.Default">{{element[item.value].value}}</ng-container>
+          <ng-container *ngIf="element[item.value].type === variableTypes.Date">{{element[item.value].value | date: element[item.value].pipeParams.format}}</ng-container>
+          <ng-container *ngIf="element[item.value].type === variableTypes.Currency">{{element[item.value].value | currency: element[item.value].pipeParams.currency}}</ng-container>
 
-          <ng-container *ngIf="element[item].type === variableTypes.Icon">
+          <ng-container *ngIf="element[item.value].type === variableTypes.Icon">
             <mat-icon
               class="pointer"
               aria-hidden="false"
-              (click)="openDialog(element[item])"
-              [fontIcon]="element[item].icon"></mat-icon>
+              (click)="openDialog(element[item.value])"
+              [fontIcon]="element[item.value].icon"></mat-icon>
+          </ng-container>
+
+          <ng-container *ngIf="!!element[item.value].htmlContent">
+            <span [innerHtml]="element[item.value].htmlContent"></span>
           </ng-container>
 
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns!"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns!;"></tr>
+      <tr mat-header-row *matHeaderRowDef="tableSchema.displayedColumns!"></tr>
+      <tr mat-row *matRowDef="let row; columns: tableSchema.displayedColumns!;"></tr>
     </table>
 
   <ciyw-loader *ngIf="isBusy"></ciyw-loader>

@@ -11,6 +11,7 @@ import {CiywPaginatorModule} from "../ciyw-paginator/ciyw-paginator.module";
 import {MatIconModule} from "@angular/material/icon";
 import {CiywConfirmDialogModule} from "../ciyw-confirm-dialog/ciyw-confirm-dialog.module";
 import {CiywLoaderModule} from "../ciyw-loader/ciyw-loader.module";
+import {UtilityCiywModule} from "../../common/utility-ciyw.module";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {CiywLoaderModule} from "../ciyw-loader/ciyw-loader.module";
 
     RouterModule,
     MatIconModule,
-    CiywLoaderModule
+    CiywLoaderModule,
+    UtilityCiywModule
   ],
   exports: [
     CiywTableComponent,

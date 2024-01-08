@@ -3,12 +3,19 @@ import {IBaseSortableQuery} from "../../../kernel/services/api-client";
 import {Sort} from "@angular/material/sort";
 import {CiywPaginatorComponent} from "../ciyw-paginator/ciyw-paginator.component";
 import {VariableTypeEnum} from "../../../kernel/enums/variable-type.enum";
-import {ITableFilterHelper, ITableItemHelper} from "../../../kernel/mappers/table.mapper";
+import {
+  crateCIYWTableSchema,
+  ITableFilterHelper,
+  ITableItemHelper
+} from "../../../kernel/mappers/ciyw-table.mapper";
 import {capitalizeFirstChar} from "../../../kernel/helpers/string.helper";
 import {MatDialog} from "@angular/material/dialog";
 import {CiywConfirmDialogComponent} from "../ciyw-confirm-dialog/ciyw-confirm-dialog.component";
 import {ICiywConfirmDialogData, IEntityDialogData} from "../../../kernel/models/dialog-input-data.model";
 import {MessagesConstant} from "../../../kernel/constants/messages.constant";
+import {CIYWTableEnum} from "../../../kernel/enums/ciyw-table.enum";
+import {IDisplayedCIYWTableSchema} from "../../../kernel/models/ciyw-table.model";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'ciyw-table',
@@ -19,9 +26,9 @@ export class CiywTableComponent<T> implements OnInit{
   @Input() isBusy: boolean | undefined = false;
   @Input() withPaginator: boolean = true;
   @Input() total: number = 0;
-  @Input() displayedColumns: string[] | undefined;
+  @Input() type: CIYWTableEnum | undefined;
   @Input() pageSizeOptions: number[] = [5, 10, 25, 100];
-  @Input() dataSource: any;
+  @Input() dataSource: MatTableDataSource<any> | undefined;
 
   @Output() filterChanged: EventEmitter<ITableFilterHelper> = new EventEmitter<ITableFilterHelper>();
   @ViewChild(CiywPaginatorComponent) paginatorComp: CiywPaginatorComponent | undefined;
@@ -30,10 +37,13 @@ export class CiywTableComponent<T> implements OnInit{
 
   public sort: IBaseSortableQuery | undefined;
 
+  public tableSchema: IDisplayedCIYWTableSchema | undefined;
+
   constructor(private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
+    this.tableSchema = crateCIYWTableSchema(this.type);
     this.sort = { column: 'Created', direction: 'desc'};
   }
 

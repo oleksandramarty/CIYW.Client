@@ -6,14 +6,11 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {HeaderComponent} from "./header/header.component";
 import {FooterComponent} from "./footer/footer.component";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {RemoveDashesPipe} from "../../kernel/pipes/remove-dashes.pipe";
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
-
-    RemoveDashesPipe,
   ],
   imports: [
     CommonModule,
@@ -26,8 +23,6 @@ import {RemoveDashesPipe} from "../../kernel/pipes/remove-dashes.pipe";
   exports: [
     HeaderComponent,
     FooterComponent,
-
-    RemoveDashesPipe,
   ]
 })
 export class CommonCiywModule {}

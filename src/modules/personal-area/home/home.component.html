@@ -7,8 +7,8 @@
   </div>
 
   <ciyw-table
-    [displayedColumns]="displayedColumns"
-    [total]="invoices?.totalCount ?? 0"
+    [type]="tableType.HomeUserInvoices"
+    [total]="graphQLInvoices?.totalCount ?? 0"
     [dataSource]="dataSource"
     [isBusy]="isBusy"
     (filterChanged)="filterChanged($event)"

@@ -20,3 +20,13 @@ export interface IBaseDateEntityType {
   date?: Date | undefined;
   humanize_date?: string | undefined;
 }
+
+export interface IStyleHelper {
+  [key: string]: {
+    attr: string | undefined;
+    value: string | number | undefined;
+  };
+}
+export interface IAnyHelper {
+  [key: string]: string | number | string[] | number[] | undefined;
+}

@@ -11,11 +11,12 @@ import {handleApiError} from "../../../kernel/helpers/rxjs.helper";
 import {UserState} from "../../../kernel/store/state/user.state";
 import {MatTableDataSource} from "@angular/material/table";
 import {FormBuilder} from "@angular/forms";
-import {ITableFilterHelper, mapGraphInvoiceTable, mapInvoiceTable} from "../../../kernel/mappers/table.mapper";
+import {ITableFilterHelper, mapGraphInvoiceTable, mapInvoiceTable} from "../../../kernel/mappers/ciyw-table.mapper";
 import {GraphQLService} from "../../../kernel/graph-ql/graph-ql.service";
 import {IUserBalance} from "../../../kernel/models/user.model";
 import {IListWithIncludeHelper} from "../../../kernel/models/common.model";
 import {IInvoiceType} from "../../../kernel/models/invoice.model";
+import {CIYWTableEnum} from "../../../kernel/enums/ciyw-table.enum";
 
 @Component({
   selector: 'ciyw-home',
@@ -28,8 +29,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
   subs = new Subscription();
 
-  displayedColumns: string[] = ['date', 'humanize_date', 'category', 'name', 'amount', 'edit', 'delete'];
   dataSource: MatTableDataSource<any> | undefined;
+
+  tableType = CIYWTableEnum;
 
   user: ICurrentUserResponse | undefined;
   balance: IUserBalance | undefined;
@@ -84,8 +86,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private getInvoices(): void {
+    // this.getApiInvoices();
     this.getGraphQLInvoices();
   }
+
   private getApiInvoices(): void {
     this.isBusy = true;
     this.dataSource = new MatTableDataSource<any>([]);
@@ -106,9 +110,22 @@ export class HomeComponent implements OnInit, OnDestroy {
         finalize(() => this.isBusy = false)
       ).subscribe();
   }
+
   private getGraphQLInvoices(): void {
     this.isBusy = true;
     this.dataSource = new MatTableDataSource<any>([]);
-    this.graphQlService.getUserInvoices(this.paginator, this.sort);
+    this.graphQlService.getUserInvoices(this.paginator, this.sort)
+      .pipe(
+        takeUntil(this.ngUnsubscribe),
+        tap((result) => {
+          this.graphQLInvoices = result?.data?.invoices;
+          if (!this.dataSource) {
+            this.dataSource = new MatTableDataSource<any>([]);
+          }
+          this.dataSource!.data = mapGraphInvoiceTable(this.graphQLInvoices);
+          this.isBusy = false;
+        }),
+        handleApiError(this.snackBar),
+      ).subscribe();
   }
 }

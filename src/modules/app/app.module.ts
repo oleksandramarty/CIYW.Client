@@ -57,7 +57,7 @@ registerLocaleData(localeEN, 'en');
     }),
     NgxsRouterPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsLoggerPluginModule.forRoot(),
+    // NgxsLoggerPluginModule.forRoot(),
     NgxsStoragePluginModule.forRoot(),
 
     HttpClientModule,

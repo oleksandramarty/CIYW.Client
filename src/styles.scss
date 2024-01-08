@@ -19,6 +19,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .t-align-center {
   text-align: center;
 }
+.t-align-left {
+  text-align: left;
+}
+.t-align-right {
+  text-align: right;
+}
 
 @for $i from 1 through 500 {
   $formatted-i: if($i < 10, '00' + $i, if($i < 100, '0' + $i, $i));
@@ -58,6 +64,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @for $i from 1 through 500 {
   $formatted-i: if($i < 10, '00' + $i, if($i < 100, '0' + $i, $i));
   .h-#{$formatted-i} { height: #{$i}px; }
+}
+@for $i from 1 through 10 {
+  $opacity: $i / 10;
+  $formatted-opacity: if($i < 10, '0' + $i, $i);
+
+  .opacity-#{$formatted-opacity} {
+    opacity: $opacity;
+  }
+}
+.f-bold {
+  font-weight: bold;
 }
 
 

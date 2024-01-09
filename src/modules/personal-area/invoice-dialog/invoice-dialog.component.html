@@ -1,43 +1,10 @@
 <h2 mat-dialog-title>{{ invoice?.name ?? 'Invoice' }}</h2>
 <mat-dialog-content class="mat-typography t-align-center">
   <ng-container *ngIf="!!invoice else loader">
-    <div *ngIf="invoiceForm" [formGroup]="invoiceForm!">
-        <div>
-          <label for="name">Name:</label>
-          <input type="text" id="name" formControlName="name" matInput />
-        </div>
-
-        <div>
-          <label for="amount">Amount:</label>
-          <input type="number" id="amount" formControlName="amount" matInput />
-        </div>
-
-        <div>
-          <label for="date">Date:</label>
-          <input type="date" id="date" formControlName="date" matInput />
-        </div>
-
-        <div>
-          <label for="type">Type:</label>
-          <mat-select id="type" formControlName="type" placeholder="Select Type">
-            <!-- Add options for the type -->
-          </mat-select>
-        </div>
-
-        <div>
-          <label for="currency">Currency:</label>
-          <mat-select id="currency" formControlName="currency" placeholder="Select Currency">
-            <!-- Add options for the currency -->
-          </mat-select>
-        </div>
-
-        <div>
-          <label for="category">Category:</label>
-          <mat-select id="category" formControlName="category" placeholder="Select Category">
-            <!-- Add options for the category -->
-          </mat-select>
-        </div>
-    </div>
+    <ciyw-input [controlGroup]="invoiceForm" placeholder="Name" controlName="name"></ciyw-input>
+    <ciyw-input [controlGroup]="invoiceForm" placeholder="Amount" controlName="amount" type="number" ></ciyw-input>
+    <ciyw-input [controlGroup]="invoiceForm" [selectData]="dictionaries?.currencies" placeholder="Currency" controlName="currency" type="select" ></ciyw-input>
+    <ciyw-input [controlGroup]="invoiceForm" [selectData]="dictionaries?.categories" placeholder="Category" controlName="category" type="select" ></ciyw-input>
   </ng-container>
   <ng-template #loader>
     <ciyw-loader></ciyw-loader>

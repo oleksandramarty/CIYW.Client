@@ -26,6 +26,7 @@ import {PersonalAreaModule} from "../personal-area/personal-area.module";
 import {APOLLO_OPTIONS, ApolloModule} from "apollo-angular";
 import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache } from '@apollo/client/core';
+import {DictionariesState} from "../../kernel/store/state/dictionary.state";
 
 export const MY_FORMATS = {
   parse: {
@@ -52,7 +53,7 @@ registerLocaleData(localeEN, 'en');
     CommonModule,
     FormsModule,
 
-    NgxsModule.forRoot([UserState], {
+    NgxsModule.forRoot([UserState, DictionariesState], {
       developmentMode: isLocalEnv(),
     }),
     NgxsRouterPluginModule.forRoot(),

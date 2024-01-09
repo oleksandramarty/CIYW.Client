@@ -3312,7 +3312,7 @@ export class CreateInvoiceCommand implements ICreateInvoiceCommand {
   currencyId!: string;
   date!: Date;
   type!: InvoiceTypeEnum;
-  noteCommand?: CreateOrUpdateNoteCommand | undefined;
+  note?: CreateOrUpdateNoteCommand | undefined;
 
   constructor(data?: ICreateInvoiceCommand) {
     if (data) {
@@ -3331,7 +3331,7 @@ export class CreateInvoiceCommand implements ICreateInvoiceCommand {
       this.currencyId = _data["currencyId"];
       this.date = _data["date"] ? new Date(_data["date"].toString()) : <any>undefined;
       this.type = _data["type"];
-      this.noteCommand = _data["noteCommand"] ? CreateOrUpdateNoteCommand.fromJS(_data["noteCommand"]) : <any>undefined;
+      this.note = _data["note"] ? CreateOrUpdateNoteCommand.fromJS(_data["note"]) : <any>undefined;
     }
   }
 
@@ -3350,7 +3350,7 @@ export class CreateInvoiceCommand implements ICreateInvoiceCommand {
     data["currencyId"] = this.currencyId;
     data["date"] = this.date ? this.date.toISOString() : <any>undefined;
     data["type"] = this.type;
-    data["noteCommand"] = this.noteCommand ? this.noteCommand.toJSON() : <any>undefined;
+    data["note"] = this.note ? this.note.toJSON() : <any>undefined;
     return data;
   }
 }
@@ -3362,7 +3362,7 @@ export interface ICreateInvoiceCommand {
   currencyId: string;
   date: Date;
   type: InvoiceTypeEnum;
-  noteCommand?: CreateOrUpdateNoteCommand | undefined;
+  note?: CreateOrUpdateNoteCommand | undefined;
 }
 
 export class BaseNullableQuery implements IBaseNullableQuery {
@@ -3438,43 +3438,7 @@ export interface ICreateOrUpdateNoteCommand extends IBaseNullableQuery {
   body: string;
 }
 
-export class BaseQuery implements IBaseQuery {
-  id!: string;
-
-  constructor(data?: IBaseQuery) {
-    if (data) {
-      for (var property in data) {
-        if (data.hasOwnProperty(property))
-          (<any>this)[property] = (<any>data)[property];
-      }
-    }
-  }
-
-  init(_data?: any) {
-    if (_data) {
-      this.id = _data["id"];
-    }
-  }
-
-  static fromJS(data: any): BaseQuery {
-    data = typeof data === 'object' ? data : {};
-    let result = new BaseQuery();
-    result.init(data);
-    return result;
-  }
-
-  toJSON(data?: any) {
-    data = typeof data === 'object' ? data : {};
-    data["id"] = this.id;
-    return data;
-  }
-}
-
-export interface IBaseQuery {
-  id: string;
-}
-
-export class UpdateInvoiceCommand extends BaseQuery implements IUpdateInvoiceCommand {
+export class UpdateInvoiceCommand extends BaseNullableQuery implements IUpdateInvoiceCommand {
   name!: string;
   amount!: number;
   categoryId!: string;
@@ -3518,7 +3482,7 @@ export class UpdateInvoiceCommand extends BaseQuery implements IUpdateInvoiceCom
   }
 }
 
-export interface IUpdateInvoiceCommand extends IBaseQuery {
+export interface IUpdateInvoiceCommand extends IBaseNullableQuery {
   name: string;
   amount: number;
   categoryId: string;

@@ -1,11 +1,17 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {ICiywConfirmDialogData, IEntityDialogData} from "../../../kernel/models/dialog-input-data.model";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {ApiClient, IBalanceInvoiceResponse, ICurrentUserResponse} from "../../../kernel/services/api-client";
+import {
+  ApiClient,
+  IBalanceInvoiceResponse,
+  ICurrentUserResponse,
+  IDictionariesResponse
+} from "../../../kernel/services/api-client";
 import {Select} from "@ngxs/store";
 import {UserState} from "../../../kernel/store/state/user.state";
 import {Observable, Subject, Subscription, takeUntil, tap} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {DictionariesState} from "../../../kernel/store/state/dictionary.state";
 
 @Component({
   selector: 'invoice-dialog',
@@ -14,11 +20,14 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class InvoiceDialogComponent implements OnInit, OnDestroy{
   @Select(UserState.getUser) user$: Observable<ICurrentUserResponse> | undefined;
+  @Select(DictionariesState.getDictionaries) dictionaries$: Observable<IDictionariesResponse> | undefined;
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
   subs = new Subscription();
   public info: IEntityDialogData | undefined;
   public invoice: IBalanceInvoiceResponse | null = null;
-  public invoiceForm: FormGroup | undefined;
+  public invoiceForm: FormGroup | null | undefined;
+
+  public dictionaries: IDictionariesResponse | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<InvoiceDialogComponent>,
@@ -30,6 +39,10 @@ export class InvoiceDialogComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
+    if (!!this.dictionaries$) {
+      this.subs.add(this.dictionaries$.subscribe(dictionaries => { this.dictionaries = dictionaries; }));
+    }
+
     this.getInvoiceById();
   }
 

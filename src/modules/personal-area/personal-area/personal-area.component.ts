@@ -3,9 +3,10 @@ import {Select, Store} from "@ngxs/store";
 import {UserState} from "../../../kernel/store/state/user.state";
 import {Observable, Subject, Subscription, switchMap, takeUntil, tap} from "rxjs";
 import {HomeRedirect, ResetUser, SetToken, SetUser} from "../../../kernel/store/actions/user.actions";
-import {ApiClient, AuthLoginQuery} from "../../../kernel/services/api-client";
+import {ApiClient, AuthLoginQuery, IDictionariesResponse} from "../../../kernel/services/api-client";
 import {handleApiError} from "../../../kernel/helpers/rxjs.helper";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {SetDictionaries} from "../../../kernel/store/actions/dictionary.actions";
 
 @Component({
   selector: 'ciyw-personal-area',
@@ -34,7 +35,7 @@ export class PersonalAreaComponent implements OnInit, OnDestroy{
       }));
     }
 
-    this.getUser();
+    this.getUserData();
   }
 
   ngOnDestroy() {
@@ -43,13 +44,17 @@ export class PersonalAreaComponent implements OnInit, OnDestroy{
     this.ngUnsubscribe.complete();
   }
 
-  getUser(): void {
+  getUserData(): void {
     this.apiClient.users_V1_CurrentUser()
       .pipe(
         takeUntil(this.ngUnsubscribe),
-        tap((result) => {
+        switchMap((result) => {
           this.store.dispatch(new SetUser(result));
           this.store.dispatch(new HomeRedirect());
+          return this.apiClient.dictionaries_V1_GetAll();
+        }),
+        tap((dictionaries) => {
+          this.store.dispatch(new SetDictionaries(dictionaries as IDictionariesResponse));
         }),
         handleApiError(this.snackBar)
       ).subscribe();

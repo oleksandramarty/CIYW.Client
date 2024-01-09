@@ -1,0 +1,27 @@
+<div [class]="wrapperClass" [ngClass]="{'d-block': !inline, 'd-inline': inline}">
+  <mat-form-field *ngIf="controlGroup" [formGroup]="controlGroup">
+
+    <ng-container *ngIf="type !== 'select' && type !== 'date'">
+      <input
+        matInput
+        [type]="type"
+        [placeholder]="placeholder || ''"
+        [formControlName]="controlName" />
+    </ng-container>
+
+    <ng-container *ngIf="type === 'select'">
+      <mat-select
+        [placeholder]="placeholder || ''"
+        [formControlName]="controlName">
+        <mat-option
+          *ngFor="let item of selectData?.items"
+          [value]="item.id" >{{ item.name }}</mat-option>
+      </mat-select>
+    </ng-container>
+
+    <ng-container *ngIf="type === 'date'">
+      <h1>PICKER</h1>
+    </ng-container>
+
+  </mat-form-field>
+</div>

@@ -1,5 +1,10 @@
 import {Action, Selector, State, StateContext} from "@ngxs/store";
-import { IDictionaryResponse, IDictionariesResponse } from "../../services/api-client";
+import {
+  IDictionariesResponse,
+  IGuidDictionaryResponse,
+  IStringDictionaryItemResponse,
+  IStringDictionaryResponse
+} from "../../services/api-client";
 import {Injectable} from "@angular/core";
 import {Dictionaries} from "../../models/dictionary.model";
 import {ResetDictionaries, SetDictionaries} from "../actions/dictionary.actions";
@@ -9,6 +14,7 @@ const defaults = {
   categories: { items: [] },
   roles: { items: [] },
   tariffs: { items: [] },
+  invoiceTypes: { items: [] },
 };
 
 @State<Dictionaries>({
@@ -20,21 +26,24 @@ export class DictionariesState {
   @Selector()
   static getDictionaries(data: Dictionaries): IDictionariesResponse { return data as IDictionariesResponse; }
   @Selector()
-  static getCurrencies(data: Dictionaries): IDictionaryResponse { return data.currencies as IDictionaryResponse; }
+  static getCurrencies(data: Dictionaries): IGuidDictionaryResponse { return data.currencies as IGuidDictionaryResponse; }
   @Selector()
-  static getCategories(data: Dictionaries): IDictionaryResponse { return data.categories as IDictionaryResponse; }
+  static getCategories(data: Dictionaries): IGuidDictionaryResponse { return data.categories as IGuidDictionaryResponse; }
   @Selector()
-  static getTariffs(data: Dictionaries): IDictionaryResponse { return data.tariffs as IDictionaryResponse; }
+  static getTariffs(data: Dictionaries): IGuidDictionaryResponse { return data.tariffs as IGuidDictionaryResponse; }
   @Selector()
-  static getRoles(data: Dictionaries): IDictionaryResponse { return data.roles as IDictionaryResponse; }
+  static getRoles(data: Dictionaries): IGuidDictionaryResponse { return data.roles as IGuidDictionaryResponse; }
+  @Selector()
+  static getInvoiceTypes(data: Dictionaries): IStringDictionaryResponse { return data.roles as IStringDictionaryResponse; }
 
   @Action(SetDictionaries)
   SetUser({patchState}: StateContext<Dictionaries>, {data}: any) {
     patchState({
-      currencies: data.currencies as IDictionaryResponse,
-      categories: data.categories as IDictionaryResponse,
-      roles: data.roles as IDictionaryResponse,
-      tariffs: data.tariffs as IDictionaryResponse,
+      currencies: data.currencies as IGuidDictionaryResponse,
+      categories: data.categories as IGuidDictionaryResponse,
+      roles: data.roles as IGuidDictionaryResponse,
+      tariffs: data.tariffs as IGuidDictionaryResponse,
+      invoiceTypes: data.invoiceTypes as IStringDictionaryResponse,
     });
   }
 

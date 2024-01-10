@@ -20,7 +20,9 @@
     </ng-container>
 
     <ng-container *ngIf="type === 'date'">
-      <h1>PICKER</h1>
+      <input matInput [matDatepicker]="picker" [formControlName]="controlName">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </ng-container>
 
   </mat-form-field>

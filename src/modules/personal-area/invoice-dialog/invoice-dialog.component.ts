@@ -68,9 +68,9 @@ export class InvoiceDialogComponent implements OnInit, OnDestroy{
       name: [this.invoice?.name, [Validators.required, Validators.maxLength(50)]],
       amount: [this.invoice?.amount, [Validators.required, Validators.min(0)]],
       date: [this.invoice?.date, [Validators.required]],
-      type: [this.invoice?.type, [Validators.required]],
-      currency: [this.invoice?.currency.id, [Validators.required]],
-      category: [this.invoice?.category.id, [Validators.required]]
+      type: [String(this.invoice?.type), [Validators.required]],
+      currency: [this.invoice?.currency?.id, [Validators.required]],
+      category: [this.invoice?.category?.id, [Validators.required]]
     });
   }
 }

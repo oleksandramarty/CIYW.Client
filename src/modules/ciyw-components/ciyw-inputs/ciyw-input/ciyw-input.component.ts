@@ -1,6 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {IDictionariesResponse, IDictionaryResponse} from "../../../../kernel/services/api-client";
+import {
+  IGuidDictionaryResponse, IStringDictionaryResponse
+} from "../../../../kernel/services/api-client";
 
 @Component({
   selector: 'ciyw-input',
@@ -14,5 +16,5 @@ export class CiywInputComponent {
 @Input() controlGroup: FormGroup | null | undefined = null;
 @Input() inline: boolean = false;
 @Input() wrapperClass: string = '';
-@Input() selectData: IDictionaryResponse | null | undefined = null;
+@Input() selectData: IGuidDictionaryResponse | IStringDictionaryResponse | null | undefined = null;
 }

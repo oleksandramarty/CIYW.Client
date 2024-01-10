@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (!!this.user$) {
       this.subs.add(this.user$.subscribe((user) => {
         this.user = user;
-        this.graphQlService.getUserBalance(this.user.id);
+        this.graphQlService.getUserBalance(this.user.id!);
       }));
     }
     if (!!this.balance$) {

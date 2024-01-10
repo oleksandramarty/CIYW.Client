@@ -73,6 +73,9 @@ export class CiywTableComponent<T> implements OnInit{
 
   private openEditEntityDialog(element: ITableItemHelper): void {
     const dialogRef = this.dialog.open(element.className!, {
+      width: '100%',
+      maxWidth: '1200px',
+      minWidth: '100px',
       data: {
         entityId: element.value,
       } as IEntityDialogData

@@ -1,8 +1,13 @@
-import {IDictionaryResponse} from "../services/api-client";
+import {
+  IGuidDictionaryResponse,
+  IStringDictionaryItemResponse,
+  IStringDictionaryResponse
+} from "../services/api-client";
 
 export class Dictionaries {
-  currencies: IDictionaryResponse | undefined;
-  categories: IDictionaryResponse | undefined;
-  roles: IDictionaryResponse | undefined;
-  tariffs: IDictionaryResponse | undefined;
+  currencies: IGuidDictionaryResponse | undefined;
+  categories: IGuidDictionaryResponse | undefined;
+  roles: IGuidDictionaryResponse | undefined;
+  tariffs: IGuidDictionaryResponse | undefined;
+  invoiceTypes: IStringDictionaryResponse | undefined;
 }

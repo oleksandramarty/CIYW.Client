@@ -10,6 +10,7 @@ import {
   styleUrl: './ciyw-input.component.scss'
 })
 export class CiywInputComponent {
+@Input() label: string | null = null;
 @Input() placeholder: string | null = null;
 @Input() type: string = 'text';
 @Input() controlName: string | null = null;

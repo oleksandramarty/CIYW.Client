@@ -1,4 +1,8 @@
-<div class="mat-elevation-z8" *ngIf="tableSchema && dataSource">
+<ng-container *ngIf="tableSchema && dataSource">
+  <div *ngIf="!!tableSchema.addButtonText" class="t-align-right">
+    <button mat-button color="primary" (click)="openDialog(tableBtn.AddBtn)">{{ tableSchema.addButtonText }}</button>
+  </div>
+  <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource!" matSort (matSortChange)="announceSortChange($event)">
 
       <ng-container *ngFor="let item of tableSchema.items; let i=index" [matColumnDef]="item.value">
@@ -19,7 +23,7 @@
             <mat-icon
               class="pointer"
               aria-hidden="false"
-              (click)="openDialog(element[item.value])"
+              (click)="openDialog(item.dialogType!, element[item.value])"
               [fontIcon]="element[item.value].icon"></mat-icon>
           </ng-container>
 
@@ -34,16 +38,16 @@
       <tr mat-row *matRowDef="let row; columns: tableSchema.displayedColumns!;"></tr>
     </table>
 
-  <ciyw-loader *ngIf="isBusy"></ciyw-loader>
+    <ciyw-loader *ngIf="isBusy"></ciyw-loader>
 
 
-  <ciyw-paginator
-    #paginatorComp
-    [total]="total"
-    [pageSizeOptions]="pageSizeOptions"
-    (pageChanged)="onPageChange($event)"
-  ></ciyw-paginator>
+    <ciyw-paginator
+      #paginatorComp
+      [total]="total"
+      [pageSizeOptions]="pageSizeOptions"
+      (pageChanged)="onPageChange($event)"
+    ></ciyw-paginator>
 
-</div>
+  </div>
 
-
+</ng-container>

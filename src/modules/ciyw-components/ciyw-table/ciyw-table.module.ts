@@ -12,28 +12,30 @@ import {MatIconModule} from "@angular/material/icon";
 import {CiywConfirmDialogModule} from "../ciyw-confirm-dialog/ciyw-confirm-dialog.module";
 import {CiywLoaderModule} from "../ciyw-loader/ciyw-loader.module";
 import {UtilityCiywModule} from "../../common/utility-ciyw.module";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
     CiywTableComponent,
   ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
+    imports: [
+        CommonModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
 
-    MatTableModule,
-    MatSortModule,
+        MatTableModule,
+        MatSortModule,
 
-    CiywPaginatorModule,
-    CiywConfirmDialogModule,
+        CiywPaginatorModule,
+        CiywConfirmDialogModule,
 
-    RouterModule,
-    MatIconModule,
-    CiywLoaderModule,
-    UtilityCiywModule
-  ],
+        RouterModule,
+        MatIconModule,
+        CiywLoaderModule,
+        UtilityCiywModule,
+        MatButtonModule
+    ],
   exports: [
     CiywTableComponent,
   ]

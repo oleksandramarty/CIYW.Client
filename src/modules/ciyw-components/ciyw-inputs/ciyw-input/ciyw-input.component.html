@@ -1,7 +1,9 @@
 <div [class]="wrapperClass" [ngClass]="{'d-block': !inline, 'd-inline': inline}">
   <mat-form-field *ngIf="controlGroup" [formGroup]="controlGroup">
 
-    <ng-container *ngIf="type !== 'select' && type !== 'date'">
+    <mat-label *ngIf="label || placeholder">{{label ?? placeholder}}</mat-label>
+
+    <ng-container *ngIf="type !== 'select' && type !== 'date' && type !== 'textarea'">
       <input
         matInput
         [type]="type"
@@ -23,6 +25,10 @@
       <input matInput [matDatepicker]="picker" [formControlName]="controlName">
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
+    </ng-container>
+
+    <ng-container *ngIf="type === 'textarea'">
+      <textarea matInput [placeholder]="placeholder || ''" [formControlName]="controlName"></textarea>
     </ng-container>
 
   </mat-form-field>

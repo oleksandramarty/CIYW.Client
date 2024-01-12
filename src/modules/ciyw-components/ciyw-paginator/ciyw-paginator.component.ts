@@ -34,4 +34,9 @@ export class CiywPaginatorComponent implements OnInit{
 
     this.pageChanged.emit(this.paginator);
   }
+
+  public resetPaginator(): void {
+    this.paginator!.pageNumber = 1;
+    this.paginator!.pageSize = 10;
+  }
 }

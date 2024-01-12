@@ -88,6 +88,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private getInvoices(): void {
     // this.getApiInvoices();
     this.getGraphQLInvoices();
+    this.graphQlService.getUserBalance(this.user!.id!);
   }
 
   private getApiInvoices(): void {

@@ -8,3 +8,9 @@
   min-width: 350px;
   padding: 24px;
 }
+
+.auth-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

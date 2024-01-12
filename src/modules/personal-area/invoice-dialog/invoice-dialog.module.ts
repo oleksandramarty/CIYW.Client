@@ -7,6 +7,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {InvoiceDialogComponent} from "./invoice-dialog.component";
 import {CiywLoaderModule} from "../../ciyw-components/ciyw-loader/ciyw-loader.module";
 import {CiywInputModule} from "../../ciyw-components/ciyw-inputs/ciyw-input/ciyw-input.module";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {CiywInputModule} from "../../ciyw-components/ciyw-inputs/ciyw-input/ciyw
 
     CiywLoaderModule,
     MatDialogModule,
+    MatButtonModule,
 
     CiywInputModule,
   ],

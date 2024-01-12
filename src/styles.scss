@@ -82,6 +82,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .d-block {
   display: block;
 }
+.mat-datepicker-input {
+  width: calc(100% - 48px) !important;
+}
+mat-form-field {
+  max-width: 300px;
+  min-width: 100px;
+  width: 100%;
+}
+.mdc-dialog__actions {
+  padding: 20px !important;
+}
+.d-flex {
+  display: flex;
+}
 
 
 

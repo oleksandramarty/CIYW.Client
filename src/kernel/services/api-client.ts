@@ -2393,13 +2393,13 @@ export interface IAuthLoginQuery {
 }
 
 export class BalanceInvoicePageableResponse implements IBalanceInvoicePageableResponse {
-  pageNumber?: number | undefined;
-  pageSize?: number | undefined;
-  isFull?: boolean | undefined;
   invoices?: BalanceInvoiceResponse[] | undefined;
   balance?: number | undefined;
   currency?: CurrencyResponse | undefined;
   totalCount?: number | undefined;
+  pageNumber?: number | undefined;
+  pageSize?: number | undefined;
+  isFull?: boolean | undefined;
 
   constructor(data?: IBalanceInvoicePageableResponse) {
     if (data) {
@@ -2412,9 +2412,6 @@ export class BalanceInvoicePageableResponse implements IBalanceInvoicePageableRe
 
   init(_data?: any) {
     if (_data) {
-      this.pageNumber = _data["pageNumber"];
-      this.pageSize = _data["pageSize"];
-      this.isFull = _data["isFull"];
       if (Array.isArray(_data["invoices"])) {
         this.invoices = [] as any;
         for (let item of _data["invoices"])
@@ -2423,6 +2420,9 @@ export class BalanceInvoicePageableResponse implements IBalanceInvoicePageableRe
       this.balance = _data["balance"];
       this.currency = _data["currency"] ? CurrencyResponse.fromJS(_data["currency"]) : <any>undefined;
       this.totalCount = _data["totalCount"];
+      this.pageNumber = _data["pageNumber"];
+      this.pageSize = _data["pageSize"];
+      this.isFull = _data["isFull"];
     }
   }
 
@@ -2435,9 +2435,6 @@ export class BalanceInvoicePageableResponse implements IBalanceInvoicePageableRe
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
-    data["pageNumber"] = this.pageNumber;
-    data["pageSize"] = this.pageSize;
-    data["isFull"] = this.isFull;
     if (Array.isArray(this.invoices)) {
       data["invoices"] = [];
       for (let item of this.invoices)
@@ -2446,31 +2443,36 @@ export class BalanceInvoicePageableResponse implements IBalanceInvoicePageableRe
     data["balance"] = this.balance;
     data["currency"] = this.currency ? this.currency.toJSON() : <any>undefined;
     data["totalCount"] = this.totalCount;
+    data["pageNumber"] = this.pageNumber;
+    data["pageSize"] = this.pageSize;
+    data["isFull"] = this.isFull;
     return data;
   }
 }
 
 export interface IBalanceInvoicePageableResponse {
-  pageNumber?: number | undefined;
-  pageSize?: number | undefined;
-  isFull?: boolean | undefined;
   invoices?: BalanceInvoiceResponse[] | undefined;
   balance?: number | undefined;
   currency?: CurrencyResponse | undefined;
   totalCount?: number | undefined;
+  pageNumber?: number | undefined;
+  pageSize?: number | undefined;
+  isFull?: boolean | undefined;
 }
 
 export class BalanceInvoiceResponse implements IBalanceInvoiceResponse {
-  id?: string | undefined;
-  created?: Date | undefined;
-  updated?: Date | undefined;
   name?: string | undefined;
   amount?: number | undefined;
+  categoryId?: string | undefined;
   category?: CategoryResponse | undefined;
+  currencyId?: string | undefined;
   currency?: CurrencyResponse | undefined;
   date?: Date | undefined;
   note?: NoteResponse | undefined;
   type?: InvoiceTypeEnum | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
 
   constructor(data?: IBalanceInvoiceResponse) {
     if (data) {
@@ -2483,16 +2485,18 @@ export class BalanceInvoiceResponse implements IBalanceInvoiceResponse {
 
   init(_data?: any) {
     if (_data) {
-      this.id = _data["id"];
-      this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
-      this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
       this.name = _data["name"];
       this.amount = _data["amount"];
+      this.categoryId = _data["categoryId"];
       this.category = _data["category"] ? CategoryResponse.fromJS(_data["category"]) : <any>undefined;
+      this.currencyId = _data["currencyId"];
       this.currency = _data["currency"] ? CurrencyResponse.fromJS(_data["currency"]) : <any>undefined;
       this.date = _data["date"] ? new Date(_data["date"].toString()) : <any>undefined;
       this.note = _data["note"] ? NoteResponse.fromJS(_data["note"]) : <any>undefined;
       this.type = _data["type"];
+      this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
+      this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
+      this.id = _data["id"];
     }
   }
 
@@ -2505,31 +2509,35 @@ export class BalanceInvoiceResponse implements IBalanceInvoiceResponse {
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
-    data["id"] = this.id;
-    data["created"] = this.created ? this.created.toISOString() : <any>undefined;
-    data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
     data["name"] = this.name;
     data["amount"] = this.amount;
+    data["categoryId"] = this.categoryId;
     data["category"] = this.category ? this.category.toJSON() : <any>undefined;
+    data["currencyId"] = this.currencyId;
     data["currency"] = this.currency ? this.currency.toJSON() : <any>undefined;
     data["date"] = this.date ? this.date.toISOString() : <any>undefined;
     data["note"] = this.note ? this.note.toJSON() : <any>undefined;
     data["type"] = this.type;
+    data["created"] = this.created ? this.created.toISOString() : <any>undefined;
+    data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
+    data["id"] = this.id;
     return data;
   }
 }
 
 export interface IBalanceInvoiceResponse {
-  id?: string | undefined;
-  created?: Date | undefined;
-  updated?: Date | undefined;
   name?: string | undefined;
   amount?: number | undefined;
+  categoryId?: string | undefined;
   category?: CategoryResponse | undefined;
+  currencyId?: string | undefined;
   currency?: CurrencyResponse | undefined;
   date?: Date | undefined;
   note?: NoteResponse | undefined;
   type?: InvoiceTypeEnum | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
 }
 
 export class BaseDateRangeQuery implements IBaseDateRangeQuery {
@@ -2657,10 +2665,10 @@ export interface IBaseSortableQuery {
 }
 
 export class CategoryResponse implements ICategoryResponse {
-  id?: string | undefined;
   name?: string | undefined;
   description?: string | undefined;
   ico?: string | undefined;
+  id?: string | undefined;
 
   constructor(data?: ICategoryResponse) {
     if (data) {
@@ -2673,10 +2681,10 @@ export class CategoryResponse implements ICategoryResponse {
 
   init(_data?: any) {
     if (_data) {
-      this.id = _data["id"];
       this.name = _data["name"];
       this.description = _data["description"];
       this.ico = _data["ico"];
+      this.id = _data["id"];
     }
   }
 
@@ -2689,19 +2697,19 @@ export class CategoryResponse implements ICategoryResponse {
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
-    data["id"] = this.id;
     data["name"] = this.name;
     data["description"] = this.description;
     data["ico"] = this.ico;
+    data["id"] = this.id;
     return data;
   }
 }
 
 export interface ICategoryResponse {
-  id?: string | undefined;
   name?: string | undefined;
   description?: string | undefined;
   ico?: string | undefined;
+  id?: string | undefined;
 }
 
 export class ChangePasswordCommand implements IChangePasswordCommand {
@@ -2809,9 +2817,9 @@ export interface ICreateInvoiceCommand {
 }
 
 export class CreateOrUpdateNoteCommand implements ICreateOrUpdateNoteCommand {
-  id?: string | undefined;
   name?: string | undefined;
   body?: string | undefined;
+  id?: string | undefined;
 
   constructor(data?: ICreateOrUpdateNoteCommand) {
     if (data) {
@@ -2824,9 +2832,9 @@ export class CreateOrUpdateNoteCommand implements ICreateOrUpdateNoteCommand {
 
   init(_data?: any) {
     if (_data) {
-      this.id = _data["id"];
       this.name = _data["name"];
       this.body = _data["body"];
+      this.id = _data["id"];
     }
   }
 
@@ -2839,17 +2847,17 @@ export class CreateOrUpdateNoteCommand implements ICreateOrUpdateNoteCommand {
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
-    data["id"] = this.id;
     data["name"] = this.name;
     data["body"] = this.body;
+    data["id"] = this.id;
     return data;
   }
 }
 
 export interface ICreateOrUpdateNoteCommand {
-  id?: string | undefined;
   name?: string | undefined;
   body?: string | undefined;
+  id?: string | undefined;
 }
 
 export class CreateUserCommand implements ICreateUserCommand {
@@ -2929,10 +2937,10 @@ export interface ICreateUserCommand {
 }
 
 export class CurrencyResponse implements ICurrencyResponse {
-  id?: string | undefined;
   isoCode?: string | undefined;
   symbol?: string | undefined;
   name?: string | undefined;
+  id?: string | undefined;
 
   constructor(data?: ICurrencyResponse) {
     if (data) {
@@ -2945,10 +2953,10 @@ export class CurrencyResponse implements ICurrencyResponse {
 
   init(_data?: any) {
     if (_data) {
-      this.id = _data["id"];
       this.isoCode = _data["isoCode"];
       this.symbol = _data["symbol"];
       this.name = _data["name"];
+      this.id = _data["id"];
     }
   }
 
@@ -2961,25 +2969,22 @@ export class CurrencyResponse implements ICurrencyResponse {
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
-    data["id"] = this.id;
     data["isoCode"] = this.isoCode;
     data["symbol"] = this.symbol;
     data["name"] = this.name;
+    data["id"] = this.id;
     return data;
   }
 }
 
 export interface ICurrencyResponse {
-  id?: string | undefined;
   isoCode?: string | undefined;
   symbol?: string | undefined;
   name?: string | undefined;
+  id?: string | undefined;
 }
 
 export class CurrentUserResponse implements ICurrentUserResponse {
-  id?: string | undefined;
-  created?: Date | undefined;
-  updated?: Date | undefined;
   login?: string | undefined;
   lastName?: string | undefined;
   firstName?: string | undefined;
@@ -2993,6 +2998,9 @@ export class CurrentUserResponse implements ICurrentUserResponse {
   currency?: CurrencyResponse | undefined;
   tariff?: TariffResponse | undefined;
   balanceAmount?: number | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
 
   constructor(data?: ICurrentUserResponse) {
     if (data) {
@@ -3005,9 +3013,6 @@ export class CurrentUserResponse implements ICurrentUserResponse {
 
   init(_data?: any) {
     if (_data) {
-      this.id = _data["id"];
-      this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
-      this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
       this.login = _data["login"];
       this.lastName = _data["lastName"];
       this.firstName = _data["firstName"];
@@ -3021,6 +3026,9 @@ export class CurrentUserResponse implements ICurrentUserResponse {
       this.currency = _data["currency"] ? CurrencyResponse.fromJS(_data["currency"]) : <any>undefined;
       this.tariff = _data["tariff"] ? TariffResponse.fromJS(_data["tariff"]) : <any>undefined;
       this.balanceAmount = _data["balanceAmount"];
+      this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
+      this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
+      this.id = _data["id"];
     }
   }
 
@@ -3033,9 +3041,6 @@ export class CurrentUserResponse implements ICurrentUserResponse {
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
-    data["id"] = this.id;
-    data["created"] = this.created ? this.created.toISOString() : <any>undefined;
-    data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
     data["login"] = this.login;
     data["lastName"] = this.lastName;
     data["firstName"] = this.firstName;
@@ -3049,14 +3054,14 @@ export class CurrentUserResponse implements ICurrentUserResponse {
     data["currency"] = this.currency ? this.currency.toJSON() : <any>undefined;
     data["tariff"] = this.tariff ? this.tariff.toJSON() : <any>undefined;
     data["balanceAmount"] = this.balanceAmount;
+    data["created"] = this.created ? this.created.toISOString() : <any>undefined;
+    data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
+    data["id"] = this.id;
     return data;
   }
 }
 
 export interface ICurrentUserResponse {
-  id?: string | undefined;
-  created?: Date | undefined;
-  updated?: Date | undefined;
   login?: string | undefined;
   lastName?: string | undefined;
   firstName?: string | undefined;
@@ -3070,6 +3075,9 @@ export interface ICurrentUserResponse {
   currency?: CurrencyResponse | undefined;
   tariff?: TariffResponse | undefined;
   balanceAmount?: number | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
 }
 
 export class DictionariesResponse implements IDictionariesResponse {
@@ -3125,11 +3133,11 @@ export interface IDictionariesResponse {
 }
 
 export enum EntityTypeEnum {
-  _1 = 1,
-  _2 = 2,
-  _3 = 3,
-  _4 = 4,
-  _5 = 5,
+  TARIFF = "TARIFF",
+  CATEGORY = "CATEGORY",
+  CURRENCY = "CURRENCY",
+  ROLE = "ROLE",
+  INVOICE_TYPE = "INVOICE_TYPE",
 }
 
 export class ErrorMessage implements IErrorMessage {
@@ -3317,8 +3325,8 @@ export interface IGuidDictionaryResponse {
 }
 
 export class InvalidFieldInfo implements IInvalidFieldInfo {
-  readonly propertyName?: string | undefined;
-  readonly errorMessage?: string | undefined;
+  propertyName?: string | undefined;
+  errorMessage?: string | undefined;
 
   constructor(data?: IInvalidFieldInfo) {
     if (data) {
@@ -3331,8 +3339,8 @@ export class InvalidFieldInfo implements IInvalidFieldInfo {
 
   init(_data?: any) {
     if (_data) {
-      (<any>this).propertyName = _data["propertyName"];
-      (<any>this).errorMessage = _data["errorMessage"];
+      this.propertyName = _data["propertyName"];
+      this.errorMessage = _data["errorMessage"];
     }
   }
 
@@ -3357,18 +3365,18 @@ export interface IInvalidFieldInfo {
 }
 
 export enum InvoiceTypeEnum {
-  _1 = 1,
-  _2 = 2,
+  INCOME = "INCOME",
+  EXPENSE = "EXPENSE",
 }
 
 export class NoteResponse implements INoteResponse {
-  id?: string | undefined;
-  created?: Date | undefined;
-  updated?: Date | undefined;
   name?: string | undefined;
   body?: string | undefined;
   invoiceId?: string | undefined;
   userId?: string | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
 
   constructor(data?: INoteResponse) {
     if (data) {
@@ -3381,13 +3389,13 @@ export class NoteResponse implements INoteResponse {
 
   init(_data?: any) {
     if (_data) {
-      this.id = _data["id"];
-      this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
-      this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
       this.name = _data["name"];
       this.body = _data["body"];
       this.invoiceId = _data["invoiceId"];
       this.userId = _data["userId"];
+      this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
+      this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
+      this.id = _data["id"];
     }
   }
 
@@ -3400,25 +3408,25 @@ export class NoteResponse implements INoteResponse {
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
-    data["id"] = this.id;
-    data["created"] = this.created ? this.created.toISOString() : <any>undefined;
-    data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
     data["name"] = this.name;
     data["body"] = this.body;
     data["invoiceId"] = this.invoiceId;
     data["userId"] = this.userId;
+    data["created"] = this.created ? this.created.toISOString() : <any>undefined;
+    data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
+    data["id"] = this.id;
     return data;
   }
 }
 
 export interface INoteResponse {
-  id?: string | undefined;
-  created?: Date | undefined;
-  updated?: Date | undefined;
   name?: string | undefined;
   body?: string | undefined;
   invoiceId?: string | undefined;
   userId?: string | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
 }
 
 export class Paginator implements IPaginator {
@@ -3610,11 +3618,11 @@ export interface IStringDictionaryResponse {
 }
 
 export class TariffResponse implements ITariffResponse {
-  id?: string | undefined;
-  created?: Date | undefined;
-  updated?: Date | undefined;
   name?: string | undefined;
   description?: string | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
 
   constructor(data?: ITariffResponse) {
     if (data) {
@@ -3627,11 +3635,11 @@ export class TariffResponse implements ITariffResponse {
 
   init(_data?: any) {
     if (_data) {
-      this.id = _data["id"];
-      this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
-      this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
       this.name = _data["name"];
       this.description = _data["description"];
+      this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
+      this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
+      this.id = _data["id"];
     }
   }
 
@@ -3644,21 +3652,21 @@ export class TariffResponse implements ITariffResponse {
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
-    data["id"] = this.id;
-    data["created"] = this.created ? this.created.toISOString() : <any>undefined;
-    data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
     data["name"] = this.name;
     data["description"] = this.description;
+    data["created"] = this.created ? this.created.toISOString() : <any>undefined;
+    data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
+    data["id"] = this.id;
     return data;
   }
 }
 
 export interface ITariffResponse {
-  id?: string | undefined;
-  created?: Date | undefined;
-  updated?: Date | undefined;
   name?: string | undefined;
   description?: string | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
 }
 
 export class TokenResponse implements ITokenResponse {
@@ -3710,13 +3718,13 @@ export interface ITokenResponse {
 }
 
 export class UpdateInvoiceCommand implements IUpdateInvoiceCommand {
-  id?: string | undefined;
   name?: string | undefined;
   amount?: number | undefined;
   categoryId?: string | undefined;
   currencyId?: string | undefined;
   date?: Date | undefined;
   type?: InvoiceTypeEnum | undefined;
+  id?: string | undefined;
 
   constructor(data?: IUpdateInvoiceCommand) {
     if (data) {
@@ -3729,13 +3737,13 @@ export class UpdateInvoiceCommand implements IUpdateInvoiceCommand {
 
   init(_data?: any) {
     if (_data) {
-      this.id = _data["id"];
       this.name = _data["name"];
       this.amount = _data["amount"];
       this.categoryId = _data["categoryId"];
       this.currencyId = _data["currencyId"];
       this.date = _data["date"] ? new Date(_data["date"].toString()) : <any>undefined;
       this.type = _data["type"];
+      this.id = _data["id"];
     }
   }
 
@@ -3748,25 +3756,25 @@ export class UpdateInvoiceCommand implements IUpdateInvoiceCommand {
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
-    data["id"] = this.id;
     data["name"] = this.name;
     data["amount"] = this.amount;
     data["categoryId"] = this.categoryId;
     data["currencyId"] = this.currencyId;
     data["date"] = this.date ? this.date.toISOString() : <any>undefined;
     data["type"] = this.type;
+    data["id"] = this.id;
     return data;
   }
 }
 
 export interface IUpdateInvoiceCommand {
-  id?: string | undefined;
   name?: string | undefined;
   amount?: number | undefined;
   categoryId?: string | undefined;
   currencyId?: string | undefined;
   date?: Date | undefined;
   type?: InvoiceTypeEnum | undefined;
+  id?: string | undefined;
 }
 
 export class UserInvoicesQuery implements IUserInvoicesQuery {

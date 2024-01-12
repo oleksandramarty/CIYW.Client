@@ -3,6 +3,8 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest}
 import {Router} from "@angular/router";
 import {catchError, Observable, throwError} from "rxjs";
 import {UserState} from "./store/state/user.state";
+import {Store} from "@ngxs/store";
+import {ResetUser} from "./store/actions/user.actions";
 
 export const HTTP_METHODS = {
   GET: 'GET',
@@ -22,6 +24,7 @@ export class BaseUrlInterceptor implements HttpInterceptor {
 
 
   constructor(
+    private store: Store,
     private router: Router) {}
 
   intercept(
@@ -35,6 +38,9 @@ export class BaseUrlInterceptor implements HttpInterceptor {
     return next.handle(apiReq).pipe(
       catchError((error: HttpErrorCustomResponse) => {
         if (error.status === 401) {
+          sessionStorage.removeItem('sessionToken');
+          this.router.navigate(['auth/login']);
+          this.store.dispatch(new ResetUser());
           return throwError(error);
         }
         if (typeof error === 'string') {

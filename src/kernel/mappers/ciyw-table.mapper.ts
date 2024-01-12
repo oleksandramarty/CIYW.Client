@@ -8,13 +8,10 @@ import {
 } from "../helpers/ciyw-table.helper";
 import {InvoiceDialogComponent} from "../../modules/personal-area/invoice-dialog/invoice-dialog.component";
 import {ComponentType} from "@angular/cdk/overlay";
-import {IAnyHelper, IListWithIncludeHelper} from "../models/common.model";
+import {IListWithIncludeHelper} from "../models/common.model";
 import {IInvoiceType} from "../models/invoice.model";
-import {CIYWTableEnum} from "../enums/ciyw-table.enum";
-import {
-  IDisplayedCIYWTableColumn,
-  IDisplayedCIYWTableSchema
-} from "../models/ciyw-table.model";
+import {CIYWTableDialogEnum, CIYWTableEnum} from "../enums/ciyw-table.enum";
+import {IDisplayedCIYWTableColumn, IDisplayedCIYWTableSchema} from "../models/ciyw-table.model";
 
 export interface ITableFilterHelper {
   paginator: IPaginator | undefined,
@@ -63,7 +60,7 @@ export function mapInvoiceTable(invoices: IBalanceInvoiceResponse[] | undefined)
 export function mapGraphInvoiceTable(invoices: IListWithIncludeHelper<IInvoiceType> | undefined): ITableInvoiceColumns[] {
   return !!invoices?.entities ? invoices!.entities.map(item => {
     const temp: ITableInvoiceColumns = {
-      date: createTableDateItem(item.date, null, `<div class="opacity-05 f-075">(${item.humanize_date})</div>`),
+      date: createTableDateItem(item.date, {format: 'yyyy-MM-dd'}, `<div class="opacity-05 f-075">(${item.modified})</div>`),
       humanize_date: createTableDefaultItem(item.humanize_date),
       category: createTableDefaultItem(item.category?.name),
       amount: createTableCurrencyItem(item.amount, { currency: item.currency?.isoCode}),
@@ -84,6 +81,8 @@ export function crateCIYWTableSchema(type: CIYWTableEnum | undefined): IDisplaye
   }
 
   let items: IDisplayedCIYWTableColumn[] = [];
+  let addButtonText: string | null = '';
+  let addButtonClassName: ComponentType<any> | null = null;
 
   switch (type) {
     case CIYWTableEnum.HomeUserInvoices:
@@ -93,21 +92,25 @@ export function crateCIYWTableSchema(type: CIYWTableEnum | undefined): IDisplaye
         { title: 'Name', value: 'name', isSortable: true },
         { title: 'Amount', value: 'amount', isSortable: true },
       ];
+      addButtonText = 'Add invoice';
+      addButtonClassName = InvoiceDialogComponent;
       break
   }
 
   switch (type) {
     case CIYWTableEnum.HomeUserInvoices:
       items.push(
-        { title: '', value: 'edit', isSortable: false, style: { width: { attr: 'width', value: 30 }} },
-        { title: '', value: 'delete', isSortable: false, style: { width: { attr: 'width', value: 30 }} },
+        { title: '', value: 'edit', isSortable: false, style: { width: { attr: 'width', value: 30 }}, dialogType: CIYWTableDialogEnum.EditBtn },
+        { title: '', value: 'delete', isSortable: false, style: { width: { attr: 'width', value: 30 }}, dialogType: CIYWTableDialogEnum.DeleteBtn },
       );
       break
   }
 
   return {
     displayedColumns: items.map(r => r.value),
-    items
+    items,
+    addButtonText,
+    addButtonClassName,
   } as IDisplayedCIYWTableSchema;
 
 }

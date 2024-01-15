@@ -27,6 +27,207 @@ export class ApiClient {
   }
 
   /**
+   * @return Success
+   */
+  adminCategories_V1_CreateCategory(): Observable<void> {
+    let url_ = this.baseUrl + "/api-ciyw/admincategories/v1";
+    url_ = url_.replace(/[?&]$/, "");
+
+    let options_ : any = {
+      observe: "response",
+      responseType: "blob",
+      headers: new HttpHeaders({
+      })
+    };
+
+    return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+      return this.processAdminCategories_V1_CreateCategory(response_);
+    })).pipe(_observableCatch((response_: any) => {
+      if (response_ instanceof HttpResponseBase) {
+        try {
+          return this.processAdminCategories_V1_CreateCategory(response_ as any);
+        } catch (e) {
+          return _observableThrow(e) as any as Observable<void>;
+        }
+      } else
+        return _observableThrow(response_) as any as Observable<void>;
+    }));
+  }
+
+  protected processAdminCategories_V1_CreateCategory(response: HttpResponseBase): Observable<void> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse ? response.body :
+        (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+    if (status === 400) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result400: any = null;
+        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result400 = ErrorMessage.fromJS(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+      }));
+    } else if (status === 401) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result401: any = null;
+        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result401 = ErrorMessage.fromJS(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+      }));
+    } else if (status === 403) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result403: any = null;
+        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result403 = ErrorMessage.fromJS(resultData403);
+        return throwException("Forbidden", status, _responseText, _headers, result403);
+      }));
+    } else if (status === 404) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result404: any = null;
+        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result404 = ErrorMessage.fromJS(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+      }));
+    } else if (status === 409) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result409: any = null;
+        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result409 = ErrorMessage.fromJS(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+      }));
+    } else if (status === 417) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result417: any = null;
+        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result417 = ErrorMessage.fromJS(resultData417);
+        return throwException("Client Error", status, _responseText, _headers, result417);
+      }));
+    } else if (status === 500) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result500: any = null;
+        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result500 = ErrorMessage.fromJS(resultData500);
+        return throwException("Server Error", status, _responseText, _headers, result500);
+      }));
+    } else if (status === 200) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        return _observableOf<void>(null as any);
+      }));
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+      }));
+    }
+    return _observableOf<void>(null as any);
+  }
+
+  /**
+   * @param body (optional)
+   * @return Success
+   */
+  adminUsers_V1_GetUsers(body?: UsersQuery | null | undefined): Observable<UserListWithIncludeHelper> {
+    let url_ = this.baseUrl + "/api-ciyw/adminusers/v1/filter";
+    url_ = url_.replace(/[?&]$/, "");
+
+    const content_ = JSON.stringify(body);
+
+    let options_ : any = {
+      body: content_,
+      observe: "response",
+      responseType: "blob",
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      })
+    };
+
+    return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+      return this.processAdminUsers_V1_GetUsers(response_);
+    })).pipe(_observableCatch((response_: any) => {
+      if (response_ instanceof HttpResponseBase) {
+        try {
+          return this.processAdminUsers_V1_GetUsers(response_ as any);
+        } catch (e) {
+          return _observableThrow(e) as any as Observable<UserListWithIncludeHelper>;
+        }
+      } else
+        return _observableThrow(response_) as any as Observable<UserListWithIncludeHelper>;
+    }));
+  }
+
+  protected processAdminUsers_V1_GetUsers(response: HttpResponseBase): Observable<UserListWithIncludeHelper> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse ? response.body :
+        (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+    if (status === 400) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result400: any = null;
+        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result400 = ErrorMessage.fromJS(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+      }));
+    } else if (status === 401) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result401: any = null;
+        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result401 = ErrorMessage.fromJS(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+      }));
+    } else if (status === 403) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result403: any = null;
+        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result403 = ErrorMessage.fromJS(resultData403);
+        return throwException("Forbidden", status, _responseText, _headers, result403);
+      }));
+    } else if (status === 404) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result404: any = null;
+        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result404 = ErrorMessage.fromJS(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+      }));
+    } else if (status === 409) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result409: any = null;
+        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result409 = ErrorMessage.fromJS(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+      }));
+    } else if (status === 417) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result417: any = null;
+        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result417 = ErrorMessage.fromJS(resultData417);
+        return throwException("Client Error", status, _responseText, _headers, result417);
+      }));
+    } else if (status === 500) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result500: any = null;
+        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result500 = ErrorMessage.fromJS(resultData500);
+        return throwException("Server Error", status, _responseText, _headers, result500);
+      }));
+    } else if (status === 200) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result200: any = null;
+        let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result200 = UserListWithIncludeHelper.fromJS(resultData200);
+        return _observableOf(result200);
+      }));
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+      }));
+    }
+    return _observableOf<UserListWithIncludeHelper>(null as any);
+  }
+
+  /**
    * @param body (optional)
    * @return Success
    */
@@ -920,102 +1121,6 @@ export class ApiClient {
   /**
    * @return Success
    */
-  categories_V1_CreateCategory(): Observable<void> {
-    let url_ = this.baseUrl + "/api-ciyw/categories/v1";
-    url_ = url_.replace(/[?&]$/, "");
-
-    let options_ : any = {
-      observe: "response",
-      responseType: "blob",
-      headers: new HttpHeaders({
-      })
-    };
-
-    return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-      return this.processCategories_V1_CreateCategory(response_);
-    })).pipe(_observableCatch((response_: any) => {
-      if (response_ instanceof HttpResponseBase) {
-        try {
-          return this.processCategories_V1_CreateCategory(response_ as any);
-        } catch (e) {
-          return _observableThrow(e) as any as Observable<void>;
-        }
-      } else
-        return _observableThrow(response_) as any as Observable<void>;
-    }));
-  }
-
-  protected processCategories_V1_CreateCategory(response: HttpResponseBase): Observable<void> {
-    const status = response.status;
-    const responseBlob =
-      response instanceof HttpResponse ? response.body :
-        (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-    if (status === 400) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result400: any = null;
-        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result400 = ErrorMessage.fromJS(resultData400);
-        return throwException("Bad Request", status, _responseText, _headers, result400);
-      }));
-    } else if (status === 401) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result401: any = null;
-        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result401 = ErrorMessage.fromJS(resultData401);
-        return throwException("Unauthorized", status, _responseText, _headers, result401);
-      }));
-    } else if (status === 403) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result403: any = null;
-        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result403 = ErrorMessage.fromJS(resultData403);
-        return throwException("Forbidden", status, _responseText, _headers, result403);
-      }));
-    } else if (status === 404) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result404: any = null;
-        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result404 = ErrorMessage.fromJS(resultData404);
-        return throwException("Not Found", status, _responseText, _headers, result404);
-      }));
-    } else if (status === 409) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result409: any = null;
-        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result409 = ErrorMessage.fromJS(resultData409);
-        return throwException("Conflict", status, _responseText, _headers, result409);
-      }));
-    } else if (status === 417) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result417: any = null;
-        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result417 = ErrorMessage.fromJS(resultData417);
-        return throwException("Client Error", status, _responseText, _headers, result417);
-      }));
-    } else if (status === 500) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result500: any = null;
-        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result500 = ErrorMessage.fromJS(resultData500);
-        return throwException("Server Error", status, _responseText, _headers, result500);
-      }));
-    } else if (status === 200) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        return _observableOf<void>(null as any);
-      }));
-    } else if (status !== 200 && status !== 204) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-      }));
-    }
-    return _observableOf<void>(null as any);
-  }
-
-  /**
-   * @return Success
-   */
   dictionaries_V1_GetAll(): Observable<DictionariesResponse> {
     let url_ = this.baseUrl + "/api-ciyw/dictionaries/v1";
     url_ = url_.replace(/[?&]$/, "");
@@ -1319,11 +1424,367 @@ export class ApiClient {
     return _observableOf<StringDictionaryResponse>(null as any);
   }
 
+  elasticSearch_V1_GetInvoiceBy222Id(): Observable<void> {
+    let url_ = this.baseUrl + "/api-ciyw/elasticsearch/v1/removeall";
+    url_ = url_.replace(/[?&]$/, "");
+
+    let options_ : any = {
+      observe: "response",
+      responseType: "blob",
+      headers: new HttpHeaders({
+      })
+    };
+
+    return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+      return this.processElasticSearch_V1_GetInvoiceBy222Id(response_);
+    })).pipe(_observableCatch((response_: any) => {
+      if (response_ instanceof HttpResponseBase) {
+        try {
+          return this.processElasticSearch_V1_GetInvoiceBy222Id(response_ as any);
+        } catch (e) {
+          return _observableThrow(e) as any as Observable<void>;
+        }
+      } else
+        return _observableThrow(response_) as any as Observable<void>;
+    }));
+  }
+
+  protected processElasticSearch_V1_GetInvoiceBy222Id(response: HttpResponseBase): Observable<void> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse ? response.body :
+        (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+    if (status === 400) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result400: any = null;
+        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result400 = ErrorMessage.fromJS(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+      }));
+    } else if (status === 401) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result401: any = null;
+        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result401 = ErrorMessage.fromJS(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+      }));
+    } else if (status === 403) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result403: any = null;
+        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result403 = ErrorMessage.fromJS(resultData403);
+        return throwException("Forbidden", status, _responseText, _headers, result403);
+      }));
+    } else if (status === 404) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result404: any = null;
+        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result404 = ErrorMessage.fromJS(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+      }));
+    } else if (status === 409) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result409: any = null;
+        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result409 = ErrorMessage.fromJS(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+      }));
+    } else if (status === 417) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result417: any = null;
+        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result417 = ErrorMessage.fromJS(resultData417);
+        return throwException("Client Error", status, _responseText, _headers, result417);
+      }));
+    } else if (status === 500) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result500: any = null;
+        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result500 = ErrorMessage.fromJS(resultData500);
+        return throwException("Server Error", status, _responseText, _headers, result500);
+      }));
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+      }));
+    }
+    return _observableOf<void>(null as any);
+  }
+
+  elasticSearch_V1_GetInvoiceBy22Id(): Observable<void> {
+    let url_ = this.baseUrl + "/api-ciyw/elasticsearch/v1/removeallindexes";
+    url_ = url_.replace(/[?&]$/, "");
+
+    let options_ : any = {
+      observe: "response",
+      responseType: "blob",
+      headers: new HttpHeaders({
+      })
+    };
+
+    return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+      return this.processElasticSearch_V1_GetInvoiceBy22Id(response_);
+    })).pipe(_observableCatch((response_: any) => {
+      if (response_ instanceof HttpResponseBase) {
+        try {
+          return this.processElasticSearch_V1_GetInvoiceBy22Id(response_ as any);
+        } catch (e) {
+          return _observableThrow(e) as any as Observable<void>;
+        }
+      } else
+        return _observableThrow(response_) as any as Observable<void>;
+    }));
+  }
+
+  protected processElasticSearch_V1_GetInvoiceBy22Id(response: HttpResponseBase): Observable<void> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse ? response.body :
+        (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+    if (status === 400) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result400: any = null;
+        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result400 = ErrorMessage.fromJS(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+      }));
+    } else if (status === 401) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result401: any = null;
+        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result401 = ErrorMessage.fromJS(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+      }));
+    } else if (status === 403) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result403: any = null;
+        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result403 = ErrorMessage.fromJS(resultData403);
+        return throwException("Forbidden", status, _responseText, _headers, result403);
+      }));
+    } else if (status === 404) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result404: any = null;
+        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result404 = ErrorMessage.fromJS(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+      }));
+    } else if (status === 409) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result409: any = null;
+        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result409 = ErrorMessage.fromJS(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+      }));
+    } else if (status === 417) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result417: any = null;
+        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result417 = ErrorMessage.fromJS(resultData417);
+        return throwException("Client Error", status, _responseText, _headers, result417);
+      }));
+    } else if (status === 500) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result500: any = null;
+        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result500 = ErrorMessage.fromJS(resultData500);
+        return throwException("Server Error", status, _responseText, _headers, result500);
+      }));
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+      }));
+    }
+    return _observableOf<void>(null as any);
+  }
+
+  elasticSearch_V1_GetInvoiceBy22IdA412sync(): Observable<void> {
+    let url_ = this.baseUrl + "/api-ciyw/elasticsearch/v1/test";
+    url_ = url_.replace(/[?&]$/, "");
+
+    let options_ : any = {
+      observe: "response",
+      responseType: "blob",
+      headers: new HttpHeaders({
+      })
+    };
+
+    return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+      return this.processElasticSearch_V1_GetInvoiceBy22IdA412sync(response_);
+    })).pipe(_observableCatch((response_: any) => {
+      if (response_ instanceof HttpResponseBase) {
+        try {
+          return this.processElasticSearch_V1_GetInvoiceBy22IdA412sync(response_ as any);
+        } catch (e) {
+          return _observableThrow(e) as any as Observable<void>;
+        }
+      } else
+        return _observableThrow(response_) as any as Observable<void>;
+    }));
+  }
+
+  protected processElasticSearch_V1_GetInvoiceBy22IdA412sync(response: HttpResponseBase): Observable<void> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse ? response.body :
+        (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+    if (status === 400) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result400: any = null;
+        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result400 = ErrorMessage.fromJS(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+      }));
+    } else if (status === 401) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result401: any = null;
+        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result401 = ErrorMessage.fromJS(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+      }));
+    } else if (status === 403) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result403: any = null;
+        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result403 = ErrorMessage.fromJS(resultData403);
+        return throwException("Forbidden", status, _responseText, _headers, result403);
+      }));
+    } else if (status === 404) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result404: any = null;
+        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result404 = ErrorMessage.fromJS(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+      }));
+    } else if (status === 409) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result409: any = null;
+        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result409 = ErrorMessage.fromJS(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+      }));
+    } else if (status === 417) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result417: any = null;
+        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result417 = ErrorMessage.fromJS(resultData417);
+        return throwException("Client Error", status, _responseText, _headers, result417);
+      }));
+    } else if (status === 500) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result500: any = null;
+        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result500 = ErrorMessage.fromJS(resultData500);
+        return throwException("Server Error", status, _responseText, _headers, result500);
+      }));
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+      }));
+    }
+    return _observableOf<void>(null as any);
+  }
+
+  elasticSearch_V1_GetUsersyId(): Observable<void> {
+    let url_ = this.baseUrl + "/api-ciyw/elasticsearch/v1/getallusers";
+    url_ = url_.replace(/[?&]$/, "");
+
+    let options_ : any = {
+      observe: "response",
+      responseType: "blob",
+      headers: new HttpHeaders({
+      })
+    };
+
+    return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+      return this.processElasticSearch_V1_GetUsersyId(response_);
+    })).pipe(_observableCatch((response_: any) => {
+      if (response_ instanceof HttpResponseBase) {
+        try {
+          return this.processElasticSearch_V1_GetUsersyId(response_ as any);
+        } catch (e) {
+          return _observableThrow(e) as any as Observable<void>;
+        }
+      } else
+        return _observableThrow(response_) as any as Observable<void>;
+    }));
+  }
+
+  protected processElasticSearch_V1_GetUsersyId(response: HttpResponseBase): Observable<void> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse ? response.body :
+        (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+    if (status === 400) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result400: any = null;
+        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result400 = ErrorMessage.fromJS(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+      }));
+    } else if (status === 401) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result401: any = null;
+        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result401 = ErrorMessage.fromJS(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+      }));
+    } else if (status === 403) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result403: any = null;
+        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result403 = ErrorMessage.fromJS(resultData403);
+        return throwException("Forbidden", status, _responseText, _headers, result403);
+      }));
+    } else if (status === 404) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result404: any = null;
+        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result404 = ErrorMessage.fromJS(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+      }));
+    } else if (status === 409) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result409: any = null;
+        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result409 = ErrorMessage.fromJS(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+      }));
+    } else if (status === 417) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result417: any = null;
+        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result417 = ErrorMessage.fromJS(resultData417);
+        return throwException("Client Error", status, _responseText, _headers, result417);
+      }));
+    } else if (status === 500) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result500: any = null;
+        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result500 = ErrorMessage.fromJS(resultData500);
+        return throwException("Server Error", status, _responseText, _headers, result500);
+      }));
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+      }));
+    }
+    return _observableOf<void>(null as any);
+  }
+
   /**
    * @param body (optional)
    * @return Success
    */
-  invoices_V1_GetUserInvoicesPOST(body?: UserInvoicesQuery | null | undefined): Observable<BalanceInvoicePageableResponse> {
+  invoices_V1_GetUserInvoicesPOST(body?: UserInvoicesQuery | null | undefined): Observable<InvoiceListWithIncludeHelper> {
     let url_ = this.baseUrl + "/api-ciyw/invoices/v1/history";
     url_ = url_.replace(/[?&]$/, "");
 
@@ -1346,14 +1807,14 @@ export class ApiClient {
         try {
           return this.processInvoices_V1_GetUserInvoicesPOST(response_ as any);
         } catch (e) {
-          return _observableThrow(e) as any as Observable<BalanceInvoicePageableResponse>;
+          return _observableThrow(e) as any as Observable<InvoiceListWithIncludeHelper>;
         }
       } else
-        return _observableThrow(response_) as any as Observable<BalanceInvoicePageableResponse>;
+        return _observableThrow(response_) as any as Observable<InvoiceListWithIncludeHelper>;
     }));
   }
 
-  protected processInvoices_V1_GetUserInvoicesPOST(response: HttpResponseBase): Observable<BalanceInvoicePageableResponse> {
+  protected processInvoices_V1_GetUserInvoicesPOST(response: HttpResponseBase): Observable<InvoiceListWithIncludeHelper> {
     const status = response.status;
     const responseBlob =
       response instanceof HttpResponse ? response.body :
@@ -1413,7 +1874,7 @@ export class ApiClient {
       return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
         let result200: any = null;
         let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result200 = BalanceInvoicePageableResponse.fromJS(resultData200);
+        result200 = InvoiceListWithIncludeHelper.fromJS(resultData200);
         return _observableOf(result200);
       }));
     } else if (status !== 200 && status !== 204) {
@@ -1421,13 +1882,13 @@ export class ApiClient {
         return throwException("An unexpected server error occurred.", status, _responseText, _headers);
       }));
     }
-    return _observableOf<BalanceInvoicePageableResponse>(null as any);
+    return _observableOf<InvoiceListWithIncludeHelper>(null as any);
   }
 
   /**
    * @return Success
    */
-  invoices_V1_GetUserInvoicesGET(): Observable<BalanceInvoicePageableResponse> {
+  invoices_V1_GetUserInvoicesGET(): Observable<InvoiceListWithIncludeHelper> {
     let url_ = this.baseUrl + "/api-ciyw/invoices/v1/monthly";
     url_ = url_.replace(/[?&]$/, "");
 
@@ -1446,14 +1907,14 @@ export class ApiClient {
         try {
           return this.processInvoices_V1_GetUserInvoicesGET(response_ as any);
         } catch (e) {
-          return _observableThrow(e) as any as Observable<BalanceInvoicePageableResponse>;
+          return _observableThrow(e) as any as Observable<InvoiceListWithIncludeHelper>;
         }
       } else
-        return _observableThrow(response_) as any as Observable<BalanceInvoicePageableResponse>;
+        return _observableThrow(response_) as any as Observable<InvoiceListWithIncludeHelper>;
     }));
   }
 
-  protected processInvoices_V1_GetUserInvoicesGET(response: HttpResponseBase): Observable<BalanceInvoicePageableResponse> {
+  protected processInvoices_V1_GetUserInvoicesGET(response: HttpResponseBase): Observable<InvoiceListWithIncludeHelper> {
     const status = response.status;
     const responseBlob =
       response instanceof HttpResponse ? response.body :
@@ -1513,7 +1974,7 @@ export class ApiClient {
       return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
         let result200: any = null;
         let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result200 = BalanceInvoicePageableResponse.fromJS(resultData200);
+        result200 = InvoiceListWithIncludeHelper.fromJS(resultData200);
         return _observableOf(result200);
       }));
     } else if (status !== 200 && status !== 204) {
@@ -1521,7 +1982,7 @@ export class ApiClient {
         return throwException("An unexpected server error occurred.", status, _responseText, _headers);
       }));
     }
-    return _observableOf<BalanceInvoicePageableResponse>(null as any);
+    return _observableOf<InvoiceListWithIncludeHelper>(null as any);
   }
 
   /**
@@ -2392,74 +2853,6 @@ export interface IAuthLoginQuery {
   rememberMe?: boolean | undefined;
 }
 
-export class BalanceInvoicePageableResponse implements IBalanceInvoicePageableResponse {
-  invoices?: BalanceInvoiceResponse[] | undefined;
-  balance?: number | undefined;
-  currency?: CurrencyResponse | undefined;
-  totalCount?: number | undefined;
-  pageNumber?: number | undefined;
-  pageSize?: number | undefined;
-  isFull?: boolean | undefined;
-
-  constructor(data?: IBalanceInvoicePageableResponse) {
-    if (data) {
-      for (var property in data) {
-        if (data.hasOwnProperty(property))
-          (<any>this)[property] = (<any>data)[property];
-      }
-    }
-  }
-
-  init(_data?: any) {
-    if (_data) {
-      if (Array.isArray(_data["invoices"])) {
-        this.invoices = [] as any;
-        for (let item of _data["invoices"])
-          this.invoices!.push(BalanceInvoiceResponse.fromJS(item));
-      }
-      this.balance = _data["balance"];
-      this.currency = _data["currency"] ? CurrencyResponse.fromJS(_data["currency"]) : <any>undefined;
-      this.totalCount = _data["totalCount"];
-      this.pageNumber = _data["pageNumber"];
-      this.pageSize = _data["pageSize"];
-      this.isFull = _data["isFull"];
-    }
-  }
-
-  static fromJS(data: any): BalanceInvoicePageableResponse {
-    data = typeof data === 'object' ? data : {};
-    let result = new BalanceInvoicePageableResponse();
-    result.init(data);
-    return result;
-  }
-
-  toJSON(data?: any) {
-    data = typeof data === 'object' ? data : {};
-    if (Array.isArray(this.invoices)) {
-      data["invoices"] = [];
-      for (let item of this.invoices)
-        data["invoices"].push(item.toJSON());
-    }
-    data["balance"] = this.balance;
-    data["currency"] = this.currency ? this.currency.toJSON() : <any>undefined;
-    data["totalCount"] = this.totalCount;
-    data["pageNumber"] = this.pageNumber;
-    data["pageSize"] = this.pageSize;
-    data["isFull"] = this.isFull;
-    return data;
-  }
-}
-
-export interface IBalanceInvoicePageableResponse {
-  invoices?: BalanceInvoiceResponse[] | undefined;
-  balance?: number | undefined;
-  currency?: CurrencyResponse | undefined;
-  totalCount?: number | undefined;
-  pageNumber?: number | undefined;
-  pageSize?: number | undefined;
-  isFull?: boolean | undefined;
-}
-
 export class BalanceInvoiceResponse implements IBalanceInvoiceResponse {
   name?: string | undefined;
   amount?: number | undefined;
@@ -2662,6 +3055,90 @@ export class BaseSortableQuery implements IBaseSortableQuery {
 export interface IBaseSortableQuery {
   column?: string | undefined;
   direction?: string | undefined;
+}
+
+export class Category implements ICategory {
+  name?: string | undefined;
+  description?: string | undefined;
+  ico?: string | undefined;
+  isActive?: boolean | undefined;
+  userCategories?: UserCategory[] | undefined;
+  invoices?: Invoice[] | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
+
+  constructor(data?: ICategory) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.name = _data["name"];
+      this.description = _data["description"];
+      this.ico = _data["ico"];
+      this.isActive = _data["isActive"];
+      if (Array.isArray(_data["userCategories"])) {
+        this.userCategories = [] as any;
+        for (let item of _data["userCategories"])
+          this.userCategories!.push(UserCategory.fromJS(item));
+      }
+      if (Array.isArray(_data["invoices"])) {
+        this.invoices = [] as any;
+        for (let item of _data["invoices"])
+          this.invoices!.push(Invoice.fromJS(item));
+      }
+      this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
+      this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
+      this.id = _data["id"];
+    }
+  }
+
+  static fromJS(data: any): Category {
+    data = typeof data === 'object' ? data : {};
+    let result = new Category();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["name"] = this.name;
+    data["description"] = this.description;
+    data["ico"] = this.ico;
+    data["isActive"] = this.isActive;
+    if (Array.isArray(this.userCategories)) {
+      data["userCategories"] = [];
+      for (let item of this.userCategories)
+        data["userCategories"].push(item.toJSON());
+    }
+    if (Array.isArray(this.invoices)) {
+      data["invoices"] = [];
+      for (let item of this.invoices)
+        data["invoices"].push(item.toJSON());
+    }
+    data["created"] = this.created ? this.created.toISOString() : <any>undefined;
+    data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
+    data["id"] = this.id;
+    return data;
+  }
+}
+
+export interface ICategory {
+  name?: string | undefined;
+  description?: string | undefined;
+  ico?: string | undefined;
+  isActive?: boolean | undefined;
+  userCategories?: UserCategory[] | undefined;
+  invoices?: Invoice[] | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
 }
 
 export class CategoryResponse implements ICategoryResponse {
@@ -2934,6 +3411,94 @@ export interface ICreateUserCommand {
   password?: string | undefined;
   confirmPassword?: string | undefined;
   isAgreeDigest?: boolean | undefined;
+}
+
+export class Currency implements ICurrency {
+  isoCode?: string | undefined;
+  symbol?: string | undefined;
+  name?: string | undefined;
+  isActive?: boolean | undefined;
+  users?: User[] | undefined;
+  invoices?: Invoice[] | undefined;
+  userBalances?: UserBalance[] | undefined;
+  id?: string | undefined;
+
+  constructor(data?: ICurrency) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.isoCode = _data["isoCode"];
+      this.symbol = _data["symbol"];
+      this.name = _data["name"];
+      this.isActive = _data["isActive"];
+      if (Array.isArray(_data["users"])) {
+        this.users = [] as any;
+        for (let item of _data["users"])
+          this.users!.push(User.fromJS(item));
+      }
+      if (Array.isArray(_data["invoices"])) {
+        this.invoices = [] as any;
+        for (let item of _data["invoices"])
+          this.invoices!.push(Invoice.fromJS(item));
+      }
+      if (Array.isArray(_data["userBalances"])) {
+        this.userBalances = [] as any;
+        for (let item of _data["userBalances"])
+          this.userBalances!.push(UserBalance.fromJS(item));
+      }
+      this.id = _data["id"];
+    }
+  }
+
+  static fromJS(data: any): Currency {
+    data = typeof data === 'object' ? data : {};
+    let result = new Currency();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["isoCode"] = this.isoCode;
+    data["symbol"] = this.symbol;
+    data["name"] = this.name;
+    data["isActive"] = this.isActive;
+    if (Array.isArray(this.users)) {
+      data["users"] = [];
+      for (let item of this.users)
+        data["users"].push(item.toJSON());
+    }
+    if (Array.isArray(this.invoices)) {
+      data["invoices"] = [];
+      for (let item of this.invoices)
+        data["invoices"].push(item.toJSON());
+    }
+    if (Array.isArray(this.userBalances)) {
+      data["userBalances"] = [];
+      for (let item of this.userBalances)
+        data["userBalances"].push(item.toJSON());
+    }
+    data["id"] = this.id;
+    return data;
+  }
+}
+
+export interface ICurrency {
+  isoCode?: string | undefined;
+  symbol?: string | undefined;
+  name?: string | undefined;
+  isActive?: boolean | undefined;
+  users?: User[] | undefined;
+  invoices?: Invoice[] | undefined;
+  userBalances?: UserBalance[] | undefined;
+  id?: string | undefined;
 }
 
 export class CurrencyResponse implements ICurrencyResponse {
@@ -3364,9 +3929,225 @@ export interface IInvalidFieldInfo {
   errorMessage?: string | undefined;
 }
 
+export class Invoice implements IInvoice {
+  name?: string | undefined;
+  amount?: number | undefined;
+  userId?: string | undefined;
+  user?: User | undefined;
+  categoryId?: string | undefined;
+  category?: Category | undefined;
+  currencyId?: string | undefined;
+  currency?: Currency | undefined;
+  mapped?: Date | undefined;
+  date?: Date | undefined;
+  noteId?: string | undefined;
+  note?: Note | undefined;
+  type?: InvoiceTypeEnum | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
+
+  constructor(data?: IInvoice) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.name = _data["name"];
+      this.amount = _data["amount"];
+      this.userId = _data["userId"];
+      this.user = _data["user"] ? User.fromJS(_data["user"]) : <any>undefined;
+      this.categoryId = _data["categoryId"];
+      this.category = _data["category"] ? Category.fromJS(_data["category"]) : <any>undefined;
+      this.currencyId = _data["currencyId"];
+      this.currency = _data["currency"] ? Currency.fromJS(_data["currency"]) : <any>undefined;
+      this.mapped = _data["mapped"] ? new Date(_data["mapped"].toString()) : <any>undefined;
+      this.date = _data["date"] ? new Date(_data["date"].toString()) : <any>undefined;
+      this.noteId = _data["noteId"];
+      this.note = _data["note"] ? Note.fromJS(_data["note"]) : <any>undefined;
+      this.type = _data["type"];
+      this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
+      this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
+      this.id = _data["id"];
+    }
+  }
+
+  static fromJS(data: any): Invoice {
+    data = typeof data === 'object' ? data : {};
+    let result = new Invoice();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["name"] = this.name;
+    data["amount"] = this.amount;
+    data["userId"] = this.userId;
+    data["user"] = this.user ? this.user.toJSON() : <any>undefined;
+    data["categoryId"] = this.categoryId;
+    data["category"] = this.category ? this.category.toJSON() : <any>undefined;
+    data["currencyId"] = this.currencyId;
+    data["currency"] = this.currency ? this.currency.toJSON() : <any>undefined;
+    data["mapped"] = this.mapped ? this.mapped.toISOString() : <any>undefined;
+    data["date"] = this.date ? this.date.toISOString() : <any>undefined;
+    data["noteId"] = this.noteId;
+    data["note"] = this.note ? this.note.toJSON() : <any>undefined;
+    data["type"] = this.type;
+    data["created"] = this.created ? this.created.toISOString() : <any>undefined;
+    data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
+    data["id"] = this.id;
+    return data;
+  }
+}
+
+export interface IInvoice {
+  name?: string | undefined;
+  amount?: number | undefined;
+  userId?: string | undefined;
+  user?: User | undefined;
+  categoryId?: string | undefined;
+  category?: Category | undefined;
+  currencyId?: string | undefined;
+  currency?: Currency | undefined;
+  mapped?: Date | undefined;
+  date?: Date | undefined;
+  noteId?: string | undefined;
+  note?: Note | undefined;
+  type?: InvoiceTypeEnum | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
+}
+
+export class InvoiceListWithIncludeHelper implements IInvoiceListWithIncludeHelper {
+  entities?: Invoice[] | undefined;
+  paginator?: Paginator | undefined;
+  totalCount?: number | undefined;
+
+  constructor(data?: IInvoiceListWithIncludeHelper) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      if (Array.isArray(_data["entities"])) {
+        this.entities = [] as any;
+        for (let item of _data["entities"])
+          this.entities!.push(Invoice.fromJS(item));
+      }
+      this.paginator = _data["paginator"] ? Paginator.fromJS(_data["paginator"]) : <any>undefined;
+      this.totalCount = _data["totalCount"];
+    }
+  }
+
+  static fromJS(data: any): InvoiceListWithIncludeHelper {
+    data = typeof data === 'object' ? data : {};
+    let result = new InvoiceListWithIncludeHelper();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    if (Array.isArray(this.entities)) {
+      data["entities"] = [];
+      for (let item of this.entities)
+        data["entities"].push(item.toJSON());
+    }
+    data["paginator"] = this.paginator ? this.paginator.toJSON() : <any>undefined;
+    data["totalCount"] = this.totalCount;
+    return data;
+  }
+}
+
+export interface IInvoiceListWithIncludeHelper {
+  entities?: Invoice[] | undefined;
+  paginator?: Paginator | undefined;
+  totalCount?: number | undefined;
+}
+
 export enum InvoiceTypeEnum {
   INCOME = "INCOME",
   EXPENSE = "EXPENSE",
+}
+
+export class Note implements INote {
+  name!: string;
+  body!: string;
+  invoiceId?: string | undefined;
+  invoice?: Invoice | undefined;
+  userId?: string | undefined;
+  user?: User | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
+
+  constructor(data?: INote) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.name = _data["name"];
+      this.body = _data["body"];
+      this.invoiceId = _data["invoiceId"];
+      this.invoice = _data["invoice"] ? Invoice.fromJS(_data["invoice"]) : <any>undefined;
+      this.userId = _data["userId"];
+      this.user = _data["user"] ? User.fromJS(_data["user"]) : <any>undefined;
+      this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
+      this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
+      this.id = _data["id"];
+    }
+  }
+
+  static fromJS(data: any): Note {
+    data = typeof data === 'object' ? data : {};
+    let result = new Note();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["name"] = this.name;
+    data["body"] = this.body;
+    data["invoiceId"] = this.invoiceId;
+    data["invoice"] = this.invoice ? this.invoice.toJSON() : <any>undefined;
+    data["userId"] = this.userId;
+    data["user"] = this.user ? this.user.toJSON() : <any>undefined;
+    data["created"] = this.created ? this.created.toISOString() : <any>undefined;
+    data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
+    data["id"] = this.id;
+    return data;
+  }
+}
+
+export interface INote {
+  name: string;
+  body: string;
+  invoiceId?: string | undefined;
+  invoice?: Invoice | undefined;
+  userId?: string | undefined;
+  user?: User | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
 }
 
 export class NoteResponse implements INoteResponse {
@@ -3617,6 +4398,74 @@ export interface IStringDictionaryResponse {
   items?: StringDictionaryItemResponse[] | undefined;
 }
 
+export class Tariff implements ITariff {
+  name?: string | undefined;
+  description?: string | undefined;
+  isActive?: boolean | undefined;
+  users?: User[] | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
+
+  constructor(data?: ITariff) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.name = _data["name"];
+      this.description = _data["description"];
+      this.isActive = _data["isActive"];
+      if (Array.isArray(_data["users"])) {
+        this.users = [] as any;
+        for (let item of _data["users"])
+          this.users!.push(User.fromJS(item));
+      }
+      this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
+      this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
+      this.id = _data["id"];
+    }
+  }
+
+  static fromJS(data: any): Tariff {
+    data = typeof data === 'object' ? data : {};
+    let result = new Tariff();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["name"] = this.name;
+    data["description"] = this.description;
+    data["isActive"] = this.isActive;
+    if (Array.isArray(this.users)) {
+      data["users"] = [];
+      for (let item of this.users)
+        data["users"].push(item.toJSON());
+    }
+    data["created"] = this.created ? this.created.toISOString() : <any>undefined;
+    data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
+    data["id"] = this.id;
+    return data;
+  }
+}
+
+export interface ITariff {
+  name?: string | undefined;
+  description?: string | undefined;
+  isActive?: boolean | undefined;
+  users?: User[] | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
+}
+
 export class TariffResponse implements ITariffResponse {
   name?: string | undefined;
   description?: string | undefined;
@@ -3724,6 +4573,7 @@ export class UpdateInvoiceCommand implements IUpdateInvoiceCommand {
   currencyId?: string | undefined;
   date?: Date | undefined;
   type?: InvoiceTypeEnum | undefined;
+  note?: CreateOrUpdateNoteCommand | undefined;
   id?: string | undefined;
 
   constructor(data?: IUpdateInvoiceCommand) {
@@ -3743,6 +4593,7 @@ export class UpdateInvoiceCommand implements IUpdateInvoiceCommand {
       this.currencyId = _data["currencyId"];
       this.date = _data["date"] ? new Date(_data["date"].toString()) : <any>undefined;
       this.type = _data["type"];
+      this.note = _data["note"] ? CreateOrUpdateNoteCommand.fromJS(_data["note"]) : <any>undefined;
       this.id = _data["id"];
     }
   }
@@ -3762,6 +4613,7 @@ export class UpdateInvoiceCommand implements IUpdateInvoiceCommand {
     data["currencyId"] = this.currencyId;
     data["date"] = this.date ? this.date.toISOString() : <any>undefined;
     data["type"] = this.type;
+    data["note"] = this.note ? this.note.toJSON() : <any>undefined;
     data["id"] = this.id;
     return data;
   }
@@ -3774,7 +4626,316 @@ export interface IUpdateInvoiceCommand {
   currencyId?: string | undefined;
   date?: Date | undefined;
   type?: InvoiceTypeEnum | undefined;
+  note?: CreateOrUpdateNoteCommand | undefined;
   id?: string | undefined;
+}
+
+export class User implements IUser {
+  login!: string;
+  lastName!: string;
+  firstName!: string;
+  patronymic?: string | undefined;
+  salt?: string | undefined;
+  isTemporaryPassword?: boolean | undefined;
+  isBlocked?: boolean | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  lastForgot?: Date | undefined;
+  mapped?: Date | undefined;
+  tariffId?: string | undefined;
+  tariff?: Tariff | undefined;
+  currencyId?: string | undefined;
+  currency?: Currency | undefined;
+  userCategories?: UserCategory[] | undefined;
+  invoices?: Invoice[] | undefined;
+  notes?: Note[] | undefined;
+  userBalanceId?: string | undefined;
+  userBalance?: UserBalance | undefined;
+  id?: string | undefined;
+  userName?: string | undefined;
+  normalizedUserName?: string | undefined;
+  email?: string | undefined;
+  normalizedEmail?: string | undefined;
+  emailConfirmed?: boolean | undefined;
+  passwordHash?: string | undefined;
+  securityStamp?: string | undefined;
+  concurrencyStamp?: string | undefined;
+  phoneNumber?: string | undefined;
+  phoneNumberConfirmed?: boolean | undefined;
+  twoFactorEnabled?: boolean | undefined;
+  lockoutEnd?: Date | undefined;
+  lockoutEnabled?: boolean | undefined;
+  accessFailedCount?: number | undefined;
+
+  constructor(data?: IUser) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.login = _data["login"];
+      this.lastName = _data["lastName"];
+      this.firstName = _data["firstName"];
+      this.patronymic = _data["patronymic"];
+      this.salt = _data["salt"];
+      this.isTemporaryPassword = _data["isTemporaryPassword"];
+      this.isBlocked = _data["isBlocked"];
+      this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
+      this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
+      this.lastForgot = _data["lastForgot"] ? new Date(_data["lastForgot"].toString()) : <any>undefined;
+      this.mapped = _data["mapped"] ? new Date(_data["mapped"].toString()) : <any>undefined;
+      this.tariffId = _data["tariffId"];
+      this.tariff = _data["tariff"] ? Tariff.fromJS(_data["tariff"]) : <any>undefined;
+      this.currencyId = _data["currencyId"];
+      this.currency = _data["currency"] ? Currency.fromJS(_data["currency"]) : <any>undefined;
+      if (Array.isArray(_data["userCategories"])) {
+        this.userCategories = [] as any;
+        for (let item of _data["userCategories"])
+          this.userCategories!.push(UserCategory.fromJS(item));
+      }
+      if (Array.isArray(_data["invoices"])) {
+        this.invoices = [] as any;
+        for (let item of _data["invoices"])
+          this.invoices!.push(Invoice.fromJS(item));
+      }
+      if (Array.isArray(_data["notes"])) {
+        this.notes = [] as any;
+        for (let item of _data["notes"])
+          this.notes!.push(Note.fromJS(item));
+      }
+      this.userBalanceId = _data["userBalanceId"];
+      this.userBalance = _data["userBalance"] ? UserBalance.fromJS(_data["userBalance"]) : <any>undefined;
+      this.id = _data["id"];
+      this.userName = _data["userName"];
+      this.normalizedUserName = _data["normalizedUserName"];
+      this.email = _data["email"];
+      this.normalizedEmail = _data["normalizedEmail"];
+      this.emailConfirmed = _data["emailConfirmed"];
+      this.passwordHash = _data["passwordHash"];
+      this.securityStamp = _data["securityStamp"];
+      this.concurrencyStamp = _data["concurrencyStamp"];
+      this.phoneNumber = _data["phoneNumber"];
+      this.phoneNumberConfirmed = _data["phoneNumberConfirmed"];
+      this.twoFactorEnabled = _data["twoFactorEnabled"];
+      this.lockoutEnd = _data["lockoutEnd"] ? new Date(_data["lockoutEnd"].toString()) : <any>undefined;
+      this.lockoutEnabled = _data["lockoutEnabled"];
+      this.accessFailedCount = _data["accessFailedCount"];
+    }
+  }
+
+  static fromJS(data: any): User {
+    data = typeof data === 'object' ? data : {};
+    let result = new User();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["login"] = this.login;
+    data["lastName"] = this.lastName;
+    data["firstName"] = this.firstName;
+    data["patronymic"] = this.patronymic;
+    data["salt"] = this.salt;
+    data["isTemporaryPassword"] = this.isTemporaryPassword;
+    data["isBlocked"] = this.isBlocked;
+    data["created"] = this.created ? this.created.toISOString() : <any>undefined;
+    data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
+    data["lastForgot"] = this.lastForgot ? this.lastForgot.toISOString() : <any>undefined;
+    data["mapped"] = this.mapped ? this.mapped.toISOString() : <any>undefined;
+    data["tariffId"] = this.tariffId;
+    data["tariff"] = this.tariff ? this.tariff.toJSON() : <any>undefined;
+    data["currencyId"] = this.currencyId;
+    data["currency"] = this.currency ? this.currency.toJSON() : <any>undefined;
+    if (Array.isArray(this.userCategories)) {
+      data["userCategories"] = [];
+      for (let item of this.userCategories)
+        data["userCategories"].push(item.toJSON());
+    }
+    if (Array.isArray(this.invoices)) {
+      data["invoices"] = [];
+      for (let item of this.invoices)
+        data["invoices"].push(item.toJSON());
+    }
+    if (Array.isArray(this.notes)) {
+      data["notes"] = [];
+      for (let item of this.notes)
+        data["notes"].push(item.toJSON());
+    }
+    data["userBalanceId"] = this.userBalanceId;
+    data["userBalance"] = this.userBalance ? this.userBalance.toJSON() : <any>undefined;
+    data["id"] = this.id;
+    data["userName"] = this.userName;
+    data["normalizedUserName"] = this.normalizedUserName;
+    data["email"] = this.email;
+    data["normalizedEmail"] = this.normalizedEmail;
+    data["emailConfirmed"] = this.emailConfirmed;
+    data["passwordHash"] = this.passwordHash;
+    data["securityStamp"] = this.securityStamp;
+    data["concurrencyStamp"] = this.concurrencyStamp;
+    data["phoneNumber"] = this.phoneNumber;
+    data["phoneNumberConfirmed"] = this.phoneNumberConfirmed;
+    data["twoFactorEnabled"] = this.twoFactorEnabled;
+    data["lockoutEnd"] = this.lockoutEnd ? this.lockoutEnd.toISOString() : <any>undefined;
+    data["lockoutEnabled"] = this.lockoutEnabled;
+    data["accessFailedCount"] = this.accessFailedCount;
+    return data;
+  }
+}
+
+export interface IUser {
+  login: string;
+  lastName: string;
+  firstName: string;
+  patronymic?: string | undefined;
+  salt?: string | undefined;
+  isTemporaryPassword?: boolean | undefined;
+  isBlocked?: boolean | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  lastForgot?: Date | undefined;
+  mapped?: Date | undefined;
+  tariffId?: string | undefined;
+  tariff?: Tariff | undefined;
+  currencyId?: string | undefined;
+  currency?: Currency | undefined;
+  userCategories?: UserCategory[] | undefined;
+  invoices?: Invoice[] | undefined;
+  notes?: Note[] | undefined;
+  userBalanceId?: string | undefined;
+  userBalance?: UserBalance | undefined;
+  id?: string | undefined;
+  userName?: string | undefined;
+  normalizedUserName?: string | undefined;
+  email?: string | undefined;
+  normalizedEmail?: string | undefined;
+  emailConfirmed?: boolean | undefined;
+  passwordHash?: string | undefined;
+  securityStamp?: string | undefined;
+  concurrencyStamp?: string | undefined;
+  phoneNumber?: string | undefined;
+  phoneNumberConfirmed?: boolean | undefined;
+  twoFactorEnabled?: boolean | undefined;
+  lockoutEnd?: Date | undefined;
+  lockoutEnabled?: boolean | undefined;
+  accessFailedCount?: number | undefined;
+}
+
+export class UserBalance implements IUserBalance {
+  amount?: number | undefined;
+  currencyId?: string | undefined;
+  currency?: Currency | undefined;
+  userId?: string | undefined;
+  user?: User | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
+
+  constructor(data?: IUserBalance) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.amount = _data["amount"];
+      this.currencyId = _data["currencyId"];
+      this.currency = _data["currency"] ? Currency.fromJS(_data["currency"]) : <any>undefined;
+      this.userId = _data["userId"];
+      this.user = _data["user"] ? User.fromJS(_data["user"]) : <any>undefined;
+      this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
+      this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
+      this.id = _data["id"];
+    }
+  }
+
+  static fromJS(data: any): UserBalance {
+    data = typeof data === 'object' ? data : {};
+    let result = new UserBalance();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["amount"] = this.amount;
+    data["currencyId"] = this.currencyId;
+    data["currency"] = this.currency ? this.currency.toJSON() : <any>undefined;
+    data["userId"] = this.userId;
+    data["user"] = this.user ? this.user.toJSON() : <any>undefined;
+    data["created"] = this.created ? this.created.toISOString() : <any>undefined;
+    data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
+    data["id"] = this.id;
+    return data;
+  }
+}
+
+export interface IUserBalance {
+  amount?: number | undefined;
+  currencyId?: string | undefined;
+  currency?: Currency | undefined;
+  userId?: string | undefined;
+  user?: User | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
+}
+
+export class UserCategory implements IUserCategory {
+  userId?: string | undefined;
+  user?: User | undefined;
+  categoryId?: string | undefined;
+  category?: Category | undefined;
+
+  constructor(data?: IUserCategory) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.userId = _data["userId"];
+      this.user = _data["user"] ? User.fromJS(_data["user"]) : <any>undefined;
+      this.categoryId = _data["categoryId"];
+      this.category = _data["category"] ? Category.fromJS(_data["category"]) : <any>undefined;
+    }
+  }
+
+  static fromJS(data: any): UserCategory {
+    data = typeof data === 'object' ? data : {};
+    let result = new UserCategory();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["userId"] = this.userId;
+    data["user"] = this.user ? this.user.toJSON() : <any>undefined;
+    data["categoryId"] = this.categoryId;
+    data["category"] = this.category ? this.category.toJSON() : <any>undefined;
+    return data;
+  }
+}
+
+export interface IUserCategory {
+  userId?: string | undefined;
+  user?: User | undefined;
+  categoryId?: string | undefined;
+  category?: Category | undefined;
 }
 
 export class UserInvoicesQuery implements IUserInvoicesQuery {
@@ -3819,6 +4980,106 @@ export class UserInvoicesQuery implements IUserInvoicesQuery {
 }
 
 export interface IUserInvoicesQuery {
+  ids?: BaseIdsListQuery | undefined;
+  paginator?: Paginator | undefined;
+  dateRange?: BaseDateRangeQuery | undefined;
+  sort?: BaseSortableQuery | undefined;
+}
+
+export class UserListWithIncludeHelper implements IUserListWithIncludeHelper {
+  entities?: User[] | undefined;
+  paginator?: Paginator | undefined;
+  totalCount?: number | undefined;
+
+  constructor(data?: IUserListWithIncludeHelper) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      if (Array.isArray(_data["entities"])) {
+        this.entities = [] as any;
+        for (let item of _data["entities"])
+          this.entities!.push(User.fromJS(item));
+      }
+      this.paginator = _data["paginator"] ? Paginator.fromJS(_data["paginator"]) : <any>undefined;
+      this.totalCount = _data["totalCount"];
+    }
+  }
+
+  static fromJS(data: any): UserListWithIncludeHelper {
+    data = typeof data === 'object' ? data : {};
+    let result = new UserListWithIncludeHelper();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    if (Array.isArray(this.entities)) {
+      data["entities"] = [];
+      for (let item of this.entities)
+        data["entities"].push(item.toJSON());
+    }
+    data["paginator"] = this.paginator ? this.paginator.toJSON() : <any>undefined;
+    data["totalCount"] = this.totalCount;
+    return data;
+  }
+}
+
+export interface IUserListWithIncludeHelper {
+  entities?: User[] | undefined;
+  paginator?: Paginator | undefined;
+  totalCount?: number | undefined;
+}
+
+export class UsersQuery implements IUsersQuery {
+  ids?: BaseIdsListQuery | undefined;
+  paginator?: Paginator | undefined;
+  dateRange?: BaseDateRangeQuery | undefined;
+  sort?: BaseSortableQuery | undefined;
+
+  constructor(data?: IUsersQuery) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.ids = _data["ids"] ? BaseIdsListQuery.fromJS(_data["ids"]) : <any>undefined;
+      this.paginator = _data["paginator"] ? Paginator.fromJS(_data["paginator"]) : <any>undefined;
+      this.dateRange = _data["dateRange"] ? BaseDateRangeQuery.fromJS(_data["dateRange"]) : <any>undefined;
+      this.sort = _data["sort"] ? BaseSortableQuery.fromJS(_data["sort"]) : <any>undefined;
+    }
+  }
+
+  static fromJS(data: any): UsersQuery {
+    data = typeof data === 'object' ? data : {};
+    let result = new UsersQuery();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["ids"] = this.ids ? this.ids.toJSON() : <any>undefined;
+    data["paginator"] = this.paginator ? this.paginator.toJSON() : <any>undefined;
+    data["dateRange"] = this.dateRange ? this.dateRange.toJSON() : <any>undefined;
+    data["sort"] = this.sort ? this.sort.toJSON() : <any>undefined;
+    return data;
+  }
+}
+
+export interface IUsersQuery {
   ids?: BaseIdsListQuery | undefined;
   paginator?: Paginator | undefined;
   dateRange?: BaseDateRangeQuery | undefined;

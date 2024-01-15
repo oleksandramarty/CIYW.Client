@@ -19,6 +19,6 @@
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close cdkFocusInitial>Close</button>
-    <button mat-flat-button color="primary" (click)="createOrUpdateInvoice()" [disabled]="invoiceForm?.invalid">Save</button>
+    <button mat-flat-button color="primary" (click)="createOrUpdateInvoice()" [disabled]="invoiceForm?.invalid">{{!!invoice ? 'Update' : 'Save'}}</button>
   </mat-dialog-actions>
 </div>

@@ -1,7 +1,7 @@
 <ng-container *ngIf="user">
   <h1>Invoice History</h1>
 
-  <div class="user-details">
+  <div class="mb-20">
     <p><strong>User Name:</strong> {{ user.firstName }} {{user.lastName}}</p>
     <p *ngIf="balance"><strong>Balance:</strong> {{ balance.amount || 0 | currency: balance.isoCode }}</p>
   </div>

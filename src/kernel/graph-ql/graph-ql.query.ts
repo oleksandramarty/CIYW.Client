@@ -60,6 +60,7 @@ export const USER_INVOICES_QUERY = gql`
     $pageSize: Int,
     $dateFrom: DateTime,
     $dateTo: DateTime,
+    $parentClass: String,
     $column: String,
     $direction: String
   ) {
@@ -69,6 +70,7 @@ export const USER_INVOICES_QUERY = gql`
       pageSize: $pageSize,
       dateFrom: $dateFrom,
       dateTo: $dateTo,
+      parentClass: $parentClass,
       column: $column,
       direction: $direction
     ) {
@@ -89,5 +91,55 @@ export const USER_INVOICES_QUERY = gql`
       }
       totalCount
     }
+  }
+`;
+
+export const ADMIN_USERS_QUERY = gql`
+  query GetInvoices(
+    $isFull: Boolean,
+    $pageNumber: Int,
+    $pageSize: Int,
+    $dateFrom: DateTime,
+    $dateTo: DateTime,
+    $parentClass: String,
+    $column: String,
+    $direction: String
+  ) {
+    users(
+      isFull: $isFull,
+      pageNumber: $pageNumber,
+      pageSize: $pageSize,
+      dateFrom: $dateFrom,
+      dateTo: $dateTo,
+      parentClass: $parentClass,
+      column: $column,
+      direction: $direction
+    ) {
+    entities {
+        id,
+        lastName,
+        firstName,
+        login,
+        email,
+        phoneNumber,
+        modified,
+        created,
+        updated,
+        userBalance {
+          id,
+          amount,
+          currency {
+            id,
+            isoCode,
+            symbol
+          }
+        }
+      }
+      paginator {
+        pageNumber,
+        pageSize
+      }
+      totalCount
+  }
   }
 `;

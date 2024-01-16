@@ -3018,6 +3018,7 @@ export interface IBaseIdsListQuery {
 }
 
 export class BaseSortableQuery implements IBaseSortableQuery {
+  parentClass?: string | undefined;
   column?: string | undefined;
   direction?: string | undefined;
 
@@ -3032,6 +3033,7 @@ export class BaseSortableQuery implements IBaseSortableQuery {
 
   init(_data?: any) {
     if (_data) {
+      this.parentClass = _data["parentClass"];
       this.column = _data["column"];
       this.direction = _data["direction"];
     }
@@ -3046,6 +3048,7 @@ export class BaseSortableQuery implements IBaseSortableQuery {
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
+    data["parentClass"] = this.parentClass;
     data["column"] = this.column;
     data["direction"] = this.direction;
     return data;
@@ -3053,6 +3056,7 @@ export class BaseSortableQuery implements IBaseSortableQuery {
 }
 
 export interface IBaseSortableQuery {
+  parentClass?: string | undefined;
   column?: string | undefined;
   direction?: string | undefined;
 }

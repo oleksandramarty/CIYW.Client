@@ -11,11 +11,10 @@ import {AdminAreaComponent} from "../modules/admin-area/admin-area/admin-area.co
 import {AdminUsersComponent} from "../modules/admin-area/admin-users/admin-users.component";
 
 export const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'auth/login', outlet: 'app-area'},
+  {path: '', pathMatch: 'full', redirectTo: 'auth/login'},
   {
     path: '',
     component: PersonalAreaComponent,
-    outlet: 'personal-area',
     children: [
       {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
       // {path: '**', pathMatch: 'full', redirectTo: 'home'}
@@ -24,7 +23,6 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminAreaComponent,
-    outlet: 'admin-area',
     children: [
       {path: 'users', component: AdminUsersComponent, canActivate: [AuthGuard]},
       // {path: '**', pathMatch: 'full', redirectTo: 'home'}
@@ -33,7 +31,6 @@ export const routes: Routes = [
   {
     path: 'auth',
     component: AuthComponent,
-    outlet: 'auth-area',
     children: [
       {path: '', pathMatch: 'full', redirectTo: 'login'},
       {path: 'login', component: AuthLoginComponent},
@@ -41,7 +38,7 @@ export const routes: Routes = [
       {path: '**', pathMatch: 'full', redirectTo: 'login'}
     ],
   },
-  {path: 'not-found', component: NotFoundComponent, outlet: 'app-area'},
+  {path: 'not-found', component: NotFoundComponent},
   {path: '**', pathMatch: 'full', redirectTo: 'auth'},
 ];
 

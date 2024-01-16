@@ -53,8 +53,14 @@ export class CiywTableComponent<T> implements OnInit{
       this.paginatorComp!.paginator!.pageNumber = 1;
       this.paginatorComp!.paginatorComp!.pageIndex = 0;
     }
+    this.sort = this.defaultSort;
     this.sort!.column = capitalizeFirstChar(sortState.active);
     this.sort!.direction = sortState.direction;
+
+    if (this.type === CIYWTableEnum.AdminUsers && this.sort!.column === 'Balance') {
+      this.sort!.parentClass = 'UserBalance';
+      this.sort!.column = 'Amount';
+    }
 
     this.filterChange();
   }

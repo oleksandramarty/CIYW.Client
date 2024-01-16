@@ -4,11 +4,18 @@ import {Store} from "@ngxs/store";
 import {SetUserBalance} from "../store/actions/user.actions";
 import {IBalanceInvoiceResponse, IBaseSortableQuery, IPaginator} from "../services/api-client";
 import {Observable, tap} from "rxjs";
-import {USER_BALANCE_QUERY, USER_INVOICE_QUERY, USER_INVOICES_QUERY, CREATE_USER_INVOICE} from "./graph-ql.query";
+import {
+  USER_BALANCE_QUERY,
+  USER_INVOICE_QUERY,
+  USER_INVOICES_QUERY,
+  CREATE_USER_INVOICE,
+  ADMIN_USERS_QUERY
+} from "./graph-ql.query";
 import {ApolloQueryResult} from "@apollo/client";
 import {IListWithIncludeHelper} from "../models/common.model";
 import {IInvoiceType} from "../models/invoice.model";
 import type {MutationResult} from "apollo-angular/types";
+import {IUserType} from "../models/user.model";
 
 @Injectable({
   providedIn: 'root',
@@ -88,11 +95,33 @@ export class GraphQLService {
             pageSize: paginator?.pageSize ?? 5,
             dateFrom: null,
             dateTo: null,
+            parentClass: sort?.parentClass,
             column: `${sortColumn === 'Date' ? 'Created' : sortColumn}`,
             direction: `${sort?.direction ?? 'desc'}`
           },
           fetchPolicy: 'network-only',
         }).valueChanges as Observable<ApolloQueryResult<{ invoices: IListWithIncludeHelper<IInvoiceType> | undefined }>>;
+  }
+
+  public getAdminUsers(
+    paginator: IPaginator | undefined,
+    sort: IBaseSortableQuery | undefined): Observable<ApolloQueryResult<{ users: IListWithIncludeHelper<IUserType> | undefined }>> {
+    let sortColumn = sort?.column ?? 'Created';
+    return this.apollo
+      .watchQuery({
+        query: ADMIN_USERS_QUERY,
+        variables: {
+          isFull: paginator?.isFull ?? false,
+          pageNumber: paginator?.pageNumber ?? 1,
+          pageSize: paginator?.pageSize ?? 5,
+          dateFrom: null,
+          dateTo: null,
+          parentClass: sort?.parentClass,
+          column: `${sortColumn === 'Date' ? 'Created' : sortColumn}`,
+          direction: `${sort?.direction ?? 'desc'}`
+        },
+        fetchPolicy: 'network-only',
+      }).valueChanges as Observable<ApolloQueryResult<{ users: IListWithIncludeHelper<IUserType> | undefined }>>;
   }
 }
 

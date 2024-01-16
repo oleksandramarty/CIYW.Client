@@ -15,4 +15,5 @@ export interface IDisplayedCIYWTableColumn {
   value: string;
   style?: IStyleHelper | undefined;
   dialogType?: CIYWTableDialogEnum | undefined;
+  parentClass?: string | undefined;
 }

@@ -3,7 +3,7 @@ import {finalize, Observable, Subject, Subscription, takeUntil, tap} from "rxjs"
 import {Select, Store} from "@ngxs/store";
 import {
   ApiClient, Paginator, BaseSortableQuery,
-  IBalanceInvoicePageableResponse, IPaginator, IBaseSortableQuery,
+  IPaginator, IBaseSortableQuery,
   ICurrentUserResponse, UserInvoicesQuery, IBalanceInvoiceResponse
 } from "../../../kernel/services/api-client";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   user: ICurrentUserResponse | undefined;
   balance: IUserBalance | undefined;
-  invoices: IBalanceInvoicePageableResponse | undefined;
+  invoices: IListWithIncludeHelper<IInvoiceType> | undefined;
 
   graphQLInvoices: IListWithIncludeHelper<IInvoiceType> | undefined;
 
@@ -101,11 +101,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.ngUnsubscribe),
         tap((result) => {
-          this.invoices = result;
+          this.invoices = result as IListWithIncludeHelper<IInvoiceType>;
           if (!this.dataSource) {
             this.dataSource = new MatTableDataSource<any>([]);
           }
-          this.dataSource!.data = mapInvoiceTable(this.invoices!.invoices);
+          this.dataSource!.data = mapGraphInvoiceTable(this.invoices);
         }),
         handleApiError(this.snackBar),
         finalize(() => this.isBusy = false)

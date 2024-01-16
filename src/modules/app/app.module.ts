@@ -2,7 +2,6 @@ import {CommonModule, registerLocaleData} from "@angular/common";
 import localeEN from '@angular/common/locales/en';
 import {LOCALE_ID, NgModule} from "@angular/core";
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
-import {AppRoutingModule} from "../../kernel/app-routing.module";
 import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormsModule} from "@angular/forms";
@@ -27,6 +26,9 @@ import {APOLLO_OPTIONS, ApolloModule} from "apollo-angular";
 import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache } from '@apollo/client/core';
 import {DictionariesState} from "../../kernel/store/state/dictionary.state";
+import {AdminAreaModule} from "../admin-area/admin-area.module";
+import {AppRoutingModule, routes} from "../../kernel/app-routing.module";
+import {RouterModule} from "@angular/router";
 
 export const MY_FORMATS = {
   parse: {
@@ -48,6 +50,7 @@ registerLocaleData(localeEN, 'en');
   ],
   imports: [
     AppRoutingModule,
+    RouterModule.forRoot(routes),
     BrowserAnimationsModule,
     BrowserModule,
     CommonModule,
@@ -68,6 +71,7 @@ registerLocaleData(localeEN, 'en');
     AuthModule,
     CommonCiywModule,
     PersonalAreaModule,
+    AdminAreaModule,
   ],
   providers: [ {
     provide: APOLLO_OPTIONS,

@@ -6,3 +6,13 @@ mat-toolbar {
 .example-spacer {
   flex: 1 1 auto;
 }
+
+.menu-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.menu-item-wrapper {
+  padding: 5px 10px;
+  cursor: pointer;
+}

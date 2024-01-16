@@ -4,6 +4,7 @@ import {UserState} from "../../../kernel/store/state/user.state";
 import {Observable, Subscription} from "rxjs";
 import {OnLogout} from "../../../kernel/store/actions/user.actions";
 import {ICurrentUserResponse} from "../../../kernel/services/api-client";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'ciyw-header',
@@ -12,6 +13,8 @@ import {ICurrentUserResponse} from "../../../kernel/services/api-client";
 })
 export class HeaderComponent implements OnInit, OnDestroy{
   @Select(UserState.isAuthorized) isAuthorized$: Observable<boolean> | undefined;
+  @Select(UserState.isUser) isUser$: Observable<boolean> | undefined;
+  @Select(UserState.isAdmin) isAdmin$: Observable<boolean> | undefined;
   @Select(UserState.getUser) user$: Observable<ICurrentUserResponse> | undefined;
 
   user: ICurrentUserResponse | undefined;
@@ -19,7 +22,8 @@ export class HeaderComponent implements OnInit, OnDestroy{
   subs = new Subscription();
 
   constructor(
-    private readonly store: Store
+    private readonly store: Store,
+    private router: Router
   ) {
   }
 
@@ -35,6 +39,10 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   logout(): void {
     this.store.dispatch(new OnLogout());
+  }
+
+  goto(url: string): void {
+    this.router.navigate([url]);
   }
 
 }

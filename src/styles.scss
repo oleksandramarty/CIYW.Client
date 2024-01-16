@@ -73,6 +73,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     opacity: $opacity;
   }
 }
+@for $i from 1 through 100 {
+  .w-#{$i} { width: #{$i}#{'%'}; }
+}
 .f-bold {
   font-weight: bold;
 }

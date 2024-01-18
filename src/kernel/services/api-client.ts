@@ -4508,6 +4508,7 @@ export class UserInvoicesQuery implements IUserInvoicesQuery {
   paginator?: Paginator | undefined;
   dateRange?: BaseDateRangeQuery | undefined;
   sort?: BaseSortableQuery | undefined;
+  userId?: string | undefined;
 
   constructor(data?: IUserInvoicesQuery) {
     if (data) {
@@ -4524,6 +4525,7 @@ export class UserInvoicesQuery implements IUserInvoicesQuery {
       this.paginator = _data["paginator"] ? Paginator.fromJS(_data["paginator"]) : <any>undefined;
       this.dateRange = _data["dateRange"] ? BaseDateRangeQuery.fromJS(_data["dateRange"]) : <any>undefined;
       this.sort = _data["sort"] ? BaseSortableQuery.fromJS(_data["sort"]) : <any>undefined;
+      this.userId = _data["userId"];
     }
   }
 
@@ -4540,6 +4542,7 @@ export class UserInvoicesQuery implements IUserInvoicesQuery {
     data["paginator"] = this.paginator ? this.paginator.toJSON() : <any>undefined;
     data["dateRange"] = this.dateRange ? this.dateRange.toJSON() : <any>undefined;
     data["sort"] = this.sort ? this.sort.toJSON() : <any>undefined;
+    data["userId"] = this.userId;
     return data;
   }
 }
@@ -4549,6 +4552,7 @@ export interface IUserInvoicesQuery {
   paginator?: Paginator | undefined;
   dateRange?: BaseDateRangeQuery | undefined;
   sort?: BaseSortableQuery | undefined;
+  userId?: string | undefined;
 }
 
 export class UserResponse implements IUserResponse {
@@ -4736,6 +4740,7 @@ export class UsersImagesQuery implements IUsersImagesQuery {
   paginator?: Paginator | undefined;
   dateRange?: BaseDateRangeQuery | undefined;
   sort?: BaseSortableQuery | undefined;
+  userId?: string | undefined;
 
   constructor(data?: IUsersImagesQuery) {
     if (data) {
@@ -4752,6 +4757,7 @@ export class UsersImagesQuery implements IUsersImagesQuery {
       this.paginator = _data["paginator"] ? Paginator.fromJS(_data["paginator"]) : <any>undefined;
       this.dateRange = _data["dateRange"] ? BaseDateRangeQuery.fromJS(_data["dateRange"]) : <any>undefined;
       this.sort = _data["sort"] ? BaseSortableQuery.fromJS(_data["sort"]) : <any>undefined;
+      this.userId = _data["userId"];
     }
   }
 
@@ -4768,6 +4774,7 @@ export class UsersImagesQuery implements IUsersImagesQuery {
     data["paginator"] = this.paginator ? this.paginator.toJSON() : <any>undefined;
     data["dateRange"] = this.dateRange ? this.dateRange.toJSON() : <any>undefined;
     data["sort"] = this.sort ? this.sort.toJSON() : <any>undefined;
+    data["userId"] = this.userId;
     return data;
   }
 }
@@ -4777,6 +4784,7 @@ export interface IUsersImagesQuery {
   paginator?: Paginator | undefined;
   dateRange?: BaseDateRangeQuery | undefined;
   sort?: BaseSortableQuery | undefined;
+  userId?: string | undefined;
 }
 
 export class UsersQuery implements IUsersQuery {
@@ -4784,6 +4792,7 @@ export class UsersQuery implements IUsersQuery {
   paginator?: Paginator | undefined;
   dateRange?: BaseDateRangeQuery | undefined;
   sort?: BaseSortableQuery | undefined;
+  userId?: string | undefined;
 
   constructor(data?: IUsersQuery) {
     if (data) {
@@ -4800,6 +4809,7 @@ export class UsersQuery implements IUsersQuery {
       this.paginator = _data["paginator"] ? Paginator.fromJS(_data["paginator"]) : <any>undefined;
       this.dateRange = _data["dateRange"] ? BaseDateRangeQuery.fromJS(_data["dateRange"]) : <any>undefined;
       this.sort = _data["sort"] ? BaseSortableQuery.fromJS(_data["sort"]) : <any>undefined;
+      this.userId = _data["userId"];
     }
   }
 
@@ -4816,6 +4826,7 @@ export class UsersQuery implements IUsersQuery {
     data["paginator"] = this.paginator ? this.paginator.toJSON() : <any>undefined;
     data["dateRange"] = this.dateRange ? this.dateRange.toJSON() : <any>undefined;
     data["sort"] = this.sort ? this.sort.toJSON() : <any>undefined;
+    data["userId"] = this.userId;
     return data;
   }
 }
@@ -4825,6 +4836,7 @@ export interface IUsersQuery {
   paginator?: Paginator | undefined;
   dateRange?: BaseDateRangeQuery | undefined;
   sort?: BaseSortableQuery | undefined;
+  userId?: string | undefined;
 }
 
 export interface FileParameter {

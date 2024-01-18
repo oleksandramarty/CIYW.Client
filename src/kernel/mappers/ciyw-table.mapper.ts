@@ -6,13 +6,14 @@ import {
   createTableDefaultItem,
   createTableIconItem
 } from "../helpers/ciyw-table.helper";
-import {InvoiceDialogComponent} from "../../modules/personal-area/invoice-dialog/invoice-dialog.component";
+import {InvoiceDialogComponent} from "../../modules/areas/personal-area/dialogs/invoice-dialog/invoice-dialog.component";
 import {ComponentType} from "@angular/cdk/overlay";
 import {IListWithIncludeHelper} from "../models/common.model";
 import {IInvoiceType} from "../models/invoice.model";
 import {CIYWTableDialogEnum, CIYWTableEnum} from "../enums/ciyw-table.enum";
 import {IDisplayedCIYWTableColumn, IDisplayedCIYWTableSchema} from "../models/ciyw-table.model";
 import {IUserType} from "../models/user.model";
+import {UserDialogComponent} from "../../modules/areas/admin-area/dialogs/user-dialog/user-dialog.component";
 
 export interface ITableFilterHelper {
   paginator: IPaginator | undefined,
@@ -79,7 +80,7 @@ export function mapGraphUsersTable(users: IListWithIncludeHelper<IUserType> | un
       login: createTableDefaultItem(item.login),
       email: createTableDefaultItem(item.email),
       balance: createTableCurrencyItem(item.userBalance?.amount, { currency: item.userBalance?.currency?.isoCode }),
-      edit: createTableIconItem(item.id, 'edit', InvoiceDialogComponent),
+      edit: createTableIconItem(item.id, 'edit', UserDialogComponent),
       delete: createTableIconItem(item.id, 'delete', null),
     };
     return temp;
@@ -134,7 +135,7 @@ export function crateCIYWTableSchema(type: CIYWTableEnum | undefined): IDisplaye
         { title: 'Amount', value: 'balance', isSortable: true, parentClass: 'UserBalance' },
       ];
       addButtonText = 'Add user';
-      addButtonClassName = InvoiceDialogComponent;
+      addButtonClassName = UserDialogComponent;
       break
   }
 

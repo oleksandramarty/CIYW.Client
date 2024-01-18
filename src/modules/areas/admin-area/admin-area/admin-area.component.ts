@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject, Subscription} from "rxjs";
 import {Select, Store} from "@ngxs/store";
-import {UserState} from "../../../kernel/store/state/user.state";
-import {ResetUser} from "../../../kernel/store/actions/user.actions";
+import {UserState} from "../../../../kernel/store/state/user.state";
+import {ResetUser} from "../../../../kernel/store/actions/user.actions";
 
 @Component({
   selector: 'ciyw-admin-area',

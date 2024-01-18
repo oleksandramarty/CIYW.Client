@@ -5,16 +5,16 @@ import {
   ApiClient,
   IBaseSortableQuery,
   IPaginator,
-} from "../../../kernel/services/api-client";
-import {IUserBalance, IUserType} from "../../../kernel/models/user.model";
+} from "../../../../kernel/services/api-client";
+import {IUserBalance, IUserType} from "../../../../kernel/models/user.model";
 import {MatTableDataSource} from "@angular/material/table";
-import {CIYWTableEnum} from "../../../kernel/enums/ciyw-table.enum";
-import {IListWithIncludeHelper} from "../../../kernel/models/common.model";
+import {CIYWTableEnum} from "../../../../kernel/enums/ciyw-table.enum";
+import {IListWithIncludeHelper} from "../../../../kernel/models/common.model";
 import {FormBuilder} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {GraphQLService} from "../../../kernel/graph-ql/graph-ql.service";
-import {ITableFilterHelper, mapGraphUsersTable} from "../../../kernel/mappers/ciyw-table.mapper";
-import {handleApiError} from "../../../kernel/helpers/rxjs.helper";
+import {GraphQLService} from "../../../../kernel/graph-ql/graph-ql.service";
+import {ITableFilterHelper, mapGraphUsersTable} from "../../../../kernel/mappers/ciyw-table.mapper";
+import {handleApiError} from "../../../../kernel/helpers/rxjs.helper";
 
 @Component({
   selector: 'ciyw-admin-users',

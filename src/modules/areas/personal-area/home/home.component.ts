@@ -5,18 +5,18 @@ import {
   ApiClient, Paginator, BaseSortableQuery,
   IPaginator, IBaseSortableQuery,
   IUserResponse, UserInvoicesQuery, IInvoiceResponse
-} from "../../../kernel/services/api-client";
+} from "../../../../kernel/services/api-client";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {handleApiError} from "../../../kernel/helpers/rxjs.helper";
-import {UserState} from "../../../kernel/store/state/user.state";
+import {handleApiError} from "../../../../kernel/helpers/rxjs.helper";
+import {UserState} from "../../../../kernel/store/state/user.state";
 import {MatTableDataSource} from "@angular/material/table";
 import {FormBuilder} from "@angular/forms";
-import {ITableFilterHelper, mapGraphInvoiceTable, mapInvoiceTable} from "../../../kernel/mappers/ciyw-table.mapper";
-import {GraphQLService} from "../../../kernel/graph-ql/graph-ql.service";
-import {IUserBalance} from "../../../kernel/models/user.model";
-import {IListWithIncludeHelper} from "../../../kernel/models/common.model";
-import {IInvoiceType} from "../../../kernel/models/invoice.model";
-import {CIYWTableEnum} from "../../../kernel/enums/ciyw-table.enum";
+import {ITableFilterHelper, mapGraphInvoiceTable, mapInvoiceTable} from "../../../../kernel/mappers/ciyw-table.mapper";
+import {GraphQLService} from "../../../../kernel/graph-ql/graph-ql.service";
+import {IUserBalance} from "../../../../kernel/models/user.model";
+import {IListWithIncludeHelper} from "../../../../kernel/models/common.model";
+import {IInvoiceType} from "../../../../kernel/models/invoice.model";
+import {CIYWTableEnum} from "../../../../kernel/enums/ciyw-table.enum";
 
 @Component({
   selector: 'ciyw-home',

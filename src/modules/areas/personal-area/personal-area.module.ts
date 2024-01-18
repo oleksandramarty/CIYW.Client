@@ -10,20 +10,21 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
+import {PersonalAreaComponent} from "./personal-area/personal-area.component";
+import {HomeComponent} from "./home/home.component";
 import {MatSortModule} from "@angular/material/sort";
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {CommonCiywModule} from "../../common/common-ciyw.module";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSelectModule} from "@angular/material/select";
-import {AdminAreaComponent} from "./admin-area/admin-area.component";
-import {CommonCiywModule} from "../common/common-ciyw.module";
-import {CiywTableModule} from "../ciyw-components/ciyw-table/ciyw-table.module";
-import {AdminUsersComponent} from "./admin-users/admin-users.component";
-import {AppRoutingModule} from "../../kernel/app-routing.module";
+import {CiywTableModule} from "../../ciyw-components/ciyw-table/ciyw-table.module";
+import {InvoiceDialogModule} from "./dialogs/invoice-dialog/invoice-dialog.module";
+import {AppRoutingModule} from "../../../kernel/app-routing.module";
 
 @NgModule({
   declarations: [
-    AdminAreaComponent,
-    AdminUsersComponent,
+    PersonalAreaComponent,
+    HomeComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -48,10 +49,11 @@ import {AppRoutingModule} from "../../kernel/app-routing.module";
     MatSelectModule,
 
     CiywTableModule,
+    InvoiceDialogModule,
   ],
   exports: [
-    AdminAreaComponent,
-    AdminUsersComponent,
+    PersonalAreaComponent,
+    HomeComponent,
   ]
 })
-export class AdminAreaModule {}
+export class PersonalAreaModule {}

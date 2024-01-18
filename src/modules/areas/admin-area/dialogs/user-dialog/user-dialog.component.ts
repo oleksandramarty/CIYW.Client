@@ -1,36 +1,36 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {IEntityDialogData} from "../../../kernel/models/dialog-input-data.model";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {Select} from "@ngxs/store";
+import {UserState} from "../../../../../kernel/store/state/user.state";
+import {finalize, Observable, Subject, Subscription, takeUntil, tap} from "rxjs";
 import {
   ApiClient,
+  IDictionariesResponse,
   IInvoiceResponse,
-  IUserResponse,
-  IDictionariesResponse
-} from "../../../kernel/services/api-client";
-import {Select} from "@ngxs/store";
-import {UserState} from "../../../kernel/store/state/user.state";
-import {finalize, Observable, Subject, Subscription, switchMap, takeUntil, tap} from "rxjs";
+  IUserResponse
+} from "../../../../../kernel/services/api-client";
+import {DictionariesState} from "../../../../../kernel/store/state/dictionary.state";
+import {IEntityDialogData} from "../../../../../kernel/models/dialog-input-data.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DictionariesState} from "../../../kernel/store/state/dictionary.state";
-import {GraphQLService} from "../../../kernel/graph-ql/graph-ql.service";
-import {handleApiError, successMessage} from "../../../kernel/helpers/rxjs.helper";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {GraphQLService} from "../../../../../kernel/graph-ql/graph-ql.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import moment from 'moment';
-import {noteFieldsRequiredValidator} from "../../../kernel/helpers/validator.helper";
+import moment from "moment/moment";
+import {handleApiError} from "../../../../../kernel/helpers/rxjs.helper";
+import {noteFieldsRequiredValidator} from "../../../../../kernel/helpers/validator.helper";
+import {InvoiceDialogComponent} from "../../../personal-area/dialogs/invoice-dialog/invoice-dialog.component";
 
 @Component({
-  selector: 'invoice-dialog',
-  templateUrl: './invoice-dialog.component.html',
-  styleUrl: './invoice-dialog.component.scss'
+  selector: 'ciyw-user-dialog',
+  templateUrl: './user-dialog.component.html',
+  styleUrl: './user-dialog.component.scss'
 })
-export class InvoiceDialogComponent implements OnInit, OnDestroy{
-  @Select(UserState.getUser) user$: Observable<IUserResponse> | undefined;
+export class UserDialogComponent implements OnInit, OnDestroy{
   @Select(DictionariesState.getDictionaries) dictionaries$: Observable<IDictionariesResponse> | undefined;
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
   subs = new Subscription();
   public info: IEntityDialogData | undefined;
-  public invoice: IInvoiceResponse | null = null;
-  public invoiceForm: FormGroup | null | undefined;
+  public user: IUserResponse | null = null;
+  public userFrom: FormGroup | null | undefined;
 
   public dictionaries: IDictionariesResponse | undefined;
   public isBusy: boolean | null = true;
@@ -56,9 +56,9 @@ export class InvoiceDialogComponent implements OnInit, OnDestroy{
     }
 
     if (this.isEdit) {
-      this.getInvoiceById();
+      this.getUserById();
     } else {
-      this.createInvoiceForm();
+      this.createUserForm();
     }
   }
 
@@ -68,7 +68,7 @@ export class InvoiceDialogComponent implements OnInit, OnDestroy{
     this.ngUnsubscribe.complete();
   }
 
-  public createOrUpdateInvoice(): void {
+  public createOrUpdateUser(): void {
     if (this.isEdit) {
 
     } else {
@@ -91,12 +91,12 @@ export class InvoiceDialogComponent implements OnInit, OnDestroy{
     }
   }
 
-  private getInvoiceById(): void {
-    this.getGraphQLInvoiceById();
+  private getUserById(): void {
+    this.getGraphQLUserById();
   }
 
-  private getGraphQLInvoiceById(): void {
-    this.graphQLService.getUserInvoice(this.info?.entityId!)
+  private getGraphQLUserById(): void {
+    this.graphQLService.getUserInvoice12(this.info?.entityId!)
       .pipe(
         takeUntil(this.ngUnsubscribe),
         tap((result) => {
@@ -106,20 +106,8 @@ export class InvoiceDialogComponent implements OnInit, OnDestroy{
       ).subscribe();
   }
 
-  private getApiInvoiceById(): void {
-    this.apiClient.invoices_V1_GetInvoiceById(this.info?.entityId!)
-      .pipe(
-        takeUntil(this.ngUnsubscribe),
-        tap((result) => {
-          this.invoice = result;
-        }),
-        handleApiError(this.snackBar),
-        finalize(() => this.createInvoiceForm())
-      ).subscribe();
-  }
-
   private createInvoiceForm() {
-    this.invoiceForm = this.fb.group({
+    this.userFrom = this.fb.group({
       name: [this.invoice?.name, [Validators.required, Validators.maxLength(50)]],
       amount: [this.invoice?.amount, [Validators.required, Validators.min(0)]],
       date: [this.invoice?.date, [Validators.required]],

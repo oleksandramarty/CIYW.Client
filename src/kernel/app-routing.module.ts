@@ -1,14 +1,14 @@
 import {RouterModule, RouterOutlet, Routes} from "@angular/router";
-import {PersonalAreaComponent} from "../modules/personal-area/personal-area/personal-area.component";
-import {HomeComponent} from "../modules/personal-area/home/home.component";
+import {PersonalAreaComponent} from "../modules/areas/personal-area/personal-area/personal-area.component";
+import {HomeComponent} from "../modules/areas/personal-area/home/home.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {NotFoundComponent} from "../modules/not-found/not-found/not-found.component";
 import {NgModule} from "@angular/core";
-import {AuthComponent} from "../modules/auth/components/auth/auth.component";
-import {AuthLoginComponent} from "../modules/auth/components/auth-login/auth-login.component";
-import {AuthSignUpComponent} from "../modules/auth/components/auth-sign-up/auth-sign-up.component";
-import {AdminAreaComponent} from "../modules/admin-area/admin-area/admin-area.component";
-import {AdminUsersComponent} from "../modules/admin-area/admin-users/admin-users.component";
+import {AuthComponent} from "../modules/areas/auth-area/auth/auth.component";
+import {AuthLoginComponent} from "../modules/areas/auth-area/auth-login/auth-login.component";
+import {AuthSignUpComponent} from "../modules/areas/auth-area/auth-sign-up/auth-sign-up.component";
+import {AdminAreaComponent} from "../modules/areas/admin-area/admin-area/admin-area.component";
+import {AdminUsersComponent} from "../modules/areas/admin-area/admin-users/admin-users.component";
 
 export const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'auth/login'},

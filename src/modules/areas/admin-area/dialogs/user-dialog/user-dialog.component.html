@@ -1,1 +1,28 @@
-<p>user-dialog works!</p>
+<div class="base-modal-wrapper">
+  <h2 mat-dialog-title>{{ !!user ? user.firstName + ' ' + user.lastName : 'Add user' }}</h2>
+  <mat-dialog-content class="mat-typography t-align-center">
+    <ng-container *ngIf="!isBusy else loader">
+      <ciyw-input [controlGroup]="userFrom" placeholder="Last Name" controlName="lastName"></ciyw-input>
+      <ciyw-input [controlGroup]="userFrom" placeholder="First Name" controlName="firstName"></ciyw-input>
+      <ciyw-input [controlGroup]="userFrom" placeholder="Patronymic" controlName="patronymic"></ciyw-input>
+      <ciyw-input [controlGroup]="userFrom" placeholder="Login" controlName="login"></ciyw-input>
+      <ciyw-input [controlGroup]="userFrom" [okHint]="{ isOk: user?.emailConfirmed!, yes: 'Verified', no: 'Need to be verified'}" placeholder="Email" controlName="email"></ciyw-input>
+      <ciyw-input [controlGroup]="userFrom" [okHint]="{ isOk: user?.phoneNumberConfirmed!, yes: 'Verified', no: 'Need to be verified'}" placeholder="Phone" controlName="phone"></ciyw-input>
+
+      <ciyw-input [controlGroup]="userFrom" [selectData]="dictionaries?.roles" placeholder="Role" controlName="roleId" type="select" ></ciyw-input>
+      <ciyw-input [controlGroup]="userFrom" [selectData]="dictionaries?.tariffs" placeholder="Tariff" controlName=tariffId type="select" ></ciyw-input>
+      <ciyw-input [controlGroup]="userFrom" [selectData]="dictionaries?.currencies" placeholder="Currency" controlName="currencyId" type="select" ></ciyw-input>
+
+      <input type="file" (change)="onFileChange($event)" />
+      <button (click)="uploadFile()">Upload</button>
+
+    </ng-container>
+    <ng-template #loader>
+      <ciyw-loader></ciyw-loader>
+    </ng-template>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close cdkFocusInitial>Close</button>
+    <button mat-flat-button color="primary" (click)="createOrUpdateUser()" [disabled]="userFrom?.invalid">{{!!user ? 'Update' : 'Save'}}</button>
+  </mat-dialog-actions>
+</div>

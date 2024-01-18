@@ -43,15 +43,33 @@ export const USER_INVOICE_QUERY = gql`
 export const USER_BY_ID_FOR_ADMIN = gql`
   query GetUserByIdForAdmin($id: Guid) {
   userByIdForAdmin(id: $id) {
-    id,
+  id,
+    login,
     lastName,
     firstName,
     patronymic,
-    login,
+    isTemporaryPassword,
+    isBlocked,
+    modified,
+    lastForgot,
+    tariffId,
+    currencyId,
+    userBalanceId,
+    roleId,
+    userBalance {
+      amount,
+      currencyId,
+      currency {
+        name,
+        symbol
+      }
+    },
     email,
-    phoneNumber,
+    created,
+    updated,
     emailConfirmed,
-    phoneNumberConfirmed,
+    phoneNumber,
+    phoneNumberConfirmed
   }
 }
 `;

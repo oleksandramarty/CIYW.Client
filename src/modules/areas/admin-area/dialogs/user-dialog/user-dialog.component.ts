@@ -31,6 +31,8 @@ export class UserDialogComponent implements OnInit, OnDestroy{
   public dictionaries: IDictionariesResponse | undefined;
   public isBusy: boolean | null = true;
 
+  selectedFile: File | null = null;
+
   constructor(
     public dialogRef: MatDialogRef<InvoiceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IEntityDialogData | undefined,
@@ -81,7 +83,7 @@ export class UserDialogComponent implements OnInit, OnDestroy{
       .pipe(
         takeUntil(this.ngUnsubscribe),
         tap((result) => {
-          this.user = result?.data?.user as IUserResponse;
+          this.user = result?.data?.userByIdForAdmin as IUserResponse;
           this.createUserForm();
         }),
       ).subscribe();
@@ -89,11 +91,40 @@ export class UserDialogComponent implements OnInit, OnDestroy{
 
   private createUserForm() {
     this.userFrom = this.fb.group({
-      login: [this.user?.login, [Validators.required, Validators.maxLength(50)]],
-      lastName: [this.user?.lastName, [Validators.required, Validators.maxLength(50)]],
-      firstName: [this.user?.firstName, [Validators.required, Validators.maxLength(50)]],
-      patronymic: [this.user?.patronymic, [Validators.required, Validators.maxLength(50)]],
+      login: [this.user?.login],
+      lastName: [this.user?.lastName],
+      firstName: [this.user?.firstName],
+      patronymic: [this.user?.patronymic],
+      email: [this.user?.email],
+      isTemporaryPassword: [this.user?.isTemporaryPassword],
+      isBlocked: [this.user?.isBlocked],
+      roleId: [this.user?.roleId],
+      phone: [this.user?.phoneNumber],
+      currencyId: [this.user?.currencyId],
+      tariffId: [this.user?.tariffId],
+      emailConfirmed: [this.user?.emailConfirmed],
+      phoneNumberConfirmed: [this.user?.phoneNumberConfirmed],
     });
     this.isBusy = false;
+  }
+
+  onFileChange(event: any): void {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      this.selectedFile = fileList[0];
+    } else {
+      this.selectedFile = null;
+    }
+  }
+
+  uploadFile(): void {
+    if (this.selectedFile) {
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+
+
+    } else {
+      console.error('No file selected');
+    }
   }
 }

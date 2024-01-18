@@ -8,22 +8,24 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
     CiywInputComponent
   ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
+    imports: [
+        CommonModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
 
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-  ],
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatIconModule,
+    ],
   exports: [
     CiywInputComponent
   ]

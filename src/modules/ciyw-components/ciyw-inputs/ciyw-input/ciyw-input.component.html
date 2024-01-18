@@ -1,4 +1,4 @@
-<div [class]="wrapperClass" [ngClass]="{'d-block': !inline, 'd-inline': inline}">
+<div [class]="wrapperClass" [ngClass]="{'d-block': !inline, 'd-inline': inline, 'mb-10': !!okHint}">
   <mat-form-field *ngIf="controlGroup" [formGroup]="controlGroup">
 
     <mat-label *ngIf="label || placeholder">{{label ?? placeholder}}</mat-label>
@@ -30,6 +30,14 @@
     <ng-container *ngIf="type === 'textarea'">
       <textarea matInput [placeholder]="placeholder || ''" [formControlName]="controlName"></textarea>
     </ng-container>
+
+    <mat-icon *ngIf="okHint?.isOk" matSuffix color="primary">verified</mat-icon>
+    <mat-icon *ngIf="!!okHint && !okHint?.isOk" matSuffix color="accent">close</mat-icon>
+    <mat-hint
+      *ngIf="okHint"
+      [ngClass]="{'success-message': okHint.isOk, 'error-message': !okHint.isOk}"
+    >{{ okHint.isOk ? okHint.yes : okHint.no }}</mat-hint>
+
 
   </mat-form-field>
 </div>

@@ -67,7 +67,7 @@ export class GraphQLService {
       }).valueChanges as Observable<ApolloQueryResult<{ invoice: IInvoiceResponse | undefined }>>;
   }
 
-  public getUserById(id: string | null): Observable<ApolloQueryResult<{ user: IUserResponse | undefined }>> {
+  public getUserById(id: string | null): Observable<ApolloQueryResult<{ userByIdForAdmin: IUserResponse | undefined }>> {
     return this.apollo
       .watchQuery({
         query: USER_BY_ID_FOR_ADMIN,
@@ -75,7 +75,7 @@ export class GraphQLService {
           id: id!,
         },
         fetchPolicy: 'network-only',
-      }).valueChanges as Observable<ApolloQueryResult<{ user: IUserResponse | undefined }>>;
+      }).valueChanges as Observable<ApolloQueryResult<{ userByIdForAdmin: IUserResponse | undefined }>>;
   }
 
   public getUserBalance(userId: string | null): void {

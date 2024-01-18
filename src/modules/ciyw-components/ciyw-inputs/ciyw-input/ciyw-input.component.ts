@@ -17,5 +17,6 @@ export class CiywInputComponent {
 @Input() controlGroup: FormGroup | null | undefined = null;
 @Input() inline: boolean = false;
 @Input() wrapperClass: string = '';
+@Input() okHint?: { isOk: boolean, yes: string, no: string } | undefined;
 @Input() selectData: IGuidDictionaryResponse | IStringDictionaryResponse | null | undefined = null;
 }

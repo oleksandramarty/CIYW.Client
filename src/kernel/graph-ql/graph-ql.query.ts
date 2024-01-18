@@ -40,6 +40,21 @@ export const USER_INVOICE_QUERY = gql`
     }
   }
 `;
+export const USER_BY_ID_FOR_ADMIN = gql`
+  query GetUserByIdForAdmin($id: Guid) {
+  userByIdForAdmin(id: $id) {
+    id,
+    lastName,
+    firstName,
+    patronymic,
+    login,
+    email,
+    phoneNumber,
+    emailConfirmed,
+    phoneNumberConfirmed,
+  }
+}
+`;
 
 export const USER_BALANCE_QUERY = gql`
   query GetUserBalance($userId: Guid) {

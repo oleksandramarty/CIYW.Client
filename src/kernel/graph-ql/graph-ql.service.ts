@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import {Apollo} from "apollo-angular";
 import {Store} from "@ngxs/store";
 import {SetUserBalance} from "../store/actions/user.actions";
-import {IInvoiceResponse, IBaseSortableQuery, IPaginator} from "../services/api-client";
+import {IInvoiceResponse, IBaseSortableQuery, IPaginator, IUserResponse} from "../services/api-client";
 import {Observable, tap} from "rxjs";
 import {
   USER_BALANCE_QUERY,
   USER_INVOICE_QUERY,
   USER_INVOICES_QUERY,
   CREATE_USER_INVOICE,
-  ADMIN_USERS_QUERY
+  ADMIN_USERS_QUERY, USER_BY_ID_FOR_ADMIN
 } from "./graph-ql.query";
 import {ApolloQueryResult} from "@apollo/client";
 import {IListWithIncludeHelper} from "../models/common.model";
@@ -65,6 +65,17 @@ export class GraphQLService {
         },
         fetchPolicy: 'network-only',
       }).valueChanges as Observable<ApolloQueryResult<{ invoice: IInvoiceResponse | undefined }>>;
+  }
+
+  public getUserById(id: string | null): Observable<ApolloQueryResult<{ user: IUserResponse | undefined }>> {
+    return this.apollo
+      .watchQuery({
+        query: USER_BY_ID_FOR_ADMIN,
+        variables: {
+          id: id!,
+        },
+        fetchPolicy: 'network-only',
+      }).valueChanges as Observable<ApolloQueryResult<{ user: IUserResponse | undefined }>>;
   }
 
   public getUserBalance(userId: string | null): void {

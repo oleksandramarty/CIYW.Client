@@ -2363,7 +2363,7 @@ export class ApiClient {
    * @param body (optional)
    * @return Success
    */
-  invoices_V1_CreateInvoice(body?: CreateInvoiceCommand | null | undefined): Observable<string> {
+  invoices_V1_CreateInvoice(body?: CreateInvoiceCommand | null | undefined): Observable<InvoiceResponse> {
     let url_ = this.baseUrl + "/api-ciyw/invoices/v1";
     url_ = url_.replace(/[?&]$/, "");
 
@@ -2386,14 +2386,14 @@ export class ApiClient {
         try {
           return this.processInvoices_V1_CreateInvoice(response_ as any);
         } catch (e) {
-          return _observableThrow(e) as any as Observable<string>;
+          return _observableThrow(e) as any as Observable<InvoiceResponse>;
         }
       } else
-        return _observableThrow(response_) as any as Observable<string>;
+        return _observableThrow(response_) as any as Observable<InvoiceResponse>;
     }));
   }
 
-  protected processInvoices_V1_CreateInvoice(response: HttpResponseBase): Observable<string> {
+  protected processInvoices_V1_CreateInvoice(response: HttpResponseBase): Observable<InvoiceResponse> {
     const status = response.status;
     const responseBlob =
       response instanceof HttpResponse ? response.body :
@@ -2453,8 +2453,7 @@ export class ApiClient {
       return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
         let result200: any = null;
         let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+        result200 = InvoiceResponse.fromJS(resultData200);
         return _observableOf(result200);
       }));
     } else if (status !== 200 && status !== 204) {
@@ -2462,7 +2461,7 @@ export class ApiClient {
         return throwException("An unexpected server error occurred.", status, _responseText, _headers);
       }));
     }
-    return _observableOf<string>(null as any);
+    return _observableOf<InvoiceResponse>(null as any);
   }
 
   /**
@@ -2570,7 +2569,7 @@ export class ApiClient {
    * @param body (optional)
    * @return Success
    */
-  notes_V1_CreateNote(body?: CreateOrUpdateNoteCommand | null | undefined): Observable<string> {
+  notes_V1_CreateNote(body?: CreateOrUpdateNoteCommand | null | undefined): Observable<NoteResponse> {
     let url_ = this.baseUrl + "/api-ciyw/notes/v1";
     url_ = url_.replace(/[?&]$/, "");
 
@@ -2593,14 +2592,14 @@ export class ApiClient {
         try {
           return this.processNotes_V1_CreateNote(response_ as any);
         } catch (e) {
-          return _observableThrow(e) as any as Observable<string>;
+          return _observableThrow(e) as any as Observable<NoteResponse>;
         }
       } else
-        return _observableThrow(response_) as any as Observable<string>;
+        return _observableThrow(response_) as any as Observable<NoteResponse>;
     }));
   }
 
-  protected processNotes_V1_CreateNote(response: HttpResponseBase): Observable<string> {
+  protected processNotes_V1_CreateNote(response: HttpResponseBase): Observable<NoteResponse> {
     const status = response.status;
     const responseBlob =
       response instanceof HttpResponse ? response.body :
@@ -2660,8 +2659,7 @@ export class ApiClient {
       return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
         let result200: any = null;
         let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+        result200 = NoteResponse.fromJS(resultData200);
         return _observableOf(result200);
       }));
     } else if (status !== 200 && status !== 204) {
@@ -2669,7 +2667,7 @@ export class ApiClient {
         return throwException("An unexpected server error occurred.", status, _responseText, _headers);
       }));
     }
-    return _observableOf<string>(null as any);
+    return _observableOf<NoteResponse>(null as any);
   }
 
   /**

@@ -1,7 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Select} from "@ngxs/store";
-import {UserState} from "../../../../../kernel/store/state/user.state";
-import {finalize, Observable, Subject, Subscription, takeUntil, tap} from "rxjs";
+import {Observable, Subject, Subscription, takeUntil, tap} from "rxjs";
 import {
   ApiClient,
   IDictionariesResponse,
@@ -14,9 +13,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {GraphQLService} from "../../../../../kernel/graph-ql/graph-ql.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import moment from "moment/moment";
-import {handleApiError} from "../../../../../kernel/helpers/rxjs.helper";
-import {noteFieldsRequiredValidator} from "../../../../../kernel/helpers/validator.helper";
 import {InvoiceDialogComponent} from "../../../personal-area/dialogs/invoice-dialog/invoice-dialog.component";
 
 @Component({
@@ -72,22 +68,7 @@ export class UserDialogComponent implements OnInit, OnDestroy{
     if (this.isEdit) {
 
     } else {
-      this.graphQLService.createInvoice(
-        this.invoiceForm?.value.name,
-        Number(this.invoiceForm?.value.amount),
-        this.invoiceForm?.value.categoryId,
-        this.invoiceForm?.value.currencyId,
-        moment(this.invoiceForm?.value.date).format('YYYY-MM-DDTHH:mm:ss'),
-        this.invoiceForm?.value.type,
-        this.invoiceForm?.value.noteName,
-        this.invoiceForm?.value.noteBody
-      ).pipe(
-        takeUntil(this.ngUnsubscribe),
-        tap(() => {
-          this.dialogRef.close(true);
-        }),
-        handleApiError(this.snackBar),
-      ).subscribe();
+
     }
   }
 
@@ -96,27 +77,23 @@ export class UserDialogComponent implements OnInit, OnDestroy{
   }
 
   private getGraphQLUserById(): void {
-    this.graphQLService.getUserInvoice12(this.info?.entityId!)
+    this.graphQLService.getUserById(this.info?.entityId!)
       .pipe(
         takeUntil(this.ngUnsubscribe),
         tap((result) => {
-          this.invoice = result?.data?.invoice as IInvoiceResponse;
-          this.createInvoiceForm();
+          this.user = result?.data?.user as IUserResponse;
+          this.createUserForm();
         }),
       ).subscribe();
   }
 
-  private createInvoiceForm() {
+  private createUserForm() {
     this.userFrom = this.fb.group({
-      name: [this.invoice?.name, [Validators.required, Validators.maxLength(50)]],
-      amount: [this.invoice?.amount, [Validators.required, Validators.min(0)]],
-      date: [this.invoice?.date, [Validators.required]],
-      type: [this.invoice?.type, [Validators.required]],
-      currencyId: [this.invoice?.currencyId, [Validators.required]],
-      categoryId: [this.invoice?.categoryId, [Validators.required]],
-      noteName: [this.invoice?.note?.name],
-      noteBody: [this.invoice?.note?.body],
-    }, { validators: noteFieldsRequiredValidator() });
+      login: [this.user?.login, [Validators.required, Validators.maxLength(50)]],
+      lastName: [this.user?.lastName, [Validators.required, Validators.maxLength(50)]],
+      firstName: [this.user?.firstName, [Validators.required, Validators.maxLength(50)]],
+      patronymic: [this.user?.patronymic, [Validators.required, Validators.maxLength(50)]],
+    });
     this.isBusy = false;
   }
 }

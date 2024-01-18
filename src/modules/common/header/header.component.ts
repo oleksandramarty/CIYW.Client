@@ -3,7 +3,7 @@ import {Select, Store} from "@ngxs/store";
 import {UserState} from "../../../kernel/store/state/user.state";
 import {Observable, Subscription} from "rxjs";
 import {OnLogout} from "../../../kernel/store/actions/user.actions";
-import {ICurrentUserResponse} from "../../../kernel/services/api-client";
+import {IUserResponse} from "../../../kernel/services/api-client";
 import {Router} from "@angular/router";
 
 @Component({
@@ -15,9 +15,9 @@ export class HeaderComponent implements OnInit, OnDestroy{
   @Select(UserState.isAuthorized) isAuthorized$: Observable<boolean> | undefined;
   @Select(UserState.isUser) isUser$: Observable<boolean> | undefined;
   @Select(UserState.isAdmin) isAdmin$: Observable<boolean> | undefined;
-  @Select(UserState.getUser) user$: Observable<ICurrentUserResponse> | undefined;
+  @Select(UserState.getUser) user$: Observable<IUserResponse> | undefined;
 
-  user: ICurrentUserResponse | undefined;
+  user: IUserResponse | undefined;
 
   subs = new Subscription();
 

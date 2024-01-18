@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Apollo} from "apollo-angular";
 import {Store} from "@ngxs/store";
 import {SetUserBalance} from "../store/actions/user.actions";
-import {IBalanceInvoiceResponse, IBaseSortableQuery, IPaginator} from "../services/api-client";
+import {IInvoiceResponse, IBaseSortableQuery, IPaginator} from "../services/api-client";
 import {Observable, tap} from "rxjs";
 import {
   USER_BALANCE_QUERY,
@@ -35,7 +35,7 @@ export class GraphQLService {
     type: string,
     noteName: string,
     noteBody: string
-  ): Observable<MutationResult<IBalanceInvoiceResponse | undefined>> {
+  ): Observable<MutationResult<IInvoiceResponse | undefined>> {
     return this.apollo
       .mutate({
         mutation: CREATE_USER_INVOICE,
@@ -56,7 +56,7 @@ export class GraphQLService {
       });
   }
 
-  public getUserInvoice(id: string | null): Observable<ApolloQueryResult<{ invoice: IBalanceInvoiceResponse | undefined }>> {
+  public getUserInvoice(id: string | null): Observable<ApolloQueryResult<{ invoice: IInvoiceResponse | undefined }>> {
     return this.apollo
       .watchQuery({
         query: USER_INVOICE_QUERY,
@@ -64,7 +64,7 @@ export class GraphQLService {
           id: id!,
         },
         fetchPolicy: 'network-only',
-      }).valueChanges as Observable<ApolloQueryResult<{ invoice: IBalanceInvoiceResponse | undefined }>>;
+      }).valueChanges as Observable<ApolloQueryResult<{ invoice: IInvoiceResponse | undefined }>>;
   }
 
   public getUserBalance(userId: string | null): void {

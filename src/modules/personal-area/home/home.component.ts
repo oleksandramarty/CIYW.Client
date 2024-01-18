@@ -4,7 +4,7 @@ import {Select, Store} from "@ngxs/store";
 import {
   ApiClient, Paginator, BaseSortableQuery,
   IPaginator, IBaseSortableQuery,
-  ICurrentUserResponse, UserInvoicesQuery, IBalanceInvoiceResponse
+  IUserResponse, UserInvoicesQuery, IInvoiceResponse
 } from "../../../kernel/services/api-client";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {handleApiError} from "../../../kernel/helpers/rxjs.helper";
@@ -24,7 +24,7 @@ import {CIYWTableEnum} from "../../../kernel/enums/ciyw-table.enum";
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  @Select(UserState.getUser) user$: Observable<ICurrentUserResponse> | undefined;
+  @Select(UserState.getUser) user$: Observable<IUserResponse> | undefined;
   @Select(UserState.getBalance) balance$: Observable<IUserBalance> | undefined;
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
   subs = new Subscription();
@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   tableType = CIYWTableEnum;
 
-  user: ICurrentUserResponse | undefined;
+  user: IUserResponse | undefined;
   balance: IUserBalance | undefined;
   invoices: IListWithIncludeHelper<IInvoiceType> | undefined;
 

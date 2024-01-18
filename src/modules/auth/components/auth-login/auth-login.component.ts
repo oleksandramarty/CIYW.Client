@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
-import {ApiClient, AuthLoginQuery, ICurrentUserResponse, ITokenResponse} from "../../../../kernel/services/api-client";
+import {ApiClient, AuthLoginQuery, IUserResponse, ITokenResponse} from "../../../../kernel/services/api-client";
 import {catchError, Subject, switchMap, take, takeUntil, tap, throwError} from "rxjs";
 import {handleApiError} from "../../../../kernel/helpers/rxjs.helper";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -56,7 +56,7 @@ export class AuthLoginComponent implements OnInit, OnDestroy {
         }),
         switchMap(() => this.apiClient.users_V1_CurrentUser()),
         tap((result) => {
-          this.store.dispatch(new SetUser(result as ICurrentUserResponse));
+          this.store.dispatch(new SetUser(result as IUserResponse));
           this.store.dispatch(new HomeRedirect());
         }),
         handleApiError(this.snackBar)

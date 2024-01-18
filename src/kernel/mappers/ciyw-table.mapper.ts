@@ -1,5 +1,5 @@
 import {VariableTypeEnum} from "../enums/variable-type.enum";
-import {IBalanceInvoiceResponse, IBaseSortableQuery, IPaginator} from "../services/api-client";
+import {IInvoiceResponse, IBaseSortableQuery, IPaginator} from "../services/api-client";
 import {
   createTableCurrencyItem,
   createTableDateItem,
@@ -54,7 +54,7 @@ export interface ITableItemHelper {
   htmlContent?: string | undefined | null;
 }
 
-export function mapInvoiceTable(invoices: IBalanceInvoiceResponse[] | undefined): ITableInvoiceColumns[] {
+export function mapInvoiceTable(invoices: IInvoiceResponse[] | undefined): ITableInvoiceColumns[] {
   return !!invoices ? invoices!.map(item => {
     const temp: ITableInvoiceColumns = {
       date: createTableDateItem(item.date),

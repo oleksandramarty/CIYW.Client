@@ -1,4 +1,4 @@
-import {ICurrentUserResponse, ITokenResponse} from "../../services/api-client";
+import {IUserResponse, ITokenResponse} from "../../services/api-client";
 import {IUserBalance} from "../../models/user.model";
 
 export class LoginRedirect {
@@ -17,7 +17,7 @@ export class SetToken {
 
 export class SetUser {
   static type = '[User] SetUser';
-  constructor(public data: ICurrentUserResponse) {}
+  constructor(public data: IUserResponse) {}
 }
 
 export class SetUserBalance {

@@ -3,8 +3,8 @@ import {IEntityDialogData} from "../../../kernel/models/dialog-input-data.model"
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {
   ApiClient,
-  IBalanceInvoiceResponse,
-  ICurrentUserResponse,
+  IInvoiceResponse,
+  IUserResponse,
   IDictionariesResponse
 } from "../../../kernel/services/api-client";
 import {Select} from "@ngxs/store";
@@ -24,12 +24,12 @@ import {noteFieldsRequiredValidator} from "../../../kernel/helpers/validator.hel
   styleUrl: './invoice-dialog.component.scss'
 })
 export class InvoiceDialogComponent implements OnInit, OnDestroy{
-  @Select(UserState.getUser) user$: Observable<ICurrentUserResponse> | undefined;
+  @Select(UserState.getUser) user$: Observable<IUserResponse> | undefined;
   @Select(DictionariesState.getDictionaries) dictionaries$: Observable<IDictionariesResponse> | undefined;
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
   subs = new Subscription();
   public info: IEntityDialogData | undefined;
-  public invoice: IBalanceInvoiceResponse | null = null;
+  public invoice: IInvoiceResponse | null = null;
   public invoiceForm: FormGroup | null | undefined;
 
   public dictionaries: IDictionariesResponse | undefined;
@@ -100,7 +100,7 @@ export class InvoiceDialogComponent implements OnInit, OnDestroy{
       .pipe(
         takeUntil(this.ngUnsubscribe),
         tap((result) => {
-          this.invoice = result?.data?.invoice as IBalanceInvoiceResponse;
+          this.invoice = result?.data?.invoice as IInvoiceResponse;
           this.createInvoiceForm();
         }),
       ).subscribe();

@@ -1,4 +1,4 @@
-import {ApiClient, ICurrentUserResponse, ITokenResponse} from "../../services/api-client";
+import {ApiClient, IUserResponse, ITokenResponse} from "../../services/api-client";
 import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {Injectable} from "@angular/core";
 import {RoleEnum} from "../../enums/role.enum";
@@ -33,7 +33,7 @@ export class UserState {
     private readonly apiClient: ApiClient) {}
 
   @Selector()
-  static getUser(user: User): ICurrentUserResponse | undefined {
+  static getUser(user: User): IUserResponse | undefined {
     return user.user;
   }
   @Selector()
@@ -156,7 +156,7 @@ export class UserState {
       : false;
   }
 
-  static get user(): ICurrentUserResponse | null {
+  static get user(): IUserResponse | null {
     const data = localStorage.getItem('@@STATE');
     if (!data) {
       return null;

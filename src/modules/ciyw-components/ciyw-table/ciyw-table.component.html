@@ -8,7 +8,7 @@
       <ng-container *ngFor="let item of tableSchema.items; let i=index" [matColumnDef]="item.value">
         <ng-container *ngIf="item.isSortable else non_sortableHeader">
           <th mat-header-cell *matHeaderCellDef mat-sort-header [sortActionDescription]="'Sort by ' + item">
-            {{ item.title }}
+            {{ item.value }}
           </th>
         </ng-container>
         <ng-template #non_sortableHeader>

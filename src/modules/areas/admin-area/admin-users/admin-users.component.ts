@@ -13,8 +13,10 @@ import {IListWithIncludeHelper} from "../../../../kernel/models/common.model";
 import {FormBuilder} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {GraphQLService} from "../../../../kernel/graph-ql/graph-ql.service";
-import {ITableFilterHelper, mapGraphUsersTable} from "../../../../kernel/mappers/ciyw-table.mapper";
 import {handleApiError} from "../../../../kernel/helpers/rxjs.helper";
+import {TableFilterHelper} from "../../../../kernel/mappers/table-filter-helper";
+import {TableInvoiceColumns} from "../../../../kernel/mappers/table-invoice-columns";
+import {TableUserColumns} from "../../../../kernel/mappers/table-user-columns";
 
 @Component({
   selector: 'ciyw-admin-users',
@@ -61,7 +63,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  public filterChanged(event: ITableFilterHelper): void {
+  public filterChanged(event: TableFilterHelper): void {
     this.sort = event.sort;
     this.paginator = event.paginator;
     this.getUsers();
@@ -91,7 +93,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
           return this.apiClient.adminUsers_V1_GetUsersImages({ ids: {ids} as BaseIdsListQuery, paginator: {pageNumber: 1, pageSize: 5, isFull: true} as Paginator } as UsersImagesQuery)
         }),
         tap((result) => {
-          this.dataSource!.data = mapGraphUsersTable(this.graphQLUsers, result as IListWithIncludeHelper<IImageDataResponse> | undefined);
+          this.dataSource!.data = TableUserColumns.Map(this.graphQLUsers, result as IListWithIncludeHelper<IImageDataResponse> | undefined);
           this.isBusy = false;
         }),
         handleApiError(this.snackBar),

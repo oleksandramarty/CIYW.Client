@@ -3,16 +3,19 @@ import {IBaseSortableQuery} from "../../../kernel/services/api-client";
 import {Sort} from "@angular/material/sort";
 import {CiywPaginatorComponent} from "../ciyw-paginator/ciyw-paginator.component";
 import {VariableTypeEnum} from "../../../kernel/enums/variable-type.enum";
-import {crateCIYWTableSchema, ITableFilterHelper, ITableItemHelper} from "../../../kernel/mappers/ciyw-table.mapper";
 import {capitalizeFirstChar} from "../../../kernel/helpers/string.helper";
 import {MatDialog} from "@angular/material/dialog";
 import {CiywConfirmDialogComponent} from "../ciyw-confirm-dialog/ciyw-confirm-dialog.component";
 import {ICiywConfirmDialogData, IEntityDialogData} from "../../../kernel/models/dialog-input-data.model";
 import {MessagesConstant} from "../../../kernel/constants/messages.constant";
 import {CIYWTableDialogEnum, CIYWTableEnum} from "../../../kernel/enums/ciyw-table.enum";
-import {IDisplayedCIYWTableSchema} from "../../../kernel/models/ciyw-table.model";
+import {IDisplayedCIYWTableColumn, IDisplayedCIYWTableSchema} from "../../../kernel/mappers/ciyw-table";
 import {MatTableDataSource} from "@angular/material/table";
 import {ComponentType} from "@angular/cdk/overlay";
+import {TableFilterHelper} from "../../../kernel/mappers/table-filter-helper";
+import {TableItemHelper} from "../../../kernel/mappers/table-item-helper";
+import {InvoiceDialogComponent} from "../../areas/personal-area/dialogs/invoice-dialog/invoice-dialog.component";
+import {UserDialogComponent} from "../../areas/admin-area/dialogs/user-dialog/user-dialog.component";
 
 @Component({
   selector: 'ciyw-table',
@@ -27,7 +30,7 @@ export class CiywTableComponent<T> implements OnInit{
   @Input() pageSizeOptions: number[] = [5, 10, 25, 100];
   @Input() dataSource: MatTableDataSource<any> | undefined;
 
-  @Output() filterChanged: EventEmitter<ITableFilterHelper> = new EventEmitter<ITableFilterHelper>();
+  @Output() filterChanged: EventEmitter<TableFilterHelper> = new EventEmitter<TableFilterHelper>();
   @ViewChild(CiywPaginatorComponent) paginatorComp: CiywPaginatorComponent | undefined;
 
   public variableTypes = VariableTypeEnum;
@@ -44,7 +47,7 @@ export class CiywTableComponent<T> implements OnInit{
   }
 
   ngOnInit(): void {
-    this.tableSchema = crateCIYWTableSchema(this.type);
+    this.tableSchema = this.crateCIYWTableSchema(this.type);
     this.sort = this.defaultSort;
   }
 
@@ -69,7 +72,7 @@ export class CiywTableComponent<T> implements OnInit{
     this.filterChange();
   }
 
-  public openDialog(type: CIYWTableDialogEnum, element?: ITableItemHelper | null): void {
+  public openDialog(type: CIYWTableDialogEnum, element?: TableItemHelper | null): void {
     switch (type) {
       case CIYWTableDialogEnum.AddBtn:
         this.openAddOrEditEntityDialog(this.tableSchema?.addButtonClassName!, null);
@@ -83,7 +86,7 @@ export class CiywTableComponent<T> implements OnInit{
     }
   }
 
-  private openAddOrEditEntityDialog(className: ComponentType<any>, element?: ITableItemHelper | null): void {
+  private openAddOrEditEntityDialog(className: ComponentType<any>, element?: TableItemHelper | null): void {
     const dialogRef = this.dialog.open(className!, {
       width: '400px',
       maxWidth: '80vw',
@@ -99,7 +102,7 @@ export class CiywTableComponent<T> implements OnInit{
     });
   }
 
-  private openConfirmDeleteDialog(element: ITableItemHelper): void {
+  private openConfirmDeleteDialog(element: TableItemHelper): void {
     const dialogRef = this.dialog.open(CiywConfirmDialogComponent, {
       data: {
         title: MessagesConstant.AreYouSure,
@@ -123,6 +126,62 @@ export class CiywTableComponent<T> implements OnInit{
     this.filterChanged.emit({
       paginator: this.paginatorComp?.paginator,
       sort: this.sort
-    } as ITableFilterHelper);
+    } as TableFilterHelper);
+  }
+
+  private crateCIYWTableSchema(type: CIYWTableEnum | undefined): IDisplayedCIYWTableSchema {
+    if (!type) {
+      return {
+        displayedColumns: [],
+        items: [],
+      };
+    }
+
+    let items: IDisplayedCIYWTableColumn[] = [];
+    let addButtonText: string | null = '';
+    let addButtonClassName: ComponentType<any> | null = null;
+
+    switch (type) {
+      case CIYWTableEnum.HomeUserInvoices:
+        items = [
+          { title: 'Date', value: 'date', isSortable: true },
+          { title: 'Category', value: 'category', isSortable: true },
+          { title: 'Name', value: 'name', isSortable: true },
+          { title: 'Amount', value: 'amount', isSortable: true },
+        ];
+        addButtonText = 'Add invoice';
+        addButtonClassName = InvoiceDialogComponent;
+        break
+      case CIYWTableEnum.AdminUsers:
+        items = [
+          { title: 'Avatar', value: 'avatar', isSortable: false },
+          { title: 'Date', value: 'date', isSortable: true },
+          { title: 'Login', value: 'login', isSortable: false },
+          { title: 'Full name', value: 'fullName', isSortable: false },
+          { title: 'Phone', value: 'phone', isSortable: false },
+          { title: 'Email', value: 'email', isSortable: false },
+          { title: 'Amount', value: 'balance', isSortable: true, parentClass: 'UserBalance' },
+        ];
+        addButtonText = 'Add user';
+        addButtonClassName = UserDialogComponent;
+        break
+    }
+
+    switch (type) {
+      case CIYWTableEnum.HomeUserInvoices:
+      case CIYWTableEnum.AdminUsers:
+        items.push(
+          { title: '', value: 'edit', isSortable: false, style: { width: { attr: 'width', value: 30 }}, dialogType: CIYWTableDialogEnum.EditBtn },
+          { title: '', value: 'delete', isSortable: false, style: { width: { attr: 'width', value: 30 }}, dialogType: CIYWTableDialogEnum.DeleteBtn },
+        );
+        break
+    }
+
+    return {
+      displayedColumns: items.map(r => r.value),
+      items,
+      addButtonText,
+      addButtonClassName,
+    } as IDisplayedCIYWTableSchema;
   }
 }

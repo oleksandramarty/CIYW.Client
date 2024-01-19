@@ -11,12 +11,13 @@ import {handleApiError} from "../../../../kernel/helpers/rxjs.helper";
 import {UserState} from "../../../../kernel/store/state/user.state";
 import {MatTableDataSource} from "@angular/material/table";
 import {FormBuilder} from "@angular/forms";
-import {ITableFilterHelper, mapGraphInvoiceTable, mapInvoiceTable} from "../../../../kernel/mappers/ciyw-table.mapper";
 import {GraphQLService} from "../../../../kernel/graph-ql/graph-ql.service";
 import {IUserBalance} from "../../../../kernel/models/user.model";
 import {IListWithIncludeHelper} from "../../../../kernel/models/common.model";
 import {IInvoiceType} from "../../../../kernel/models/invoice.model";
 import {CIYWTableEnum} from "../../../../kernel/enums/ciyw-table.enum";
+import {TableInvoiceColumns} from "../../../../kernel/mappers/table-invoice-columns";
+import {TableFilterHelper} from "../../../../kernel/mappers/table-filter-helper";
 
 @Component({
   selector: 'ciyw-home',
@@ -79,37 +80,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  public filterChanged(event: ITableFilterHelper): void {
+  public filterChanged(event: TableFilterHelper): void {
     this.sort = event.sort;
     this.paginator = event.paginator;
     this.getInvoices();
   }
 
   private getInvoices(): void {
-    // this.getApiInvoices();
     this.getGraphQLInvoices();
     this.graphQlService.getUserBalance(this.user!.id!);
-  }
-
-  private getApiInvoices(): void {
-    this.isBusy = true;
-    this.dataSource = new MatTableDataSource<any>([]);
-    this.apiClient.invoices_V1_GetUserInvoicesPOST({
-      paginator: this.paginator as Paginator,
-      sort: this.sort as BaseSortableQuery
-    } as UserInvoicesQuery)
-      .pipe(
-        takeUntil(this.ngUnsubscribe),
-        tap((result) => {
-          this.invoices = result as IListWithIncludeHelper<IInvoiceType>;
-          if (!this.dataSource) {
-            this.dataSource = new MatTableDataSource<any>([]);
-          }
-          this.dataSource!.data = mapGraphInvoiceTable(this.invoices);
-        }),
-        handleApiError(this.snackBar),
-        finalize(() => this.isBusy = false)
-      ).subscribe();
   }
 
   private getGraphQLInvoices(): void {
@@ -123,7 +102,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           if (!this.dataSource) {
             this.dataSource = new MatTableDataSource<any>([]);
           }
-          this.dataSource!.data = mapGraphInvoiceTable(this.graphQLInvoices);
+          this.dataSource!.data = TableInvoiceColumns.Map(this.graphQLInvoices);
           this.isBusy = false;
         }),
         handleApiError(this.snackBar),

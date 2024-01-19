@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Select, Store} from "@ngxs/store";
-import {Subject, takeUntil, tap} from "rxjs";
+import {Subject, switchMap, takeUntil, tap} from "rxjs";
 import {
-  ApiClient,
-  IBaseSortableQuery,
-  IPaginator,
+  ApiClient, BaseIdsListQuery,
+  IBaseSortableQuery, IImageDataResponse,
+  IPaginator, Paginator, UsersImagesQuery,
 } from "../../../../kernel/services/api-client";
 import {IUserBalance, IUserType} from "../../../../kernel/models/user.model";
 import {MatTableDataSource} from "@angular/material/table";
@@ -77,12 +77,21 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
     this.graphQlService.getAdminUsers(this.paginator, this.sort)
       .pipe(
         takeUntil(this.ngUnsubscribe),
-        tap((result) => {
+        switchMap((result) => {
           this.graphQLUsers = result?.data?.users;
           if (!this.dataSource) {
             this.dataSource = new MatTableDataSource<any>([]);
           }
-          this.dataSource!.data = mapGraphUsersTable(this.graphQLUsers);
+
+          let ids: string[] = [];
+          this.graphQLUsers?.entities.forEach((item) => {
+            ids.push(item.id!);
+          });
+
+          return this.apiClient.adminUsers_V1_GetUsersImages({ ids: {ids} as BaseIdsListQuery, paginator: {pageNumber: 1, pageSize: 5, isFull: true} as Paginator } as UsersImagesQuery)
+        }),
+        tap((result) => {
+          this.dataSource!.data = mapGraphUsersTable(this.graphQLUsers, result as IListWithIncludeHelper<IImageDataResponse> | undefined);
           this.isBusy = false;
         }),
         handleApiError(this.snackBar),

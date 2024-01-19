@@ -13,8 +13,7 @@
       <ciyw-input [controlGroup]="userFrom" [selectData]="dictionaries?.tariffs" placeholder="Tariff" controlName=tariffId type="select" ></ciyw-input>
       <ciyw-input [controlGroup]="userFrom" [selectData]="dictionaries?.currencies" placeholder="Currency" controlName="currencyId" type="select" ></ciyw-input>
 
-      <input type="file" (change)="onFileChange($event)" />
-      <button (click)="uploadFile()">Upload</button>
+      <ciyw-file-upload #fileComp title="User avatar"></ciyw-file-upload>
 
     </ng-container>
     <ng-template #loader>

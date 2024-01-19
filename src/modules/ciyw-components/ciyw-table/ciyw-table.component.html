@@ -19,6 +19,11 @@
           <ng-container *ngIf="element[item.value].type === variableTypes.Date">{{element[item.value].value | date: element[item.value].pipeParams.format}}</ng-container>
           <ng-container *ngIf="element[item.value].type === variableTypes.Currency">{{element[item.value].value | currency: element[item.value].pipeParams.currency}}</ng-container>
 
+
+          <ng-container *ngIf="element[item.value].type === variableTypes.Avatar">
+            <ciyw-avatar [imageData]="element[item.value].value"></ciyw-avatar>
+          </ng-container>
+
           <ng-container *ngIf="element[item.value].type === variableTypes.Icon">
             <mat-icon
               class="pointer"

@@ -8,6 +8,9 @@
       <div class="menu-item-wrapper" *ngIf="(isAdmin$ | async)" (click)="goto('admin/users')">Users</div>
     </div>
 
+    <div *ngIf="avatar" class="d-flex flex-item m-10">
+      <img class="avatar" [src]="'data:image/png;base64,' + avatar" alt="Avatar">
+    </div>
     <div class="flex-item m-10 f-075">
       <div class="h-020">{{user.login}}</div>
       <div class="flex-container" *ngIf="user.tariff">

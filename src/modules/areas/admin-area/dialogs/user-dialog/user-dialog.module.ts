@@ -8,6 +8,7 @@ import {CiywLoaderModule} from "../../../../ciyw-components/ciyw-loader/ciyw-loa
 import {CiywInputModule} from "../../../../ciyw-components/ciyw-inputs/ciyw-input/ciyw-input.module";
 import {MatButtonModule} from "@angular/material/button";
 import {UserDialogComponent} from "./user-dialog.component";
+import {CiywFileUploadModule} from "../../../../ciyw-components/ciyw-inputs/ciyw-file-upload/ciyw-file-upload.module";
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import {UserDialogComponent} from "./user-dialog.component";
     MatButtonModule,
 
     CiywInputModule,
+    CiywFileUploadModule,
   ],
   exports: [
     UserDialogComponent,

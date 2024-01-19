@@ -14,6 +14,10 @@ export class SetToken {
   static type = '[User] SetToken'
   constructor(public data: ITokenResponse) {}
 }
+export class SetAvatar {
+  static type = '[User] SetAvatar'
+  constructor(public data: string | undefined) {}
+}
 
 export class SetUser {
   static type = '[User] SetUser';

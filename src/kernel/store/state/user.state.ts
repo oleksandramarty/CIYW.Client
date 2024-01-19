@@ -9,7 +9,7 @@ import {
   SetUser,
   ResetUser,
   HomeRedirect,
-  SetUserBalance
+  SetUserBalance, SetAvatar
 } from "../actions/user.actions";
 import {Navigate} from "@ngxs/router-plugin";
 import {catchError, EMPTY, switchMap, tap, throwError} from "rxjs";
@@ -20,6 +20,7 @@ const defaults = {
   user: undefined,
   token: undefined,
   balance: undefined,
+  avatar: undefined,
 };
 
 @State<User>({
@@ -32,6 +33,10 @@ export class UserState {
   constructor(
     private readonly apiClient: ApiClient) {}
 
+  @Selector()
+  static getAvatar(user: User): string | undefined {
+    return user.avatar;
+  }
   @Selector()
   static getUser(user: User): IUserResponse | undefined {
     return user.user;
@@ -107,6 +112,11 @@ export class UserState {
     token = !!data && !!data.value ? data.value : '';
     this.sessionToken = String(token);
     patchState({token: data});
+  }
+
+  @Action(SetAvatar)
+  SetAvatar({patchState}: StateContext<User>, {data}: any) {
+    patchState({avatar: data});
   }
 
   @Action(SetUser)

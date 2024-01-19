@@ -231,6 +231,216 @@ export class ApiClient {
    * @param body (optional)
    * @return Success
    */
+  adminUsers_V1_GetUsersImages(body?: UsersImagesQuery | null | undefined): Observable<ImageDataResponseListWithIncludeHelper> {
+    let url_ = this.baseUrl + "/api-ciyw/adminusers/v1/images/ids";
+    url_ = url_.replace(/[?&]$/, "");
+
+    const content_ = JSON.stringify(body);
+
+    let options_ : any = {
+      body: content_,
+      observe: "response",
+      responseType: "blob",
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      })
+    };
+
+    return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+      return this.processAdminUsers_V1_GetUsersImages(response_);
+    })).pipe(_observableCatch((response_: any) => {
+      if (response_ instanceof HttpResponseBase) {
+        try {
+          return this.processAdminUsers_V1_GetUsersImages(response_ as any);
+        } catch (e) {
+          return _observableThrow(e) as any as Observable<ImageDataResponseListWithIncludeHelper>;
+        }
+      } else
+        return _observableThrow(response_) as any as Observable<ImageDataResponseListWithIncludeHelper>;
+    }));
+  }
+
+  protected processAdminUsers_V1_GetUsersImages(response: HttpResponseBase): Observable<ImageDataResponseListWithIncludeHelper> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse ? response.body :
+        (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+    if (status === 400) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result400: any = null;
+        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result400 = ErrorMessage.fromJS(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+      }));
+    } else if (status === 401) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result401: any = null;
+        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result401 = ErrorMessage.fromJS(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+      }));
+    } else if (status === 403) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result403: any = null;
+        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result403 = ErrorMessage.fromJS(resultData403);
+        return throwException("Forbidden", status, _responseText, _headers, result403);
+      }));
+    } else if (status === 404) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result404: any = null;
+        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result404 = ErrorMessage.fromJS(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+      }));
+    } else if (status === 409) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result409: any = null;
+        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result409 = ErrorMessage.fromJS(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+      }));
+    } else if (status === 417) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result417: any = null;
+        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result417 = ErrorMessage.fromJS(resultData417);
+        return throwException("Client Error", status, _responseText, _headers, result417);
+      }));
+    } else if (status === 500) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result500: any = null;
+        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result500 = ErrorMessage.fromJS(resultData500);
+        return throwException("Server Error", status, _responseText, _headers, result500);
+      }));
+    } else if (status === 200) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result200: any = null;
+        let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result200 = ImageDataResponseListWithIncludeHelper.fromJS(resultData200);
+        return _observableOf(result200);
+      }));
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+      }));
+    }
+    return _observableOf<ImageDataResponseListWithIncludeHelper>(null as any);
+  }
+
+  /**
+   * @param body (optional)
+   * @return Success
+   */
+  adminUsers_V1_GetUserImage(body?: UserImageQuery | null | undefined): Observable<ImageDataResponse> {
+    let url_ = this.baseUrl + "/api-ciyw/adminusers/v1/images";
+    url_ = url_.replace(/[?&]$/, "");
+
+    const content_ = JSON.stringify(body);
+
+    let options_ : any = {
+      body: content_,
+      observe: "response",
+      responseType: "blob",
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      })
+    };
+
+    return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+      return this.processAdminUsers_V1_GetUserImage(response_);
+    })).pipe(_observableCatch((response_: any) => {
+      if (response_ instanceof HttpResponseBase) {
+        try {
+          return this.processAdminUsers_V1_GetUserImage(response_ as any);
+        } catch (e) {
+          return _observableThrow(e) as any as Observable<ImageDataResponse>;
+        }
+      } else
+        return _observableThrow(response_) as any as Observable<ImageDataResponse>;
+    }));
+  }
+
+  protected processAdminUsers_V1_GetUserImage(response: HttpResponseBase): Observable<ImageDataResponse> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse ? response.body :
+        (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+    if (status === 400) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result400: any = null;
+        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result400 = ErrorMessage.fromJS(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+      }));
+    } else if (status === 401) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result401: any = null;
+        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result401 = ErrorMessage.fromJS(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+      }));
+    } else if (status === 403) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result403: any = null;
+        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result403 = ErrorMessage.fromJS(resultData403);
+        return throwException("Forbidden", status, _responseText, _headers, result403);
+      }));
+    } else if (status === 404) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result404: any = null;
+        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result404 = ErrorMessage.fromJS(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+      }));
+    } else if (status === 409) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result409: any = null;
+        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result409 = ErrorMessage.fromJS(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+      }));
+    } else if (status === 417) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result417: any = null;
+        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result417 = ErrorMessage.fromJS(resultData417);
+        return throwException("Client Error", status, _responseText, _headers, result417);
+      }));
+    } else if (status === 500) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result500: any = null;
+        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result500 = ErrorMessage.fromJS(resultData500);
+        return throwException("Server Error", status, _responseText, _headers, result500);
+      }));
+    } else if (status === 200) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result200: any = null;
+        let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result200 = ImageDataResponse.fromJS(resultData200);
+        return _observableOf(result200);
+      }));
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+      }));
+    }
+    return _observableOf<ImageDataResponse>(null as any);
+  }
+
+  /**
+   * @param body (optional)
+   * @return Success
+   */
   auth_V1_SignIn(body?: CreateUserCommand | null | undefined): Observable<void> {
     let url_ = this.baseUrl + "/api-ciyw/auth/v1/signin";
     url_ = url_.replace(/[?&]$/, "");
@@ -1428,11 +1638,14 @@ export class ApiClient {
    * @param file (optional)
    * @return Success
    */
-  image_V1_CreateImage(type: any, file?: FileParameter | null | undefined): Observable<string> {
-    let url_ = this.baseUrl + "/api-ciyw/image/v1/{type}";
+  image_V1_CreateImage(type: any, userId: string, file?: FileParameter | null | undefined): Observable<string> {
+    let url_ = this.baseUrl + "/api-ciyw/image/v1/{type}/{userId}";
     if (type === undefined || type === null)
       throw new Error("The parameter 'type' must be defined.");
     url_ = url_.replace("{type}", encodeURIComponent("" + type));
+    if (userId === undefined || userId === null)
+      throw new Error("The parameter 'userId' must be defined.");
+    url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
     url_ = url_.replace(/[?&]$/, "");
 
     const content_ = new FormData();
@@ -1742,214 +1955,6 @@ export class ApiClient {
       }));
     }
     return _observableOf<void>(null as any);
-  }
-
-  /**
-   * @return Success
-   */
-  image_V1_GetUserImage(id: string): Observable<ImageDataResponse> {
-    let url_ = this.baseUrl + "/api-ciyw/image/v1/users/{id}";
-    if (id === undefined || id === null)
-      throw new Error("The parameter 'id' must be defined.");
-    url_ = url_.replace("{id}", encodeURIComponent("" + id));
-    url_ = url_.replace(/[?&]$/, "");
-
-    let options_ : any = {
-      observe: "response",
-      responseType: "blob",
-      headers: new HttpHeaders({
-        "Accept": "application/json"
-      })
-    };
-
-    return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-      return this.processImage_V1_GetUserImage(response_);
-    })).pipe(_observableCatch((response_: any) => {
-      if (response_ instanceof HttpResponseBase) {
-        try {
-          return this.processImage_V1_GetUserImage(response_ as any);
-        } catch (e) {
-          return _observableThrow(e) as any as Observable<ImageDataResponse>;
-        }
-      } else
-        return _observableThrow(response_) as any as Observable<ImageDataResponse>;
-    }));
-  }
-
-  protected processImage_V1_GetUserImage(response: HttpResponseBase): Observable<ImageDataResponse> {
-    const status = response.status;
-    const responseBlob =
-      response instanceof HttpResponse ? response.body :
-        (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-    if (status === 400) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result400: any = null;
-        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result400 = ErrorMessage.fromJS(resultData400);
-        return throwException("Bad Request", status, _responseText, _headers, result400);
-      }));
-    } else if (status === 401) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result401: any = null;
-        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result401 = ErrorMessage.fromJS(resultData401);
-        return throwException("Unauthorized", status, _responseText, _headers, result401);
-      }));
-    } else if (status === 403) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result403: any = null;
-        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result403 = ErrorMessage.fromJS(resultData403);
-        return throwException("Forbidden", status, _responseText, _headers, result403);
-      }));
-    } else if (status === 404) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result404: any = null;
-        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result404 = ErrorMessage.fromJS(resultData404);
-        return throwException("Not Found", status, _responseText, _headers, result404);
-      }));
-    } else if (status === 409) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result409: any = null;
-        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result409 = ErrorMessage.fromJS(resultData409);
-        return throwException("Conflict", status, _responseText, _headers, result409);
-      }));
-    } else if (status === 417) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result417: any = null;
-        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result417 = ErrorMessage.fromJS(resultData417);
-        return throwException("Client Error", status, _responseText, _headers, result417);
-      }));
-    } else if (status === 500) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result500: any = null;
-        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result500 = ErrorMessage.fromJS(resultData500);
-        return throwException("Server Error", status, _responseText, _headers, result500);
-      }));
-    } else if (status === 200) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result200: any = null;
-        let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result200 = ImageDataResponse.fromJS(resultData200);
-        return _observableOf(result200);
-      }));
-    } else if (status !== 200 && status !== 204) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-      }));
-    }
-    return _observableOf<ImageDataResponse>(null as any);
-  }
-
-  /**
-   * @param body (optional)
-   * @return Success
-   */
-  image_V1_GetUsersImages(body?: UsersImagesQuery | null | undefined): Observable<ImageDataResponseListWithIncludeHelper> {
-    let url_ = this.baseUrl + "/api-ciyw/image/v1/users";
-    url_ = url_.replace(/[?&]$/, "");
-
-    const content_ = JSON.stringify(body);
-
-    let options_ : any = {
-      body: content_,
-      observe: "response",
-      responseType: "blob",
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      })
-    };
-
-    return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-      return this.processImage_V1_GetUsersImages(response_);
-    })).pipe(_observableCatch((response_: any) => {
-      if (response_ instanceof HttpResponseBase) {
-        try {
-          return this.processImage_V1_GetUsersImages(response_ as any);
-        } catch (e) {
-          return _observableThrow(e) as any as Observable<ImageDataResponseListWithIncludeHelper>;
-        }
-      } else
-        return _observableThrow(response_) as any as Observable<ImageDataResponseListWithIncludeHelper>;
-    }));
-  }
-
-  protected processImage_V1_GetUsersImages(response: HttpResponseBase): Observable<ImageDataResponseListWithIncludeHelper> {
-    const status = response.status;
-    const responseBlob =
-      response instanceof HttpResponse ? response.body :
-        (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-    if (status === 400) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result400: any = null;
-        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result400 = ErrorMessage.fromJS(resultData400);
-        return throwException("Bad Request", status, _responseText, _headers, result400);
-      }));
-    } else if (status === 401) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result401: any = null;
-        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result401 = ErrorMessage.fromJS(resultData401);
-        return throwException("Unauthorized", status, _responseText, _headers, result401);
-      }));
-    } else if (status === 403) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result403: any = null;
-        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result403 = ErrorMessage.fromJS(resultData403);
-        return throwException("Forbidden", status, _responseText, _headers, result403);
-      }));
-    } else if (status === 404) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result404: any = null;
-        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result404 = ErrorMessage.fromJS(resultData404);
-        return throwException("Not Found", status, _responseText, _headers, result404);
-      }));
-    } else if (status === 409) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result409: any = null;
-        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result409 = ErrorMessage.fromJS(resultData409);
-        return throwException("Conflict", status, _responseText, _headers, result409);
-      }));
-    } else if (status === 417) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result417: any = null;
-        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result417 = ErrorMessage.fromJS(resultData417);
-        return throwException("Client Error", status, _responseText, _headers, result417);
-      }));
-    } else if (status === 500) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result500: any = null;
-        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result500 = ErrorMessage.fromJS(resultData500);
-        return throwException("Server Error", status, _responseText, _headers, result500);
-      }));
-    } else if (status === 200) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result200: any = null;
-        let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result200 = ImageDataResponseListWithIncludeHelper.fromJS(resultData200);
-        return _observableOf(result200);
-      }));
-    } else if (status !== 200 && status !== 204) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-      }));
-    }
-    return _observableOf<ImageDataResponseListWithIncludeHelper>(null as any);
   }
 
   /**
@@ -2968,6 +2973,106 @@ export class ApiClient {
       }));
     }
     return _observableOf<UserResponse>(null as any);
+  }
+
+  /**
+   * @return Success
+   */
+  users_V1_GetCurrentUserImage(): Observable<ImageDataResponse> {
+    let url_ = this.baseUrl + "/api-ciyw/users/v1/avatar";
+    url_ = url_.replace(/[?&]$/, "");
+
+    let options_ : any = {
+      observe: "response",
+      responseType: "blob",
+      headers: new HttpHeaders({
+        "Accept": "application/json"
+      })
+    };
+
+    return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+      return this.processUsers_V1_GetCurrentUserImage(response_);
+    })).pipe(_observableCatch((response_: any) => {
+      if (response_ instanceof HttpResponseBase) {
+        try {
+          return this.processUsers_V1_GetCurrentUserImage(response_ as any);
+        } catch (e) {
+          return _observableThrow(e) as any as Observable<ImageDataResponse>;
+        }
+      } else
+        return _observableThrow(response_) as any as Observable<ImageDataResponse>;
+    }));
+  }
+
+  protected processUsers_V1_GetCurrentUserImage(response: HttpResponseBase): Observable<ImageDataResponse> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse ? response.body :
+        (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+    if (status === 400) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result400: any = null;
+        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result400 = ErrorMessage.fromJS(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+      }));
+    } else if (status === 401) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result401: any = null;
+        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result401 = ErrorMessage.fromJS(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+      }));
+    } else if (status === 403) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result403: any = null;
+        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result403 = ErrorMessage.fromJS(resultData403);
+        return throwException("Forbidden", status, _responseText, _headers, result403);
+      }));
+    } else if (status === 404) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result404: any = null;
+        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result404 = ErrorMessage.fromJS(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+      }));
+    } else if (status === 409) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result409: any = null;
+        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result409 = ErrorMessage.fromJS(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+      }));
+    } else if (status === 417) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result417: any = null;
+        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result417 = ErrorMessage.fromJS(resultData417);
+        return throwException("Client Error", status, _responseText, _headers, result417);
+      }));
+    } else if (status === 500) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result500: any = null;
+        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result500 = ErrorMessage.fromJS(resultData500);
+        return throwException("Server Error", status, _responseText, _headers, result500);
+      }));
+    } else if (status === 200) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result200: any = null;
+        let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result200 = ImageDataResponse.fromJS(resultData200);
+        return _observableOf(result200);
+      }));
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+      }));
+    }
+    return _observableOf<ImageDataResponse>(null as any);
   }
 }
 
@@ -4501,6 +4606,46 @@ export interface IUserBalanceResponse {
   id?: string | undefined;
 }
 
+export class UserImageQuery implements IUserImageQuery {
+  userId?: string | undefined;
+  id?: string | undefined;
+
+  constructor(data?: IUserImageQuery) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.userId = _data["userId"];
+      this.id = _data["id"];
+    }
+  }
+
+  static fromJS(data: any): UserImageQuery {
+    data = typeof data === 'object' ? data : {};
+    let result = new UserImageQuery();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["userId"] = this.userId;
+    data["id"] = this.id;
+    return data;
+  }
+}
+
+export interface IUserImageQuery {
+  userId?: string | undefined;
+  id?: string | undefined;
+}
+
 export class UserInvoicesQuery implements IUserInvoicesQuery {
   ids?: BaseIdsListQuery | undefined;
   paginator?: Paginator | undefined;
@@ -4575,6 +4720,7 @@ export class UserResponse implements IUserResponse {
   emailConfirmed?: boolean | undefined;
   phoneNumberConfirmed?: boolean | undefined;
   balanceAmount?: number | undefined;
+  avatar?: ImageDataResponse | undefined;
   created?: Date | undefined;
   updated?: Date | undefined;
   id?: string | undefined;
@@ -4611,6 +4757,7 @@ export class UserResponse implements IUserResponse {
       this.emailConfirmed = _data["emailConfirmed"];
       this.phoneNumberConfirmed = _data["phoneNumberConfirmed"];
       this.balanceAmount = _data["balanceAmount"];
+      this.avatar = _data["avatar"] ? ImageDataResponse.fromJS(_data["avatar"]) : <any>undefined;
       this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
       this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
       this.id = _data["id"];
@@ -4647,6 +4794,7 @@ export class UserResponse implements IUserResponse {
     data["emailConfirmed"] = this.emailConfirmed;
     data["phoneNumberConfirmed"] = this.phoneNumberConfirmed;
     data["balanceAmount"] = this.balanceAmount;
+    data["avatar"] = this.avatar ? this.avatar.toJSON() : <any>undefined;
     data["created"] = this.created ? this.created.toISOString() : <any>undefined;
     data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
     data["id"] = this.id;
@@ -4676,6 +4824,7 @@ export interface IUserResponse {
   emailConfirmed?: boolean | undefined;
   phoneNumberConfirmed?: boolean | undefined;
   balanceAmount?: number | undefined;
+  avatar?: ImageDataResponse | undefined;
   created?: Date | undefined;
   updated?: Date | undefined;
   id?: string | undefined;

@@ -1,12 +1,21 @@
 import {VariableTypeEnum} from "../enums/variable-type.enum";
-import {IInvoiceResponse, IBaseSortableQuery, IPaginator} from "../services/api-client";
+import {
+  FileTypeEnum,
+  IBaseSortableQuery, IImageDataResponse,
+  IInvoiceResponse,
+  ImageDataResponse,
+  IPaginator
+} from "../services/api-client";
 import {
   createTableCurrencyItem,
   createTableDateItem,
   createTableDefaultItem,
-  createTableIconItem
+  createTableIconItem,
+  createTableImageItem
 } from "../helpers/ciyw-table.helper";
-import {InvoiceDialogComponent} from "../../modules/areas/personal-area/dialogs/invoice-dialog/invoice-dialog.component";
+import {
+  InvoiceDialogComponent
+} from "../../modules/areas/personal-area/dialogs/invoice-dialog/invoice-dialog.component";
 import {ComponentType} from "@angular/cdk/overlay";
 import {IListWithIncludeHelper} from "../models/common.model";
 import {IInvoiceType} from "../models/invoice.model";
@@ -29,6 +38,7 @@ export interface ITableInvoiceColumns extends ITableEditableColumns{
 }
 
 export interface ITableUserColumns extends ITableEditableColumns{
+  avatar: ITableItemHelper | undefined;
   date: ITableItemHelper | undefined;
   humanize_date: ITableItemHelper | undefined;
   fullName: ITableItemHelper | undefined;
@@ -46,7 +56,7 @@ export interface ITableEditableColumns {
 
 export interface ITableItemHelper {
   type: VariableTypeEnum;
-  value: Date | number | string | boolean | undefined;
+  value: Date | number | string | boolean | IImageDataResponse |undefined;
   icon: string | null;
   className?: ComponentType<any> | null;
   pipeParams?: {
@@ -70,9 +80,13 @@ export function mapInvoiceTable(invoices: IInvoiceResponse[] | undefined): ITabl
   }) : [];
 }
 
-export function mapGraphUsersTable(users: IListWithIncludeHelper<IUserType> | undefined): ITableUserColumns[] {
+export function mapGraphUsersTable(users: IListWithIncludeHelper<IUserType> | undefined, avatars: IListWithIncludeHelper<IImageDataResponse> | undefined): ITableUserColumns[] {
   return !!users?.entities ? users!.entities.map(item => {
+
+    const index = avatars?.entities?.findIndex(x => x.userId === item.id) ?? -1;
+
     const temp: ITableUserColumns = {
+      avatar: createTableImageItem(!!avatars?.entities && index > -1 ? avatars.entities[index] as IImageDataResponse : undefined),
       date: createTableDateItem(item.date, {format: 'yyyy-MM-dd'}, `<div class="opacity-05 f-075">(${item.modified})</div>`),
       humanize_date: createTableDefaultItem(item.humanize_date),
       fullName: createTableDefaultItem(`${item.firstName} ${item.lastName}`),
@@ -127,6 +141,7 @@ export function crateCIYWTableSchema(type: CIYWTableEnum | undefined): IDisplaye
       break
     case CIYWTableEnum.AdminUsers:
       items = [
+        { title: 'Avatar', value: 'avatar', isSortable: false },
         { title: 'Date', value: 'date', isSortable: true },
         { title: 'Login', value: 'login', isSortable: false },
         { title: 'Full name', value: 'fullName', isSortable: false },

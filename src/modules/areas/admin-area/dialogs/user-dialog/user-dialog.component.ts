@@ -1,8 +1,8 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Select} from "@ngxs/store";
 import {Observable, Subject, Subscription, takeUntil, tap} from "rxjs";
 import {
-  ApiClient,
+  ApiClient, FileTypeEnum,
   IDictionariesResponse,
   IInvoiceResponse,
   IUserResponse
@@ -14,6 +14,11 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {GraphQLService} from "../../../../../kernel/graph-ql/graph-ql.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {InvoiceDialogComponent} from "../../../personal-area/dialogs/invoice-dialog/invoice-dialog.component";
+import {CiywPaginatorComponent} from "../../../../ciyw-components/ciyw-paginator/ciyw-paginator.component";
+import {
+  CiywFileUploadComponent
+} from "../../../../ciyw-components/ciyw-inputs/ciyw-file-upload/ciyw-file-upload.component";
+import {handleApiError} from "../../../../../kernel/helpers/rxjs.helper";
 
 @Component({
   selector: 'ciyw-user-dialog',
@@ -31,7 +36,7 @@ export class UserDialogComponent implements OnInit, OnDestroy{
   public dictionaries: IDictionariesResponse | undefined;
   public isBusy: boolean | null = true;
 
-  selectedFile: File | null = null;
+  @ViewChild(CiywFileUploadComponent) fileComp: CiywFileUploadComponent | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<InvoiceDialogComponent>,
@@ -67,10 +72,20 @@ export class UserDialogComponent implements OnInit, OnDestroy{
   }
 
   public createOrUpdateUser(): void {
+    console.log(this.fileComp?.selectedFile)
+
+    this.apiClient.image_V1_CreateImage(FileTypeEnum.USER_IMAGE, this.user?.id!, { data: this.fileComp?.selectedFile, fileName: this.fileComp?.selectedFile?.name!})
+      .pipe(
+        takeUntil(this.ngUnsubscribe),
+        tap((result) => {
+          console.log(result);
+        }),
+        handleApiError(this.snackBar)
+      ).subscribe();
+
     if (this.isEdit) {
 
     } else {
-
     }
   }
 
@@ -106,25 +121,5 @@ export class UserDialogComponent implements OnInit, OnDestroy{
       phoneNumberConfirmed: [this.user?.phoneNumberConfirmed],
     });
     this.isBusy = false;
-  }
-
-  onFileChange(event: any): void {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
-      this.selectedFile = fileList[0];
-    } else {
-      this.selectedFile = null;
-    }
-  }
-
-  uploadFile(): void {
-    if (this.selectedFile) {
-      const formData = new FormData();
-      formData.append('file', this.selectedFile);
-
-
-    } else {
-      console.error('No file selected');
-    }
   }
 }

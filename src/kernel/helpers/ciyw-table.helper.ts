@@ -2,6 +2,7 @@ import {ITableItemHelper} from "../mappers/ciyw-table.mapper";
 import {VariableTypeEnum} from "../enums/variable-type.enum";
 import {ComponentType} from "@angular/cdk/overlay";
 import {IStyleHelper} from "../models/common.model";
+import {IImageDataResponse, ImageDataResponse} from "../services/api-client";
 
 export function createTableDateItem(
   value: Date | undefined,
@@ -60,5 +61,17 @@ export function createTableIconItem(
     className,
     pipeParams: null,
     htmlContent,
+  }
+}
+
+export function createTableImageItem(
+  value: IImageDataResponse | undefined): ITableItemHelper {
+  return {
+    type: VariableTypeEnum.Avatar,
+    value,
+    icon: null,
+    className: null,
+    pipeParams: null,
+    htmlContent: null,
   }
 }

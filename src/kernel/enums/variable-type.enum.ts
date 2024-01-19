@@ -3,4 +3,5 @@ export enum VariableTypeEnum {
   Currency = 'Currency',
   Date = 'Date',
   Icon = 'Icon',
+  Avatar = 'Avatar',
 }

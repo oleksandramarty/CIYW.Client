@@ -16,8 +16,10 @@ export class HeaderComponent implements OnInit, OnDestroy{
   @Select(UserState.isUser) isUser$: Observable<boolean> | undefined;
   @Select(UserState.isAdmin) isAdmin$: Observable<boolean> | undefined;
   @Select(UserState.getUser) user$: Observable<IUserResponse> | undefined;
+  @Select(UserState.getAvatar) avatar$: Observable<string | undefined> | undefined;
 
   user: IUserResponse | undefined;
+  avatar: string | undefined;
 
   subs = new Subscription();
 
@@ -30,6 +32,9 @@ export class HeaderComponent implements OnInit, OnDestroy{
   ngOnInit() {
     if (!!this.user$) {
       this.subs.add(this.user$.subscribe((user) => this.user = user));
+    }
+    if (!!this.avatar$) {
+      this.subs.add(this.avatar$.subscribe((avatar) => this.avatar = avatar));
     }
   }
 

@@ -1,0 +1,5 @@
+<div *ngIf="title">{{title}}</div>
+<input #fileUpload hidden="true" type="file" onclick="this.value=null" (change)="onFileChange($event)"/>
+<button mat-flat-button color="primary" (click)="fileUpload.click()">Choose File</button>
+<div class="f-075 mb-0">{{selectedFile?.name}}</div>
+<div class="pointer error-message f-075" *ngIf="!!selectedFile" (click)="selectedFile = null">Remove</div>

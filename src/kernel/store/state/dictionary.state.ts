@@ -37,7 +37,7 @@ export class DictionariesState {
   static getInvoiceTypes(data: Dictionaries): IStringDictionaryResponse { return data.roles as IStringDictionaryResponse; }
 
   @Action(SetDictionaries)
-  SetUser({patchState}: StateContext<Dictionaries>, {data}: any) {
+  SetDictionaries({patchState}: StateContext<Dictionaries>, {data}: any) {
     patchState({
       currencies: data.currencies as IGuidDictionaryResponse,
       categories: data.categories as IGuidDictionaryResponse,

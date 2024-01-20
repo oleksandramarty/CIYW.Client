@@ -9,7 +9,7 @@ import {
   USER_INVOICE_QUERY,
   USER_INVOICES_QUERY,
   CREATE_USER_INVOICE,
-  ADMIN_USERS_QUERY, USER_BY_ID_FOR_ADMIN
+  ADMIN_USERS_QUERY, USER_BY_ID_FOR_ADMIN, CREATE_USER_BY_ADMIN, UPDATE_USER_BY_ADMIN
 } from "./graph-ql.query";
 import {ApolloQueryResult} from "@apollo/client";
 import {IListWithIncludeHelper} from "../models/common.model";
@@ -133,6 +133,88 @@ export class GraphQLService {
         },
         fetchPolicy: 'network-only',
       }).valueChanges as Observable<ApolloQueryResult<{ users: IListWithIncludeHelper<IUserType> | undefined }>>;
+  }
+
+  public createUserByAdmin(
+    lastName: string,
+    firstName: string,
+    patronymic: string,
+    login: string,
+    email: string,
+    phone: string,
+    confirmEmail: string,
+    isAgree: boolean,
+    password: string,
+    confirmPassword: string,
+    isAgreeDigest: boolean,
+    isTemporaryPassword: boolean,
+    tariffId: string,
+    currencyId: string
+  ): Observable<MutationResult<IUserResponse | undefined>> {
+    return this.apollo
+      .mutate({
+        mutation: CREATE_USER_BY_ADMIN,
+        variables: {
+          input: {
+            lastName,
+            firstName,
+            patronymic,
+            login,
+            email,
+            phone,
+            confirmEmail,
+            isAgree,
+            password,
+            confirmPassword,
+            isAgreeDigest,
+            isTemporaryPassword,
+            tariffId,
+            currencyId,
+          },
+        },
+      });
+  }
+
+  public updateUserByAdmin(
+    id: string,
+    lastName: string,
+    firstName: string,
+    patronymic: string,
+    login: string,
+    email: string,
+    phone: string,
+    confirmEmail: string,
+    isAgree: boolean,
+    password: string,
+    confirmPassword: string,
+    isAgreeDigest: boolean,
+    isTemporaryPassword: boolean,
+    tariffId: string,
+    currencyId: string
+  ): Observable<MutationResult<IUserResponse | undefined>> {
+    return this.apollo
+      .mutate({
+        mutation: UPDATE_USER_BY_ADMIN,
+        variables: {
+          id,
+          input: {
+            lastName,
+            firstName,
+            patronymic,
+            login,
+            email,
+            phone,
+            confirmEmail,
+            isAgree,
+            password,
+            confirmPassword,
+            isAgreeDigest,
+            isTemporaryPassword,
+            tariffId,
+            currencyId,
+          },
+        },
+      });
   }
 }
 

@@ -1,6 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Select} from "@ngxs/store";
-import {Observable, Subject, Subscription, takeUntil, tap} from "rxjs";
+import {Observable, Subject, Subscription, switchMap, takeUntil, tap} from "rxjs";
 import {
   ApiClient, FileTypeEnum,
   IDictionariesResponse,
@@ -72,8 +72,53 @@ export class UserDialogComponent implements OnInit, OnDestroy{
   }
 
   public createOrUpdateUser(): void {
-    console.log(this.fileComp?.selectedFile)
+    if (this.isEdit) {
+      this.graphQLService.updateUserByAdmin(
+        this.user!.id!,
+        this.userFrom?.value.lastName,
+        this.userFrom?.value.firstName,
+        this.userFrom?.value.patronymic,
+        this.userFrom?.value.login,
+        this.userFrom?.value.email,
+        this.userFrom?.value.phone,
+        this.userFrom?.value.email,
+        true,
+        '',
+        '',
+        false,
+        !!this.userFrom?.value.isTemporaryPassword,
+        this.userFrom?.value.tariffId!,
+        this.userFrom?.value.currencyId!
+      ).pipe(
+        takeUntil(this.ngUnsubscribe),
+        tap(() => {
+          this.dialogRef.close(true);
+        })).subscribe();
+    } else {
+      this.graphQLService.createUserByAdmin(
+        this.userFrom?.value.lastName,
+        this.userFrom?.value.firstName,
+        this.userFrom?.value.patronymic,
+        this.userFrom?.value.login,
+        this.userFrom?.value.email,
+        this.userFrom?.value.phone,
+        this.userFrom?.value.email,
+        true,
+        this.userFrom?.value.password,
+        this.userFrom?.value.password,
+        false,
+        !!this.userFrom?.value.isTemporaryPassword,
+        this.userFrom?.value.tariffId!,
+        this.userFrom?.value.currencyId!
+      ).pipe(
+        takeUntil(this.ngUnsubscribe),
+        tap(() => {
+          this.dialogRef.close(true);
+        })).subscribe();
+    }
+  }
 
+  private createUserAvatar(): void {
     this.apiClient.image_V1_CreateImage(FileTypeEnum.USER_IMAGE, this.user?.id!, { data: this.fileComp?.selectedFile, fileName: this.fileComp?.selectedFile?.name!})
       .pipe(
         takeUntil(this.ngUnsubscribe),
@@ -82,11 +127,6 @@ export class UserDialogComponent implements OnInit, OnDestroy{
         }),
         handleApiError(this.snackBar)
       ).subscribe();
-
-    if (this.isEdit) {
-
-    } else {
-    }
   }
 
   private getUserById(): void {
@@ -118,6 +158,7 @@ export class UserDialogComponent implements OnInit, OnDestroy{
       currencyId: [this.user?.currencyId],
       tariffId: [this.user?.tariffId],
       emailConfirmed: [this.user?.emailConfirmed],
+      password: [''],
       phoneNumberConfirmed: [this.user?.phoneNumberConfirmed],
     });
     this.isBusy = false;

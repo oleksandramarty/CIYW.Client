@@ -43,7 +43,7 @@ export const USER_INVOICE_QUERY = gql`
 export const USER_BY_ID_FOR_ADMIN = gql`
   query GetUserByIdForAdmin($id: Guid) {
   userByIdForAdmin(id: $id) {
-  id,
+    id,
     login,
     lastName,
     firstName,
@@ -174,5 +174,73 @@ export const ADMIN_USERS_QUERY = gql`
       }
       totalCount
   }
+  }
+`;
+
+export const CREATE_USER_BY_ADMIN = gql`
+  mutation CreateUserByAdmin($input: UserInput!) {
+    createUserByAdmin(input: $input) {
+      id
+      login
+      lastName
+      firstName
+      patronymic
+      isTemporaryPassword
+      isBlocked
+      modified
+      lastForgot
+      tariffId
+      currencyId
+      userBalanceId
+      roleId
+      userBalance {
+        amount
+        currencyId
+        currency {
+          name
+          symbol
+        }
+      }
+      email
+      created
+      updated
+      emailConfirmed
+      phoneNumber
+      phoneNumberConfirmed
+    }
+  }
+`;
+
+export const UPDATE_USER_BY_ADMIN = gql`
+  mutation UpdateUserByAdmin($id: Guid!, $input: UserInput!) {
+    updateUserByAdmin(id: $id, input: $input) {
+      id
+      login
+      lastName
+      firstName
+      patronymic
+      isTemporaryPassword
+      isBlocked
+      modified
+      lastForgot
+      tariffId
+      currencyId
+      userBalanceId
+      roleId
+      userBalance {
+        amount
+        currencyId
+        currency {
+          name
+          symbol
+        }
+      }
+      email
+      created
+      updated
+      emailConfirmed
+      phoneNumber
+      phoneNumberConfirmed
+    }
   }
 `;

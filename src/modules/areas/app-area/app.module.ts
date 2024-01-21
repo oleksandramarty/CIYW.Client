@@ -29,6 +29,7 @@ import {DictionariesState} from "../../../kernel/store/state/dictionary.state";
 import {AdminAreaModule} from "../admin-area/admin-area.module";
 import {AppRoutingModule, routes} from "../../../kernel/app-routing.module";
 import {RouterModule} from "@angular/router";
+import {SignalRService} from "../../../kernel/services/signalR.service";
 
 export const MY_FORMATS = {
   parse: {
@@ -103,6 +104,7 @@ registerLocaleData(localeEN, 'en');
     },
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
     ApiClient,
+    SignalRService,
   ],
   bootstrap: [AppComponent],
 })

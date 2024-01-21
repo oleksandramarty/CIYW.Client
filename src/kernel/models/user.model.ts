@@ -1,4 +1,10 @@
-import {IUserResponse, ITokenResponse, ImageDataResponse, IImageDataResponse} from "../services/api-client";
+import {
+  IUserResponse,
+  ITokenResponse,
+  ImageDataResponse,
+  IImageDataResponse,
+  IActiveUserResponse
+} from "../services/api-client";
 import {IBaseDateEntityType, IBaseEntityType, IBaseModifiedEntityType} from "./common.model";
 import {ICurrencyType} from "./currency.model";
 
@@ -7,6 +13,7 @@ export class User {
   token: ITokenResponse | undefined;
   balance: IUserBalance | undefined;
   avatar: string | undefined;
+  active: IActiveUserResponse | undefined;
 }
 
 export interface IUserBalance {

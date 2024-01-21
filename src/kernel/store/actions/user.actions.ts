@@ -1,4 +1,4 @@
-import {IUserResponse, ITokenResponse} from "../../services/api-client";
+import {IUserResponse, ITokenResponse, IActiveUserResponse} from "../../services/api-client";
 import {IUserBalance} from "../../models/user.model";
 
 export class LoginRedirect {
@@ -14,9 +14,15 @@ export class SetToken {
   static type = '[User] SetToken'
   constructor(public data: ITokenResponse) {}
 }
+
 export class SetAvatar {
   static type = '[User] SetAvatar'
   constructor(public data: string | undefined) {}
+}
+
+export class SetActive {
+  static type = '[User] SetActive'
+  constructor(public data: IActiveUserResponse | undefined) {}
 }
 
 export class SetUser {

@@ -119,7 +119,7 @@ export class UserDialogComponent implements OnInit, OnDestroy{
   }
 
   private createUserAvatar(): void {
-    this.apiClient.image_V1_CreateImage(FileTypeEnum.USER_IMAGE, this.user?.id!, { data: this.fileComp?.selectedFile, fileName: this.fileComp?.selectedFile?.name!})
+    this.apiClient.images_V1_CreateImage(FileTypeEnum.USER_IMAGE, this.user?.id!, { data: this.fileComp?.selectedFile, fileName: this.fileComp?.selectedFile?.name!})
       .pipe(
         takeUntil(this.ngUnsubscribe),
         tap((result) => {

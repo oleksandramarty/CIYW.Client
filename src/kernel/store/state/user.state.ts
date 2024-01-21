@@ -9,11 +9,12 @@ import {
   SetUser,
   ResetUser,
   HomeRedirect,
-  SetUserBalance, SetAvatar
+  SetUserBalance, SetAvatar, SetActive
 } from "../actions/user.actions";
 import {Navigate} from "@ngxs/router-plugin";
 import {catchError, EMPTY, switchMap, tap, throwError} from "rxjs";
 import {IUserBalance, User} from "../../models/user.model";
+import {SignalRService} from "../../services/signalR.service";
 
 let token: string | null = '';
 const defaults = {
@@ -21,6 +22,7 @@ const defaults = {
   token: undefined,
   balance: undefined,
   avatar: undefined,
+  active: undefined
 };
 
 @State<User>({
@@ -31,7 +33,9 @@ const defaults = {
 export class UserState {
 
   constructor(
-    private readonly apiClient: ApiClient) {}
+    private readonly apiClient: ApiClient,
+    private readonly signalR: SignalRService,
+    ) {}
 
   @Selector()
   static getAvatar(user: User): string | undefined {
@@ -86,6 +90,7 @@ export class UserState {
           this.cleanSessionToken();
           token = null;
           dispatch(new Navigate(['/auth/login']));
+          this.signalR.stop();
         }),
         catchError((error) => {
           console.error(error);
@@ -99,6 +104,7 @@ export class UserState {
     setState(defaults);
     this.cleanSessionToken();
     token = null;
+    this.signalR.stop();
     dispatch(new Navigate(['/auth/login']));
   }
 
@@ -119,8 +125,14 @@ export class UserState {
     patchState({avatar: data});
   }
 
+  @Action(SetActive)
+  SetActive({patchState}: StateContext<User>, {data}: any) {
+    patchState({active: data});
+  }
+
   @Action(SetUser)
   SetUser({patchState}: StateContext<User>, {data}: any) {
+    this.signalR.start();
     patchState({user: data});
   }
   @Action(SetUserBalance)

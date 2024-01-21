@@ -6934,6 +6934,7 @@ export class UserSearchModel implements IUserSearchModel {
   login?: string | undefined;
   email?: string | undefined;
   phoneNumber?: string | undefined;
+  isBlocked?: boolean | undefined;
   created?: Date | undefined;
   updated?: Date | undefined;
   userBalance?: UserBalanceSearchModel | undefined;
@@ -6955,6 +6956,7 @@ export class UserSearchModel implements IUserSearchModel {
       this.login = _data["login"];
       this.email = _data["email"];
       this.phoneNumber = _data["phoneNumber"];
+      this.isBlocked = _data["isBlocked"];
       this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
       this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
       this.userBalance = _data["userBalance"] ? UserBalanceSearchModel.fromJS(_data["userBalance"]) : <any>undefined;
@@ -6976,6 +6978,7 @@ export class UserSearchModel implements IUserSearchModel {
     data["login"] = this.login;
     data["email"] = this.email;
     data["phoneNumber"] = this.phoneNumber;
+    data["isBlocked"] = this.isBlocked;
     data["created"] = this.created ? this.created.toISOString() : <any>undefined;
     data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
     data["userBalance"] = this.userBalance ? this.userBalance.toJSON() : <any>undefined;
@@ -6990,6 +6993,7 @@ export interface IUserSearchModel {
   login?: string | undefined;
   email?: string | undefined;
   phoneNumber?: string | undefined;
+  isBlocked?: boolean | undefined;
   created?: Date | undefined;
   updated?: Date | undefined;
   userBalance?: UserBalanceSearchModel | undefined;
@@ -7048,6 +7052,17 @@ export interface IUsersImagesQuery {
 }
 
 export class UsersQuery implements IUsersQuery {
+  isBlocked?: boolean | undefined;
+  phone?: string | undefined;
+  email?: string | undefined;
+  login?: string | undefined;
+  name?: string | undefined;
+  createdRange?: BaseDateRangeQuery | undefined;
+  updatedRange?: BaseDateRangeQuery | undefined;
+  categoryIds?: BaseIdsListQuery | undefined;
+  currencyIds?: BaseIdsListQuery | undefined;
+  roleIds?: BaseIdsListQuery | undefined;
+  tariffIds?: BaseIdsListQuery | undefined;
   ids?: BaseIdsListQuery | undefined;
   paginator?: Paginator | undefined;
   dateRange?: BaseDateRangeQuery | undefined;
@@ -7065,6 +7080,17 @@ export class UsersQuery implements IUsersQuery {
 
   init(_data?: any) {
     if (_data) {
+      this.isBlocked = _data["isBlocked"];
+      this.phone = _data["phone"];
+      this.email = _data["email"];
+      this.login = _data["login"];
+      this.name = _data["name"];
+      this.createdRange = _data["createdRange"] ? BaseDateRangeQuery.fromJS(_data["createdRange"]) : <any>undefined;
+      this.updatedRange = _data["updatedRange"] ? BaseDateRangeQuery.fromJS(_data["updatedRange"]) : <any>undefined;
+      this.categoryIds = _data["categoryIds"] ? BaseIdsListQuery.fromJS(_data["categoryIds"]) : <any>undefined;
+      this.currencyIds = _data["currencyIds"] ? BaseIdsListQuery.fromJS(_data["currencyIds"]) : <any>undefined;
+      this.roleIds = _data["roleIds"] ? BaseIdsListQuery.fromJS(_data["roleIds"]) : <any>undefined;
+      this.tariffIds = _data["tariffIds"] ? BaseIdsListQuery.fromJS(_data["tariffIds"]) : <any>undefined;
       this.ids = _data["ids"] ? BaseIdsListQuery.fromJS(_data["ids"]) : <any>undefined;
       this.paginator = _data["paginator"] ? Paginator.fromJS(_data["paginator"]) : <any>undefined;
       this.dateRange = _data["dateRange"] ? BaseDateRangeQuery.fromJS(_data["dateRange"]) : <any>undefined;
@@ -7082,6 +7108,17 @@ export class UsersQuery implements IUsersQuery {
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
+    data["isBlocked"] = this.isBlocked;
+    data["phone"] = this.phone;
+    data["email"] = this.email;
+    data["login"] = this.login;
+    data["name"] = this.name;
+    data["createdRange"] = this.createdRange ? this.createdRange.toJSON() : <any>undefined;
+    data["updatedRange"] = this.updatedRange ? this.updatedRange.toJSON() : <any>undefined;
+    data["categoryIds"] = this.categoryIds ? this.categoryIds.toJSON() : <any>undefined;
+    data["currencyIds"] = this.currencyIds ? this.currencyIds.toJSON() : <any>undefined;
+    data["roleIds"] = this.roleIds ? this.roleIds.toJSON() : <any>undefined;
+    data["tariffIds"] = this.tariffIds ? this.tariffIds.toJSON() : <any>undefined;
     data["ids"] = this.ids ? this.ids.toJSON() : <any>undefined;
     data["paginator"] = this.paginator ? this.paginator.toJSON() : <any>undefined;
     data["dateRange"] = this.dateRange ? this.dateRange.toJSON() : <any>undefined;
@@ -7092,6 +7129,17 @@ export class UsersQuery implements IUsersQuery {
 }
 
 export interface IUsersQuery {
+  isBlocked?: boolean | undefined;
+  phone?: string | undefined;
+  email?: string | undefined;
+  login?: string | undefined;
+  name?: string | undefined;
+  createdRange?: BaseDateRangeQuery | undefined;
+  updatedRange?: BaseDateRangeQuery | undefined;
+  categoryIds?: BaseIdsListQuery | undefined;
+  currencyIds?: BaseIdsListQuery | undefined;
+  roleIds?: BaseIdsListQuery | undefined;
+  tariffIds?: BaseIdsListQuery | undefined;
   ids?: BaseIdsListQuery | undefined;
   paginator?: Paginator | undefined;
   dateRange?: BaseDateRangeQuery | undefined;

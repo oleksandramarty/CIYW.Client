@@ -31,17 +31,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   $font-size: calc($i / 100);
   .f-#{$formatted-i} { font-size: #{$font-size}rem; }
 }
-@for $i from 1 through 500 {
-  .ml-#{$i} { margin-left: #{$i}px; }
+@for $i from 1 through 100 {
+  .ml-#{$i} { margin-left: #{$i}#{'%'}; }
+}
+@for $i from 1 through 100 {
+  .mr-#{$i} { margin-right: #{$i}#{'%'}; }
 }
 @for $i from 1 through 500 {
-  .mr-#{$i} { margin-right: #{$i}px; }
+  .ml-#{$i}p { margin-left: #{$i}px; }
 }
 @for $i from 1 through 500 {
-  .mb-#{$i} { margin-bottom: #{$i}px; }
+  .mr-#{$i}p { margin-right: #{$i}px; }
 }
 @for $i from 1 through 500 {
-  .mt-#{$i} { margin-top: #{$i}px; }
+  .mb-#{$i}p { margin-bottom: #{$i}px; }
+}
+@for $i from 1 through 500 {
+  .mt-#{$i}p { margin-top: #{$i}px; }
 }
 @for $i from 1 through 500 {
   .m-#{$i} { margin: #{$i}px; }
@@ -82,6 +88,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .d-inline {
   display: inline;
 }
+.d-inline-block {
+  display: inline-block;
+}
 .d-block {
   display: block;
 }
@@ -109,6 +118,16 @@ mat-form-field {
   border-radius: 50%;
   width: 3rem;
 }
+.filter-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
 
+.filter-item {
+  padding: 5px;
+  min-width: 100px;
+  max-width: 200px;
+  width: 25%;
+}
 
 

@@ -16,15 +16,13 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSelectModule} from "@angular/material/select";
 import {AdminAreaComponent} from "./admin-area/admin-area.component";
 import {CommonCiywModule} from "../../common/common-ciyw.module";
-import {CiywTableModule} from "../../ciyw-components/ciyw-table/ciyw-table.module";
-import {AdminUsersComponent} from "./admin-users/admin-users.component";
 import {AppRoutingModule} from "../../../kernel/app-routing.module";
 import {UserDialogModule} from "./dialogs/user-dialog/user-dialog.module";
+import {AdminUsersModule} from "./admin-users/admin-users.module";
 
 @NgModule({
   declarations: [
     AdminAreaComponent,
-    AdminUsersComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -48,12 +46,11 @@ import {UserDialogModule} from "./dialogs/user-dialog/user-dialog.module";
     MatPaginatorModule,
     MatSelectModule,
 
-    CiywTableModule,
+    AdminUsersModule,
     UserDialogModule,
   ],
   exports: [
     AdminAreaComponent,
-    AdminUsersComponent,
   ]
 })
 export class AdminAreaModule {}

@@ -4,6 +4,47 @@
   <p><strong>List of users:</strong></p>
 </div>
 
+<div class="filter-wrapper" *ngIf="userForm">
+  <div class="filter-item">
+    <ciyw-input [controlGroup]="userForm" placeholder="Phone" controlName="phone"></ciyw-input>
+  </div>
+  <div class="filter-item">
+    <ciyw-input [controlGroup]="userForm" placeholder="Email" controlName="email"></ciyw-input>
+  </div>
+  <div class="filter-item">
+    <ciyw-input [controlGroup]="userForm" placeholder="Login" controlName="login"></ciyw-input>
+  </div>
+  <div class="filter-item">
+    <ciyw-input [controlGroup]="userForm" placeholder="Name" controlName="name"></ciyw-input>
+  </div>
+
+  <div class="filter-item">
+    <ciyw-input [controlGroup]="userForm" [selectData]="dictionaries?.currencies" placeholder="Currency" controlName="currencyIds" type="select"></ciyw-input>
+  </div>
+  <div class="filter-item">
+    <ciyw-input [controlGroup]="userForm" [selectData]="dictionaries?.roles" placeholder="Role" controlName="roleIds" type="select"></ciyw-input>
+  </div>
+  <div class="filter-item">
+    <ciyw-input [controlGroup]="userForm" [selectData]="dictionaries?.tariffs" placeholder="Tariff" controlName="tariffIds" type="select"></ciyw-input>
+  </div>
+
+  <div class="filter-item">
+    <ciyw-input [controlGroup]="userForm" placeholder="Created range" controlName="createdRange" type="daterange"></ciyw-input>
+  </div>
+  <div class="filter-item">
+    <ciyw-input [controlGroup]="userForm" placeholder="Updated range" controlName="updatedRange" type="daterange"></ciyw-input>
+  </div>
+
+  <div class="filter-item">
+    <ciyw-checkbox [controlGroup]="userForm" label="Blocked" controlName="isBlocked"></ciyw-checkbox>
+  </div>
+</div>
+
+<div class="w-100 t-align-right mb-20p">
+  <button class="mr-20p" mat-flat-button color="accent">Reset</button>
+  <button mat-flat-button color="primary" (click)="usersFilterChanged()">Search</button>
+</div>
+
 <ciyw-table
   [type]="tableType.AdminUsers"
   [total]="graphQLUsers?.totalCount ?? 0"

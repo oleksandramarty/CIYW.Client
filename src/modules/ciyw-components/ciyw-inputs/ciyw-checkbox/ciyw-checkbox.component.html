@@ -1,1 +1,6 @@
-<p>ciyw-checkbox works!</p>
+<div *ngIf="controlGroup" [formGroup]="controlGroup" [class]="wrapperClass">
+  <mat-checkbox [formControlName]="controlName">{{ label }}</mat-checkbox>
+  <mat-hint
+    *ngIf="!!hint"
+  >{{ hint }}</mat-hint>
+</div>

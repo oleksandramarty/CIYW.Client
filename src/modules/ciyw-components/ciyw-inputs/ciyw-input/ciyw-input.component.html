@@ -3,7 +3,7 @@
 
     <mat-label *ngIf="label || placeholder">{{label ?? placeholder}}</mat-label>
 
-    <ng-container *ngIf="type !== 'select' && type !== 'date' && type !== 'textarea'">
+    <ng-container *ngIf="type !== 'select' && type !== 'date' && type !== 'textarea' && type !== 'daterange'">
       <input
         matInput
         [type]="type"
@@ -25,6 +25,15 @@
       <input matInput [matDatepicker]="picker" [formControlName]="controlName">
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
+    </ng-container>
+
+    <ng-container *ngIf="type === 'daterange'">
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate placeholder="Start date" [formControlName]="controlName + 'From'">
+        <input matEndDate placeholder="End date" [formControlName]="controlName + 'To'">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
     </ng-container>
 
     <ng-container *ngIf="type === 'textarea'">

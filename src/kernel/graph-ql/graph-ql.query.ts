@@ -128,7 +128,7 @@ export const USER_INVOICES_QUERY = gql`
 `;
 
 export const ADMIN_USERS_QUERY = gql`
-  query GetInvoices(
+  query GetUsers(
     $isFull: Boolean,
     $pageNumber: Int,
     $pageSize: Int,
@@ -136,7 +136,19 @@ export const ADMIN_USERS_QUERY = gql`
     $dateTo: DateTime,
     $parentClass: String,
     $column: String,
-    $direction: String
+    $direction: String,
+    $isBlocked: Boolean,
+    $phone: String,
+    $email: String,
+    $login: String,
+    $name: String,
+    $createdRangeFrom: DateTime,
+    $createdRangeTo: DateTime,
+    $updatedRangeFrom: DateTime,
+    $updatedRangeTo: DateTime,
+    $currencyIds: [Guid],
+    $roleIds: [Guid],
+    $tariffIds: [Guid]
   ) {
     users(
       isFull: $isFull,
@@ -146,36 +158,49 @@ export const ADMIN_USERS_QUERY = gql`
       dateTo: $dateTo,
       parentClass: $parentClass,
       column: $column,
-      direction: $direction
+      direction: $direction,
+      isBlocked: $isBlocked,
+      phone: $phone,
+      email: $email,
+      login: $login,
+      name: $name,
+      createdRangeFrom: $createdRangeFrom,
+      createdRangeTo: $createdRangeTo,
+      updatedRangeFrom: $updatedRangeFrom,
+      updatedRangeTo: $updatedRangeTo,
+      currencyIds: $currencyIds,
+      roleIds: $roleIds,
+      tariffIds: $tariffIds
     ) {
-    entities {
-        id,
-        lastName,
-        firstName,
-        login,
-        email,
-        phoneNumber,
-        modified,
-        created,
-        updated,
+      entities {
+        id
+        lastName
+        firstName
+        login
+        email
+        phoneNumber
+        modified
+        created
+        updated
         userBalance {
-          id,
-          amount,
+          id
+          amount
           currency {
-            id,
-            isoCode,
+            id
+            isoCode
             symbol
           }
         }
       }
       paginator {
-        pageNumber,
+        pageNumber
         pageSize
       }
       totalCount
-  }
+    }
   }
 `;
+
 
 export const CREATE_USER_BY_ADMIN = gql`
   mutation CreateUserByAdmin($input: UserInput!) {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Apollo} from "apollo-angular";
 import {Store} from "@ngxs/store";
 import {SetUserBalance} from "../store/actions/user.actions";
-import {IInvoiceResponse, IBaseSortableQuery, IPaginator, IUserResponse} from "../services/api-client";
+import {IInvoiceResponse, IBaseSortableQuery, IPaginator, IUserResponse, IUsersQuery} from "../services/api-client";
 import {Observable, tap} from "rxjs";
 import {
   USER_BALANCE_QUERY,
@@ -115,21 +115,33 @@ export class GraphQLService {
   }
 
   public getAdminUsers(
-    paginator: IPaginator | undefined,
-    sort: IBaseSortableQuery | undefined): Observable<ApolloQueryResult<{ users: IListWithIncludeHelper<IUserType> | undefined }>> {
-    let sortColumn = sort?.column ?? 'Created';
+    query: IUsersQuery): Observable<ApolloQueryResult<{ users: IListWithIncludeHelper<IUserType> | undefined }>> {
+    let sortColumn = query.sort?.column ?? 'Created';
     return this.apollo
       .watchQuery({
         query: ADMIN_USERS_QUERY,
         variables: {
-          isFull: paginator?.isFull ?? false,
-          pageNumber: paginator?.pageNumber ?? 1,
-          pageSize: paginator?.pageSize ?? 5,
+          isFull: query.paginator?.isFull ?? false,
+          pageNumber: query.paginator?.pageNumber ?? 1,
+          pageSize: query.paginator?.pageSize ?? 5,
           dateFrom: null,
           dateTo: null,
-          parentClass: sort?.parentClass,
+          parentClass: query.sort?.parentClass,
           column: `${sortColumn === 'Date' ? 'Created' : sortColumn}`,
-          direction: `${sort?.direction ?? 'desc'}`
+          direction: `${query.sort?.direction ?? 'desc'}`,
+          isBlocked: query.isBlocked,
+          phone: query.phone,
+          email: query.email,
+          login: query.login,
+          name: query.name,
+          createdRangeFrom: query.createdRange?.dateFrom,
+          createdRangeTo: query.createdRange?.dateTo,
+          updatedRangeFrom: query.updatedRange?.dateFrom,
+          updatedRangeTo: query.updatedRange?.dateTo,
+          categoryIds: query.categoryIds?.ids,
+          currencyIds: query.currencyIds?.ids,
+          roleIds: query.roleIds?.ids,
+          tariffIds: query.tariffIds?.ids,
         },
         fetchPolicy: 'network-only',
       }).valueChanges as Observable<ApolloQueryResult<{ users: IListWithIncludeHelper<IUserType> | undefined }>>;

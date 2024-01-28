@@ -1,0 +1,26 @@
+<ng-container *ngIf="schema">
+  <h1 class="t-align-center">{{schema.title}}</h1>
+  <form *ngIf="formGroup" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+
+    <ng-container *ngFor="let control of schema.controls; let i=index">
+      <ciyw-input *ngIf="control.inputType !== inoutType.Checkbox"
+        [controlGroup]="formGroup"
+        [placeholder]="control.placeholder"
+        [controlName]="control.name"
+        [label]="control.label"
+        [type]="control.inputTypeStr!"
+        [inline]="control.inline!"
+        [okHint]="control.okHint"
+      ></ciyw-input>
+
+      <ciyw-checkbox *ngIf="control.inputType === inoutType.Checkbox"
+        [controlGroup]="formGroup"
+        [label]="control.label"
+        [controlName]="control.name"></ciyw-checkbox>
+
+    </ng-container>
+    <div class="t-align-right">
+      <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid">{{schema.submitButton?.title}}</button>
+    </div>
+  </form>
+</ng-container>

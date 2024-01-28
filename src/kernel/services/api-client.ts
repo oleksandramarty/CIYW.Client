@@ -1151,100 +1151,11 @@ export class ApiClient {
     return _observableOf<void>(null as any);
   }
 
-  auth_V1_ResetPasswordCheckAccess(url: string): Observable<void> {
+  auth_V1_RestorePassword(url: string, body?: RestorePasswordCommand | null | undefined): Observable<void> {
     let url_ = this.baseUrl + "/api-ciyw/auth/v1/restore/{url}";
     if (url === undefined || url === null)
       throw new Error("The parameter 'url' must be defined.");
     url_ = url_.replace("{url}", encodeURIComponent("" + url));
-    url_ = url_.replace(/[?&]$/, "");
-
-    let options_ : any = {
-      observe: "response",
-      responseType: "blob",
-      headers: new HttpHeaders({
-      })
-    };
-
-    return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-      return this.processAuth_V1_ResetPasswordCheckAccess(response_);
-    })).pipe(_observableCatch((response_: any) => {
-      if (response_ instanceof HttpResponseBase) {
-        try {
-          return this.processAuth_V1_ResetPasswordCheckAccess(response_ as any);
-        } catch (e) {
-          return _observableThrow(e) as any as Observable<void>;
-        }
-      } else
-        return _observableThrow(response_) as any as Observable<void>;
-    }));
-  }
-
-  protected processAuth_V1_ResetPasswordCheckAccess(response: HttpResponseBase): Observable<void> {
-    const status = response.status;
-    const responseBlob =
-      response instanceof HttpResponse ? response.body :
-        (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-    if (status === 400) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result400: any = null;
-        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result400 = ErrorMessage.fromJS(resultData400);
-        return throwException("Bad Request", status, _responseText, _headers, result400);
-      }));
-    } else if (status === 401) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result401: any = null;
-        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result401 = ErrorMessage.fromJS(resultData401);
-        return throwException("Unauthorized", status, _responseText, _headers, result401);
-      }));
-    } else if (status === 403) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result403: any = null;
-        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result403 = ErrorMessage.fromJS(resultData403);
-        return throwException("Forbidden", status, _responseText, _headers, result403);
-      }));
-    } else if (status === 404) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result404: any = null;
-        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result404 = ErrorMessage.fromJS(resultData404);
-        return throwException("Not Found", status, _responseText, _headers, result404);
-      }));
-    } else if (status === 409) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result409: any = null;
-        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result409 = ErrorMessage.fromJS(resultData409);
-        return throwException("Conflict", status, _responseText, _headers, result409);
-      }));
-    } else if (status === 417) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result417: any = null;
-        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result417 = ErrorMessage.fromJS(resultData417);
-        return throwException("Client Error", status, _responseText, _headers, result417);
-      }));
-    } else if (status === 500) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result500: any = null;
-        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result500 = ErrorMessage.fromJS(resultData500);
-        return throwException("Server Error", status, _responseText, _headers, result500);
-      }));
-    } else if (status !== 200 && status !== 204) {
-      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-      }));
-    }
-    return _observableOf<void>(null as any);
-  }
-
-  auth_V1_RestorePassword(body?: RestorePasswordCommand | null | undefined): Observable<void> {
-    let url_ = this.baseUrl + "/api-ciyw/auth/v1/restore";
     url_ = url_.replace(/[?&]$/, "");
 
     const content_ = JSON.stringify(body);
@@ -1536,6 +1447,212 @@ export class ApiClient {
       }));
     }
     return _observableOf<number>(null as any);
+  }
+
+  /**
+   * @return Success
+   */
+  definitions_V1_GetAuthSchema(type: any): Observable<FormModel> {
+    let url_ = this.baseUrl + "/api-ciyw/definitions/v1/schemas/auth/{type}";
+    if (type === undefined || type === null)
+      throw new Error("The parameter 'type' must be defined.");
+    url_ = url_.replace("{type}", encodeURIComponent("" + type));
+    url_ = url_.replace(/[?&]$/, "");
+
+    let options_ : any = {
+      observe: "response",
+      responseType: "blob",
+      headers: new HttpHeaders({
+        "Accept": "application/json"
+      })
+    };
+
+    return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+      return this.processDefinitions_V1_GetAuthSchema(response_);
+    })).pipe(_observableCatch((response_: any) => {
+      if (response_ instanceof HttpResponseBase) {
+        try {
+          return this.processDefinitions_V1_GetAuthSchema(response_ as any);
+        } catch (e) {
+          return _observableThrow(e) as any as Observable<FormModel>;
+        }
+      } else
+        return _observableThrow(response_) as any as Observable<FormModel>;
+    }));
+  }
+
+  protected processDefinitions_V1_GetAuthSchema(response: HttpResponseBase): Observable<FormModel> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse ? response.body :
+        (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+    if (status === 400) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result400: any = null;
+        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result400 = ErrorMessage.fromJS(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+      }));
+    } else if (status === 401) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result401: any = null;
+        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result401 = ErrorMessage.fromJS(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+      }));
+    } else if (status === 403) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result403: any = null;
+        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result403 = ErrorMessage.fromJS(resultData403);
+        return throwException("Forbidden", status, _responseText, _headers, result403);
+      }));
+    } else if (status === 404) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result404: any = null;
+        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result404 = ErrorMessage.fromJS(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+      }));
+    } else if (status === 409) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result409: any = null;
+        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result409 = ErrorMessage.fromJS(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+      }));
+    } else if (status === 417) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result417: any = null;
+        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result417 = ErrorMessage.fromJS(resultData417);
+        return throwException("Client Error", status, _responseText, _headers, result417);
+      }));
+    } else if (status === 500) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result500: any = null;
+        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result500 = ErrorMessage.fromJS(resultData500);
+        return throwException("Server Error", status, _responseText, _headers, result500);
+      }));
+    } else if (status === 200) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result200: any = null;
+        let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result200 = FormModel.fromJS(resultData200);
+        return _observableOf(result200);
+      }));
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+      }));
+    }
+    return _observableOf<FormModel>(null as any);
+  }
+
+  /**
+   * @return Success
+   */
+  definitions_V1_GetNonAuthSchema(type: any): Observable<FormModel> {
+    let url_ = this.baseUrl + "/api-ciyw/definitions/v1/schemas/{type}";
+    if (type === undefined || type === null)
+      throw new Error("The parameter 'type' must be defined.");
+    url_ = url_.replace("{type}", encodeURIComponent("" + type));
+    url_ = url_.replace(/[?&]$/, "");
+
+    let options_ : any = {
+      observe: "response",
+      responseType: "blob",
+      headers: new HttpHeaders({
+        "Accept": "application/json"
+      })
+    };
+
+    return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+      return this.processDefinitions_V1_GetNonAuthSchema(response_);
+    })).pipe(_observableCatch((response_: any) => {
+      if (response_ instanceof HttpResponseBase) {
+        try {
+          return this.processDefinitions_V1_GetNonAuthSchema(response_ as any);
+        } catch (e) {
+          return _observableThrow(e) as any as Observable<FormModel>;
+        }
+      } else
+        return _observableThrow(response_) as any as Observable<FormModel>;
+    }));
+  }
+
+  protected processDefinitions_V1_GetNonAuthSchema(response: HttpResponseBase): Observable<FormModel> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse ? response.body :
+        (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+    if (status === 400) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result400: any = null;
+        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result400 = ErrorMessage.fromJS(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+      }));
+    } else if (status === 401) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result401: any = null;
+        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result401 = ErrorMessage.fromJS(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+      }));
+    } else if (status === 403) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result403: any = null;
+        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result403 = ErrorMessage.fromJS(resultData403);
+        return throwException("Forbidden", status, _responseText, _headers, result403);
+      }));
+    } else if (status === 404) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result404: any = null;
+        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result404 = ErrorMessage.fromJS(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+      }));
+    } else if (status === 409) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result409: any = null;
+        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result409 = ErrorMessage.fromJS(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+      }));
+    } else if (status === 417) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result417: any = null;
+        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result417 = ErrorMessage.fromJS(resultData417);
+        return throwException("Client Error", status, _responseText, _headers, result417);
+      }));
+    } else if (status === 500) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result500: any = null;
+        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result500 = ErrorMessage.fromJS(resultData500);
+        return throwException("Server Error", status, _responseText, _headers, result500);
+      }));
+    } else if (status === 200) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result200: any = null;
+        let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result200 = FormModel.fromJS(resultData200);
+        return _observableOf(result200);
+      }));
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+      }));
+    }
+    return _observableOf<FormModel>(null as any);
   }
 
   /**
@@ -2483,7 +2600,7 @@ export class ApiClient {
    * @param file (optional)
    * @return Success
    */
-  images_V1_CreateImage(type: any, userId: string, file?: FileParameter | null | undefined): Observable<string> {
+  images_V1_CreateImage(type: any, userId: string, file?: FileParameter | null | undefined): Observable<ImageDataResponse> {
     let url_ = this.baseUrl + "/api-ciyw/images/v1/{type}/{userId}";
     if (type === undefined || type === null)
       throw new Error("The parameter 'type' must be defined.");
@@ -2513,14 +2630,14 @@ export class ApiClient {
         try {
           return this.processImages_V1_CreateImage(response_ as any);
         } catch (e) {
-          return _observableThrow(e) as any as Observable<string>;
+          return _observableThrow(e) as any as Observable<ImageDataResponse>;
         }
       } else
-        return _observableThrow(response_) as any as Observable<string>;
+        return _observableThrow(response_) as any as Observable<ImageDataResponse>;
     }));
   }
 
-  protected processImages_V1_CreateImage(response: HttpResponseBase): Observable<string> {
+  protected processImages_V1_CreateImage(response: HttpResponseBase): Observable<ImageDataResponse> {
     const status = response.status;
     const responseBlob =
       response instanceof HttpResponse ? response.body :
@@ -2580,8 +2697,7 @@ export class ApiClient {
       return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
         let result200: any = null;
         let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+        result200 = ImageDataResponse.fromJS(resultData200);
         return _observableOf(result200);
       }));
     } else if (status !== 200 && status !== 204) {
@@ -2589,7 +2705,7 @@ export class ApiClient {
         return throwException("An unexpected server error occurred.", status, _responseText, _headers);
       }));
     }
-    return _observableOf<string>(null as any);
+    return _observableOf<ImageDataResponse>(null as any);
   }
 
   /**
@@ -3721,6 +3837,111 @@ export class ApiClient {
   }
 
   /**
+   * @param body (optional)
+   * @return Success
+   */
+  tariffs_V1_GetTariffs(body?: TariffsQuery | null | undefined): Observable<TariffResponseListWithIncludeHelper> {
+    let url_ = this.baseUrl + "/api-ciyw/tariffs/v1";
+    url_ = url_.replace(/[?&]$/, "");
+
+    const content_ = JSON.stringify(body);
+
+    let options_ : any = {
+      body: content_,
+      observe: "response",
+      responseType: "blob",
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      })
+    };
+
+    return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+      return this.processTariffs_V1_GetTariffs(response_);
+    })).pipe(_observableCatch((response_: any) => {
+      if (response_ instanceof HttpResponseBase) {
+        try {
+          return this.processTariffs_V1_GetTariffs(response_ as any);
+        } catch (e) {
+          return _observableThrow(e) as any as Observable<TariffResponseListWithIncludeHelper>;
+        }
+      } else
+        return _observableThrow(response_) as any as Observable<TariffResponseListWithIncludeHelper>;
+    }));
+  }
+
+  protected processTariffs_V1_GetTariffs(response: HttpResponseBase): Observable<TariffResponseListWithIncludeHelper> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse ? response.body :
+        (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+    if (status === 400) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result400: any = null;
+        let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result400 = ErrorMessage.fromJS(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+      }));
+    } else if (status === 401) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result401: any = null;
+        let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result401 = ErrorMessage.fromJS(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+      }));
+    } else if (status === 403) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result403: any = null;
+        let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result403 = ErrorMessage.fromJS(resultData403);
+        return throwException("Forbidden", status, _responseText, _headers, result403);
+      }));
+    } else if (status === 404) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result404: any = null;
+        let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result404 = ErrorMessage.fromJS(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+      }));
+    } else if (status === 409) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result409: any = null;
+        let resultData409 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result409 = ErrorMessage.fromJS(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+      }));
+    } else if (status === 417) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result417: any = null;
+        let resultData417 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result417 = ErrorMessage.fromJS(resultData417);
+        return throwException("Client Error", status, _responseText, _headers, result417);
+      }));
+    } else if (status === 500) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result500: any = null;
+        let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result500 = ErrorMessage.fromJS(resultData500);
+        return throwException("Server Error", status, _responseText, _headers, result500);
+      }));
+    } else if (status === 200) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result200: any = null;
+        let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result200 = TariffResponseListWithIncludeHelper.fromJS(resultData200);
+        return _observableOf(result200);
+      }));
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+      }));
+    }
+    return _observableOf<TariffResponseListWithIncludeHelper>(null as any);
+  }
+
+  /**
    * @return Success
    */
   users_V1_CurrentUser(): Observable<UserResponse> {
@@ -4805,6 +5026,142 @@ export interface ICurrency {
   id?: string | undefined;
 }
 
+export class CurrencyEntity implements ICurrencyEntity {
+  entityId?: string | undefined;
+  entityType?: EntityTypeEnum | undefined;
+  amount?: number | undefined;
+  currencyId?: string | undefined;
+  currency?: Currency | undefined;
+  isDefault?: boolean | undefined;
+  tariffId?: string | undefined;
+  tariff?: Tariff | undefined;
+  id?: string | undefined;
+
+  constructor(data?: ICurrencyEntity) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.entityId = _data["entityId"];
+      this.entityType = _data["entityType"];
+      this.amount = _data["amount"];
+      this.currencyId = _data["currencyId"];
+      this.currency = _data["currency"] ? Currency.fromJS(_data["currency"]) : <any>undefined;
+      this.isDefault = _data["isDefault"];
+      this.tariffId = _data["tariffId"];
+      this.tariff = _data["tariff"] ? Tariff.fromJS(_data["tariff"]) : <any>undefined;
+      this.id = _data["id"];
+    }
+  }
+
+  static fromJS(data: any): CurrencyEntity {
+    data = typeof data === 'object' ? data : {};
+    let result = new CurrencyEntity();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["entityId"] = this.entityId;
+    data["entityType"] = this.entityType;
+    data["amount"] = this.amount;
+    data["currencyId"] = this.currencyId;
+    data["currency"] = this.currency ? this.currency.toJSON() : <any>undefined;
+    data["isDefault"] = this.isDefault;
+    data["tariffId"] = this.tariffId;
+    data["tariff"] = this.tariff ? this.tariff.toJSON() : <any>undefined;
+    data["id"] = this.id;
+    return data;
+  }
+}
+
+export interface ICurrencyEntity {
+  entityId?: string | undefined;
+  entityType?: EntityTypeEnum | undefined;
+  amount?: number | undefined;
+  currencyId?: string | undefined;
+  currency?: Currency | undefined;
+  isDefault?: boolean | undefined;
+  tariffId?: string | undefined;
+  tariff?: Tariff | undefined;
+  id?: string | undefined;
+}
+
+export class CurrencyEntityResponse implements ICurrencyEntityResponse {
+  entityId?: string | undefined;
+  entityType?: EntityTypeEnum | undefined;
+  amount?: number | undefined;
+  currencyId?: string | undefined;
+  currency?: CurrencyResponse | undefined;
+  isDefault?: boolean | undefined;
+  tariffId?: string | undefined;
+  tariff?: TariffResponse | undefined;
+  id?: string | undefined;
+
+  constructor(data?: ICurrencyEntityResponse) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.entityId = _data["entityId"];
+      this.entityType = _data["entityType"];
+      this.amount = _data["amount"];
+      this.currencyId = _data["currencyId"];
+      this.currency = _data["currency"] ? CurrencyResponse.fromJS(_data["currency"]) : <any>undefined;
+      this.isDefault = _data["isDefault"];
+      this.tariffId = _data["tariffId"];
+      this.tariff = _data["tariff"] ? TariffResponse.fromJS(_data["tariff"]) : <any>undefined;
+      this.id = _data["id"];
+    }
+  }
+
+  static fromJS(data: any): CurrencyEntityResponse {
+    data = typeof data === 'object' ? data : {};
+    let result = new CurrencyEntityResponse();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["entityId"] = this.entityId;
+    data["entityType"] = this.entityType;
+    data["amount"] = this.amount;
+    data["currencyId"] = this.currencyId;
+    data["currency"] = this.currency ? this.currency.toJSON() : <any>undefined;
+    data["isDefault"] = this.isDefault;
+    data["tariffId"] = this.tariffId;
+    data["tariff"] = this.tariff ? this.tariff.toJSON() : <any>undefined;
+    data["id"] = this.id;
+    return data;
+  }
+}
+
+export interface ICurrencyEntityResponse {
+  entityId?: string | undefined;
+  entityType?: EntityTypeEnum | undefined;
+  amount?: number | undefined;
+  currencyId?: string | undefined;
+  currency?: CurrencyResponse | undefined;
+  isDefault?: boolean | undefined;
+  tariffId?: string | undefined;
+  tariff?: TariffResponse | undefined;
+  id?: string | undefined;
+}
+
 export class CurrencyResponse implements ICurrencyResponse {
   isoCode?: string | undefined;
   symbol?: string | undefined;
@@ -4961,12 +5318,16 @@ export interface IDictionariesResponse {
   invoiceTypes?: StringDictionaryResponse | undefined;
 }
 
-export enum EntityTypeEnum {
+export enum DictionaryTypeEnum {
   TARIFF = "TARIFF",
   CATEGORY = "CATEGORY",
   CURRENCY = "CURRENCY",
   ROLE = "ROLE",
   INVOICE_TYPE = "INVOICE_TYPE",
+}
+
+export enum EntityTypeEnum {
+  USER = "USER",
 }
 
 export class ErrorMessage implements IErrorMessage {
@@ -5070,6 +5431,313 @@ export interface IForgotPasswordQuery {
   phone?: string | undefined;
 }
 
+export class FormButtonModel implements IFormButtonModel {
+  title?: string | undefined;
+
+  constructor(data?: IFormButtonModel) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.title = _data["title"];
+    }
+  }
+
+  static fromJS(data: any): FormButtonModel {
+    data = typeof data === 'object' ? data : {};
+    let result = new FormButtonModel();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["title"] = this.title;
+    return data;
+  }
+}
+
+export interface IFormButtonModel {
+  title?: string | undefined;
+}
+
+export enum FormItemInputDateTypeEnum {
+  String = "String",
+  Number = "Number",
+  Boolean = "Boolean",
+  Guid = "Guid",
+}
+
+export enum FormItemInputType {
+  Select = "Select",
+  Date = "Date",
+  Daterange = "Daterange",
+  Checkbox = "Checkbox",
+  Radio = "Radio",
+  Text = "Text",
+  Password = "Password",
+}
+
+export class FormItemModel implements IFormItemModel {
+  name?: string | undefined;
+  defaultValue?: any | undefined;
+  valueType?: FormItemInputDateTypeEnum | undefined;
+  inputType?: FormItemInputType | undefined;
+  inputTypeStr?: string | undefined;
+  selectDataType?: DictionaryTypeEnum | undefined;
+  validators?: FormItemValidatorModel[] | undefined;
+  label?: string | undefined;
+  placeholder?: string | undefined;
+  inline?: boolean | undefined;
+  okHint?: FormItemOkHintModel | undefined;
+  wrapperType?: FormItemWrapperTypeEnum | undefined;
+
+  constructor(data?: IFormItemModel) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.name = _data["name"];
+      this.defaultValue = _data["defaultValue"];
+      this.valueType = _data["valueType"];
+      this.inputType = _data["inputType"];
+      this.inputTypeStr = _data["inputTypeStr"];
+      this.selectDataType = _data["selectDataType"];
+      if (Array.isArray(_data["validators"])) {
+        this.validators = [] as any;
+        for (let item of _data["validators"])
+          this.validators!.push(FormItemValidatorModel.fromJS(item));
+      }
+      this.label = _data["label"];
+      this.placeholder = _data["placeholder"];
+      this.inline = _data["inline"];
+      this.okHint = _data["okHint"] ? FormItemOkHintModel.fromJS(_data["okHint"]) : <any>undefined;
+      this.wrapperType = _data["wrapperType"];
+    }
+  }
+
+  static fromJS(data: any): FormItemModel {
+    data = typeof data === 'object' ? data : {};
+    let result = new FormItemModel();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["name"] = this.name;
+    data["defaultValue"] = this.defaultValue;
+    data["valueType"] = this.valueType;
+    data["inputType"] = this.inputType;
+    data["inputTypeStr"] = this.inputTypeStr;
+    data["selectDataType"] = this.selectDataType;
+    if (Array.isArray(this.validators)) {
+      data["validators"] = [];
+      for (let item of this.validators)
+        data["validators"].push(item.toJSON());
+    }
+    data["label"] = this.label;
+    data["placeholder"] = this.placeholder;
+    data["inline"] = this.inline;
+    data["okHint"] = this.okHint ? this.okHint.toJSON() : <any>undefined;
+    data["wrapperType"] = this.wrapperType;
+    return data;
+  }
+}
+
+export interface IFormItemModel {
+  name?: string | undefined;
+  defaultValue?: any | undefined;
+  valueType?: FormItemInputDateTypeEnum | undefined;
+  inputType?: FormItemInputType | undefined;
+  inputTypeStr?: string | undefined;
+  selectDataType?: DictionaryTypeEnum | undefined;
+  validators?: FormItemValidatorModel[] | undefined;
+  label?: string | undefined;
+  placeholder?: string | undefined;
+  inline?: boolean | undefined;
+  okHint?: FormItemOkHintModel | undefined;
+  wrapperType?: FormItemWrapperTypeEnum | undefined;
+}
+
+export class FormItemOkHintModel implements IFormItemOkHintModel {
+  isOk?: boolean | undefined;
+  yes?: string | undefined;
+  no?: string | undefined;
+
+  constructor(data?: IFormItemOkHintModel) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.isOk = _data["isOk"];
+      this.yes = _data["yes"];
+      this.no = _data["no"];
+    }
+  }
+
+  static fromJS(data: any): FormItemOkHintModel {
+    data = typeof data === 'object' ? data : {};
+    let result = new FormItemOkHintModel();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["isOk"] = this.isOk;
+    data["yes"] = this.yes;
+    data["no"] = this.no;
+    return data;
+  }
+}
+
+export interface IFormItemOkHintModel {
+  isOk?: boolean | undefined;
+  yes?: string | undefined;
+  no?: string | undefined;
+}
+
+export class FormItemValidatorModel implements IFormItemValidatorModel {
+  validatorType?: FormItemValidatorTypeEnum | undefined;
+  value?: string | undefined;
+
+  constructor(data?: IFormItemValidatorModel) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.validatorType = _data["validatorType"];
+      this.value = _data["value"];
+    }
+  }
+
+  static fromJS(data: any): FormItemValidatorModel {
+    data = typeof data === 'object' ? data : {};
+    let result = new FormItemValidatorModel();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["validatorType"] = this.validatorType;
+    data["value"] = this.value;
+    return data;
+  }
+}
+
+export interface IFormItemValidatorModel {
+  validatorType?: FormItemValidatorTypeEnum | undefined;
+  value?: string | undefined;
+}
+
+export enum FormItemValidatorTypeEnum {
+  MinLen = "MinLen",
+  MaxLen = "MaxLen",
+  Required = "Required",
+  Min = "Min",
+  Max = "Max",
+  Email = "Email",
+  AtLeastOne = "AtLeastOne",
+  Pattern = "Pattern",
+}
+
+export enum FormItemWrapperTypeEnum {
+  Full = "Full",
+  Half = "Half",
+  Third = "Third",
+  Quarter = "Quarter",
+}
+
+export class FormModel implements IFormModel {
+  type?: FormTypeEnum | undefined;
+  controls?: FormItemModel[] | undefined;
+  title?: string | undefined;
+  submitButton?: FormButtonModel | undefined;
+  cancelButton?: FormButtonModel | undefined;
+
+  constructor(data?: IFormModel) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.type = _data["type"];
+      if (Array.isArray(_data["controls"])) {
+        this.controls = [] as any;
+        for (let item of _data["controls"])
+          this.controls!.push(FormItemModel.fromJS(item));
+      }
+      this.title = _data["title"];
+      this.submitButton = _data["submitButton"] ? FormButtonModel.fromJS(_data["submitButton"]) : <any>undefined;
+      this.cancelButton = _data["cancelButton"] ? FormButtonModel.fromJS(_data["cancelButton"]) : <any>undefined;
+    }
+  }
+
+  static fromJS(data: any): FormModel {
+    data = typeof data === 'object' ? data : {};
+    let result = new FormModel();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["type"] = this.type;
+    if (Array.isArray(this.controls)) {
+      data["controls"] = [];
+      for (let item of this.controls)
+        data["controls"].push(item.toJSON());
+    }
+    data["title"] = this.title;
+    data["submitButton"] = this.submitButton ? this.submitButton.toJSON() : <any>undefined;
+    data["cancelButton"] = this.cancelButton ? this.cancelButton.toJSON() : <any>undefined;
+    return data;
+  }
+}
+
+export interface IFormModel {
+  type?: FormTypeEnum | undefined;
+  controls?: FormItemModel[] | undefined;
+  title?: string | undefined;
+  submitButton?: FormButtonModel | undefined;
+  cancelButton?: FormButtonModel | undefined;
+}
+
+export enum FormTypeEnum {
+  AUTH_LOGIN = "AUTH_LOGIN",
+}
+
 export class GuidDictionaryItemResponse implements IGuidDictionaryItemResponse {
   id?: string | undefined;
   name?: string | undefined;
@@ -5159,10 +5827,11 @@ export interface IGuidDictionaryResponse {
 }
 
 export class ImageDataResponse implements IImageDataResponse {
-  id?: string | undefined;
-  userId?: string | undefined;
+  entityId?: string | undefined;
   type?: FileTypeEnum | undefined;
+  name?: string | undefined;
   data?: string | undefined;
+  id?: string | undefined;
 
   constructor(data?: IImageDataResponse) {
     if (data) {
@@ -5175,10 +5844,11 @@ export class ImageDataResponse implements IImageDataResponse {
 
   init(_data?: any) {
     if (_data) {
-      this.id = _data["id"];
-      this.userId = _data["userId"];
+      this.entityId = _data["entityId"];
       this.type = _data["type"];
+      this.name = _data["name"];
       this.data = _data["data"];
+      this.id = _data["id"];
     }
   }
 
@@ -5191,19 +5861,21 @@ export class ImageDataResponse implements IImageDataResponse {
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
-    data["id"] = this.id;
-    data["userId"] = this.userId;
+    data["entityId"] = this.entityId;
     data["type"] = this.type;
+    data["name"] = this.name;
     data["data"] = this.data;
+    data["id"] = this.id;
     return data;
   }
 }
 
 export interface IImageDataResponse {
-  id?: string | undefined;
-  userId?: string | undefined;
+  entityId?: string | undefined;
   type?: FileTypeEnum | undefined;
+  name?: string | undefined;
   data?: string | undefined;
+  id?: string | undefined;
 }
 
 export class ImageDataResponseListWithIncludeHelper implements IImageDataResponseListWithIncludeHelper {
@@ -5260,6 +5932,7 @@ export interface IImageDataResponseListWithIncludeHelper {
 
 export class InvalidFieldInfo implements IInvalidFieldInfo {
   propertyName?: string | undefined;
+  code?: string | undefined;
   errorMessage?: string | undefined;
 
   constructor(data?: IInvalidFieldInfo) {
@@ -5274,6 +5947,7 @@ export class InvalidFieldInfo implements IInvalidFieldInfo {
   init(_data?: any) {
     if (_data) {
       this.propertyName = _data["propertyName"];
+      this.code = _data["code"];
       this.errorMessage = _data["errorMessage"];
     }
   }
@@ -5288,6 +5962,7 @@ export class InvalidFieldInfo implements IInvalidFieldInfo {
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
     data["propertyName"] = this.propertyName;
+    data["code"] = this.code;
     data["errorMessage"] = this.errorMessage;
     return data;
   }
@@ -5295,6 +5970,7 @@ export class InvalidFieldInfo implements IInvalidFieldInfo {
 
 export interface IInvalidFieldInfo {
   propertyName?: string | undefined;
+  code?: string | undefined;
   errorMessage?: string | undefined;
 }
 
@@ -5675,6 +6351,70 @@ export interface INoteResponse {
   id?: string | undefined;
 }
 
+export class Notification implements INotification {
+  read?: Date | undefined;
+  entityType?: EntityTypeEnum | undefined;
+  entityId?: string | undefined;
+  type?: number | undefined;
+  userId?: string | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
+
+  constructor(data?: INotification) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.read = _data["read"] ? new Date(_data["read"].toString()) : <any>undefined;
+      this.entityType = _data["entityType"];
+      this.entityId = _data["entityId"];
+      this.type = _data["type"];
+      this.userId = _data["userId"];
+      this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
+      this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
+      this.id = _data["id"];
+    }
+  }
+
+  static fromJS(data: any): Notification {
+    data = typeof data === 'object' ? data : {};
+    let result = new Notification();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["read"] = this.read ? this.read.toISOString() : <any>undefined;
+    data["entityType"] = this.entityType;
+    data["entityId"] = this.entityId;
+    data["type"] = this.type;
+    data["userId"] = this.userId;
+    data["created"] = this.created ? this.created.toISOString() : <any>undefined;
+    data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
+    data["id"] = this.id;
+    return data;
+  }
+}
+
+export interface INotification {
+  read?: Date | undefined;
+  entityType?: EntityTypeEnum | undefined;
+  entityId?: string | undefined;
+  type?: number | undefined;
+  userId?: string | undefined;
+  created?: Date | undefined;
+  updated?: Date | undefined;
+  id?: string | undefined;
+}
+
 export class Paginator implements IPaginator {
   pageNumber?: number | undefined;
   pageSize?: number | undefined;
@@ -5866,8 +6606,10 @@ export interface IStringDictionaryResponse {
 export class Tariff implements ITariff {
   name?: string | undefined;
   description?: string | undefined;
+  currencyEntities?: CurrencyEntity[] | undefined;
   isActive?: boolean | undefined;
   users?: User[] | undefined;
+  order?: number | undefined;
   created?: Date | undefined;
   updated?: Date | undefined;
   id?: string | undefined;
@@ -5885,12 +6627,18 @@ export class Tariff implements ITariff {
     if (_data) {
       this.name = _data["name"];
       this.description = _data["description"];
+      if (Array.isArray(_data["currencyEntities"])) {
+        this.currencyEntities = [] as any;
+        for (let item of _data["currencyEntities"])
+          this.currencyEntities!.push(CurrencyEntity.fromJS(item));
+      }
       this.isActive = _data["isActive"];
       if (Array.isArray(_data["users"])) {
         this.users = [] as any;
         for (let item of _data["users"])
           this.users!.push(User.fromJS(item));
       }
+      this.order = _data["order"];
       this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
       this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
       this.id = _data["id"];
@@ -5908,12 +6656,18 @@ export class Tariff implements ITariff {
     data = typeof data === 'object' ? data : {};
     data["name"] = this.name;
     data["description"] = this.description;
+    if (Array.isArray(this.currencyEntities)) {
+      data["currencyEntities"] = [];
+      for (let item of this.currencyEntities)
+        data["currencyEntities"].push(item.toJSON());
+    }
     data["isActive"] = this.isActive;
     if (Array.isArray(this.users)) {
       data["users"] = [];
       for (let item of this.users)
         data["users"].push(item.toJSON());
     }
+    data["order"] = this.order;
     data["created"] = this.created ? this.created.toISOString() : <any>undefined;
     data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
     data["id"] = this.id;
@@ -5924,8 +6678,10 @@ export class Tariff implements ITariff {
 export interface ITariff {
   name?: string | undefined;
   description?: string | undefined;
+  currencyEntities?: CurrencyEntity[] | undefined;
   isActive?: boolean | undefined;
   users?: User[] | undefined;
+  order?: number | undefined;
   created?: Date | undefined;
   updated?: Date | undefined;
   id?: string | undefined;
@@ -5934,6 +6690,9 @@ export interface ITariff {
 export class TariffResponse implements ITariffResponse {
   name?: string | undefined;
   description?: string | undefined;
+  currencyEntities?: CurrencyEntityResponse[] | undefined;
+  isActive?: boolean | undefined;
+  order?: number | undefined;
   created?: Date | undefined;
   updated?: Date | undefined;
   id?: string | undefined;
@@ -5951,6 +6710,13 @@ export class TariffResponse implements ITariffResponse {
     if (_data) {
       this.name = _data["name"];
       this.description = _data["description"];
+      if (Array.isArray(_data["currencyEntities"])) {
+        this.currencyEntities = [] as any;
+        for (let item of _data["currencyEntities"])
+          this.currencyEntities!.push(CurrencyEntityResponse.fromJS(item));
+      }
+      this.isActive = _data["isActive"];
+      this.order = _data["order"];
       this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
       this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
       this.id = _data["id"];
@@ -5968,6 +6734,13 @@ export class TariffResponse implements ITariffResponse {
     data = typeof data === 'object' ? data : {};
     data["name"] = this.name;
     data["description"] = this.description;
+    if (Array.isArray(this.currencyEntities)) {
+      data["currencyEntities"] = [];
+      for (let item of this.currencyEntities)
+        data["currencyEntities"].push(item.toJSON());
+    }
+    data["isActive"] = this.isActive;
+    data["order"] = this.order;
     data["created"] = this.created ? this.created.toISOString() : <any>undefined;
     data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
     data["id"] = this.id;
@@ -5978,9 +6751,116 @@ export class TariffResponse implements ITariffResponse {
 export interface ITariffResponse {
   name?: string | undefined;
   description?: string | undefined;
+  currencyEntities?: CurrencyEntityResponse[] | undefined;
+  isActive?: boolean | undefined;
+  order?: number | undefined;
   created?: Date | undefined;
   updated?: Date | undefined;
   id?: string | undefined;
+}
+
+export class TariffResponseListWithIncludeHelper implements ITariffResponseListWithIncludeHelper {
+  entities?: TariffResponse[] | undefined;
+  paginator?: Paginator | undefined;
+  totalCount?: number | undefined;
+
+  constructor(data?: ITariffResponseListWithIncludeHelper) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      if (Array.isArray(_data["entities"])) {
+        this.entities = [] as any;
+        for (let item of _data["entities"])
+          this.entities!.push(TariffResponse.fromJS(item));
+      }
+      this.paginator = _data["paginator"] ? Paginator.fromJS(_data["paginator"]) : <any>undefined;
+      this.totalCount = _data["totalCount"];
+    }
+  }
+
+  static fromJS(data: any): TariffResponseListWithIncludeHelper {
+    data = typeof data === 'object' ? data : {};
+    let result = new TariffResponseListWithIncludeHelper();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    if (Array.isArray(this.entities)) {
+      data["entities"] = [];
+      for (let item of this.entities)
+        data["entities"].push(item.toJSON());
+    }
+    data["paginator"] = this.paginator ? this.paginator.toJSON() : <any>undefined;
+    data["totalCount"] = this.totalCount;
+    return data;
+  }
+}
+
+export interface ITariffResponseListWithIncludeHelper {
+  entities?: TariffResponse[] | undefined;
+  paginator?: Paginator | undefined;
+  totalCount?: number | undefined;
+}
+
+export class TariffsQuery implements ITariffsQuery {
+  ids?: BaseIdsListQuery | undefined;
+  paginator?: Paginator | undefined;
+  dateRange?: BaseDateRangeQuery | undefined;
+  sort?: BaseSortableQuery | undefined;
+  userId?: string | undefined;
+
+  constructor(data?: ITariffsQuery) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.ids = _data["ids"] ? BaseIdsListQuery.fromJS(_data["ids"]) : <any>undefined;
+      this.paginator = _data["paginator"] ? Paginator.fromJS(_data["paginator"]) : <any>undefined;
+      this.dateRange = _data["dateRange"] ? BaseDateRangeQuery.fromJS(_data["dateRange"]) : <any>undefined;
+      this.sort = _data["sort"] ? BaseSortableQuery.fromJS(_data["sort"]) : <any>undefined;
+      this.userId = _data["userId"];
+    }
+  }
+
+  static fromJS(data: any): TariffsQuery {
+    data = typeof data === 'object' ? data : {};
+    let result = new TariffsQuery();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["ids"] = this.ids ? this.ids.toJSON() : <any>undefined;
+    data["paginator"] = this.paginator ? this.paginator.toJSON() : <any>undefined;
+    data["dateRange"] = this.dateRange ? this.dateRange.toJSON() : <any>undefined;
+    data["sort"] = this.sort ? this.sort.toJSON() : <any>undefined;
+    data["userId"] = this.userId;
+    return data;
+  }
+}
+
+export interface ITariffsQuery {
+  ids?: BaseIdsListQuery | undefined;
+  paginator?: Paginator | undefined;
+  dateRange?: BaseDateRangeQuery | undefined;
+  sort?: BaseSortableQuery | undefined;
+  userId?: string | undefined;
 }
 
 export class TokenResponse implements ITokenResponse {
@@ -6194,7 +7074,7 @@ export interface IUpdateUserByAdminCommand {
 export class User implements IUser {
   login!: string;
   lastName!: string;
-  firstName!: string;
+  firstName?: string | undefined;
   patronymic?: string | undefined;
   salt?: string | undefined;
   isTemporaryPassword?: boolean | undefined;
@@ -6203,10 +7083,12 @@ export class User implements IUser {
   updated?: Date | undefined;
   lastForgot?: Date | undefined;
   mapped?: Date | undefined;
+  restored?: Date | undefined;
   tariffId?: string | undefined;
   tariff?: Tariff | undefined;
   currencyId?: string | undefined;
   currency?: Currency | undefined;
+  notifications?: Notification[] | undefined;
   userCategories?: UserCategory[] | undefined;
   invoices?: Invoice[] | undefined;
   notes?: Note[] | undefined;
@@ -6250,10 +7132,16 @@ export class User implements IUser {
       this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
       this.lastForgot = _data["lastForgot"] ? new Date(_data["lastForgot"].toString()) : <any>undefined;
       this.mapped = _data["mapped"] ? new Date(_data["mapped"].toString()) : <any>undefined;
+      this.restored = _data["restored"] ? new Date(_data["restored"].toString()) : <any>undefined;
       this.tariffId = _data["tariffId"];
       this.tariff = _data["tariff"] ? Tariff.fromJS(_data["tariff"]) : <any>undefined;
       this.currencyId = _data["currencyId"];
       this.currency = _data["currency"] ? Currency.fromJS(_data["currency"]) : <any>undefined;
+      if (Array.isArray(_data["notifications"])) {
+        this.notifications = [] as any;
+        for (let item of _data["notifications"])
+          this.notifications!.push(Notification.fromJS(item));
+      }
       if (Array.isArray(_data["userCategories"])) {
         this.userCategories = [] as any;
         for (let item of _data["userCategories"])
@@ -6309,10 +7197,16 @@ export class User implements IUser {
     data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
     data["lastForgot"] = this.lastForgot ? this.lastForgot.toISOString() : <any>undefined;
     data["mapped"] = this.mapped ? this.mapped.toISOString() : <any>undefined;
+    data["restored"] = this.restored ? this.restored.toISOString() : <any>undefined;
     data["tariffId"] = this.tariffId;
     data["tariff"] = this.tariff ? this.tariff.toJSON() : <any>undefined;
     data["currencyId"] = this.currencyId;
     data["currency"] = this.currency ? this.currency.toJSON() : <any>undefined;
+    if (Array.isArray(this.notifications)) {
+      data["notifications"] = [];
+      for (let item of this.notifications)
+        data["notifications"].push(item.toJSON());
+    }
     if (Array.isArray(this.userCategories)) {
       data["userCategories"] = [];
       for (let item of this.userCategories)
@@ -6352,7 +7246,7 @@ export class User implements IUser {
 export interface IUser {
   login: string;
   lastName: string;
-  firstName: string;
+  firstName?: string | undefined;
   patronymic?: string | undefined;
   salt?: string | undefined;
   isTemporaryPassword?: boolean | undefined;
@@ -6361,10 +7255,12 @@ export interface IUser {
   updated?: Date | undefined;
   lastForgot?: Date | undefined;
   mapped?: Date | undefined;
+  restored?: Date | undefined;
   tariffId?: string | undefined;
   tariff?: Tariff | undefined;
   currencyId?: string | undefined;
   currency?: Currency | undefined;
+  notifications?: Notification[] | undefined;
   userCategories?: UserCategory[] | undefined;
   invoices?: Invoice[] | undefined;
   notes?: Note[] | undefined;
@@ -6612,6 +7508,7 @@ export interface IUserCategory {
 }
 
 export class UserImageQuery implements IUserImageQuery {
+  type?: FileTypeEnum | undefined;
   userId?: string | undefined;
   id?: string | undefined;
 
@@ -6626,6 +7523,7 @@ export class UserImageQuery implements IUserImageQuery {
 
   init(_data?: any) {
     if (_data) {
+      this.type = _data["type"];
       this.userId = _data["userId"];
       this.id = _data["id"];
     }
@@ -6640,6 +7538,7 @@ export class UserImageQuery implements IUserImageQuery {
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
+    data["type"] = this.type;
     data["userId"] = this.userId;
     data["id"] = this.id;
     return data;
@@ -6647,6 +7546,7 @@ export class UserImageQuery implements IUserImageQuery {
 }
 
 export interface IUserImageQuery {
+  type?: FileTypeEnum | undefined;
   userId?: string | undefined;
   id?: string | undefined;
 }
@@ -6935,6 +7835,8 @@ export class UserSearchModel implements IUserSearchModel {
   email?: string | undefined;
   phoneNumber?: string | undefined;
   isBlocked?: boolean | undefined;
+  roleId?: string | undefined;
+  tariffId?: string | undefined;
   created?: Date | undefined;
   updated?: Date | undefined;
   userBalance?: UserBalanceSearchModel | undefined;
@@ -6957,6 +7859,8 @@ export class UserSearchModel implements IUserSearchModel {
       this.email = _data["email"];
       this.phoneNumber = _data["phoneNumber"];
       this.isBlocked = _data["isBlocked"];
+      this.roleId = _data["roleId"];
+      this.tariffId = _data["tariffId"];
       this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
       this.updated = _data["updated"] ? new Date(_data["updated"].toString()) : <any>undefined;
       this.userBalance = _data["userBalance"] ? UserBalanceSearchModel.fromJS(_data["userBalance"]) : <any>undefined;
@@ -6979,6 +7883,8 @@ export class UserSearchModel implements IUserSearchModel {
     data["email"] = this.email;
     data["phoneNumber"] = this.phoneNumber;
     data["isBlocked"] = this.isBlocked;
+    data["roleId"] = this.roleId;
+    data["tariffId"] = this.tariffId;
     data["created"] = this.created ? this.created.toISOString() : <any>undefined;
     data["updated"] = this.updated ? this.updated.toISOString() : <any>undefined;
     data["userBalance"] = this.userBalance ? this.userBalance.toJSON() : <any>undefined;
@@ -6994,12 +7900,15 @@ export interface IUserSearchModel {
   email?: string | undefined;
   phoneNumber?: string | undefined;
   isBlocked?: boolean | undefined;
+  roleId?: string | undefined;
+  tariffId?: string | undefined;
   created?: Date | undefined;
   updated?: Date | undefined;
   userBalance?: UserBalanceSearchModel | undefined;
 }
 
 export class UsersImagesQuery implements IUsersImagesQuery {
+  type?: FileTypeEnum | undefined;
   ids?: BaseIdsListQuery | undefined;
   paginator?: Paginator | undefined;
   dateRange?: BaseDateRangeQuery | undefined;
@@ -7017,6 +7926,7 @@ export class UsersImagesQuery implements IUsersImagesQuery {
 
   init(_data?: any) {
     if (_data) {
+      this.type = _data["type"];
       this.ids = _data["ids"] ? BaseIdsListQuery.fromJS(_data["ids"]) : <any>undefined;
       this.paginator = _data["paginator"] ? Paginator.fromJS(_data["paginator"]) : <any>undefined;
       this.dateRange = _data["dateRange"] ? BaseDateRangeQuery.fromJS(_data["dateRange"]) : <any>undefined;
@@ -7034,6 +7944,7 @@ export class UsersImagesQuery implements IUsersImagesQuery {
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
+    data["type"] = this.type;
     data["ids"] = this.ids ? this.ids.toJSON() : <any>undefined;
     data["paginator"] = this.paginator ? this.paginator.toJSON() : <any>undefined;
     data["dateRange"] = this.dateRange ? this.dateRange.toJSON() : <any>undefined;
@@ -7044,6 +7955,7 @@ export class UsersImagesQuery implements IUsersImagesQuery {
 }
 
 export interface IUsersImagesQuery {
+  type?: FileTypeEnum | undefined;
   ids?: BaseIdsListQuery | undefined;
   paginator?: Paginator | undefined;
   dateRange?: BaseDateRangeQuery | undefined;
@@ -7059,7 +7971,6 @@ export class UsersQuery implements IUsersQuery {
   name?: string | undefined;
   createdRange?: BaseDateRangeQuery | undefined;
   updatedRange?: BaseDateRangeQuery | undefined;
-  categoryIds?: BaseIdsListQuery | undefined;
   currencyIds?: BaseIdsListQuery | undefined;
   roleIds?: BaseIdsListQuery | undefined;
   tariffIds?: BaseIdsListQuery | undefined;
@@ -7087,7 +7998,6 @@ export class UsersQuery implements IUsersQuery {
       this.name = _data["name"];
       this.createdRange = _data["createdRange"] ? BaseDateRangeQuery.fromJS(_data["createdRange"]) : <any>undefined;
       this.updatedRange = _data["updatedRange"] ? BaseDateRangeQuery.fromJS(_data["updatedRange"]) : <any>undefined;
-      this.categoryIds = _data["categoryIds"] ? BaseIdsListQuery.fromJS(_data["categoryIds"]) : <any>undefined;
       this.currencyIds = _data["currencyIds"] ? BaseIdsListQuery.fromJS(_data["currencyIds"]) : <any>undefined;
       this.roleIds = _data["roleIds"] ? BaseIdsListQuery.fromJS(_data["roleIds"]) : <any>undefined;
       this.tariffIds = _data["tariffIds"] ? BaseIdsListQuery.fromJS(_data["tariffIds"]) : <any>undefined;
@@ -7115,7 +8025,6 @@ export class UsersQuery implements IUsersQuery {
     data["name"] = this.name;
     data["createdRange"] = this.createdRange ? this.createdRange.toJSON() : <any>undefined;
     data["updatedRange"] = this.updatedRange ? this.updatedRange.toJSON() : <any>undefined;
-    data["categoryIds"] = this.categoryIds ? this.categoryIds.toJSON() : <any>undefined;
     data["currencyIds"] = this.currencyIds ? this.currencyIds.toJSON() : <any>undefined;
     data["roleIds"] = this.roleIds ? this.roleIds.toJSON() : <any>undefined;
     data["tariffIds"] = this.tariffIds ? this.tariffIds.toJSON() : <any>undefined;
@@ -7136,7 +8045,6 @@ export interface IUsersQuery {
   name?: string | undefined;
   createdRange?: BaseDateRangeQuery | undefined;
   updatedRange?: BaseDateRangeQuery | undefined;
-  categoryIds?: BaseIdsListQuery | undefined;
   currencyIds?: BaseIdsListQuery | undefined;
   roleIds?: BaseIdsListQuery | undefined;
   tariffIds?: BaseIdsListQuery | undefined;

@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {
+  FormItemOkHintModel,
   IGuidDictionaryResponse, IStringDictionaryResponse
 } from "../../../../kernel/services/api-client";
 
@@ -10,13 +11,13 @@ import {
   styleUrl: './ciyw-input.component.scss'
 })
 export class CiywInputComponent {
-@Input() label: string | null = null;
-@Input() placeholder: string | null = null;
+@Input() label: string | undefined | null = null;
+@Input() placeholder: string | undefined | null = null;
 @Input() type: string = 'text';
-@Input() controlName: string | null = null;
+@Input() controlName: string | undefined | null = null;
 @Input() controlGroup: FormGroup | null | undefined = null;
 @Input() inline: boolean = false;
 @Input() wrapperClass: string = '';
-@Input() okHint?: { isOk: boolean, yes: string, no: string } | undefined;
+@Input() okHint?: FormItemOkHintModel | undefined;
 @Input() selectData: IGuidDictionaryResponse | IStringDictionaryResponse | null | undefined = null;
 }

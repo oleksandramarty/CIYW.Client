@@ -1,18 +1,38 @@
-<ng-container *ngIf="user">
-  <h1>Invoice History</h1>
+<main>
+  <section class="hero">
+    <h2>Take Control of Your Finances</h2>
+    <p>Manage your money wisely with CIYW - your ultimate financial control app. Track expenses, set budgets, and achieve your financial goals.</p>
+    <a routerLink="/signup" class="cta-button">Get Started</a>
+  </section>
 
-  <div class="mb-20">
-    <p><strong>User Name:</strong> {{ user.firstName }} {{user.lastName}}</p>
-    <p *ngIf="balance"><strong>Balance:</strong> {{ balance.amount || 0 | currency: balance.isoCode }}</p>
-  </div>
+  <section class="features">
+    <div class="feature">
+      <i class="fas fa-chart-pie"></i>
+      <h3>Visualize Your Spending</h3>
+      <p>Interactive charts and graphs help you understand where your money is going. Make informed decisions to improve your financial health.</p>
+    </div>
+    <div class="feature">
+      <i class="fas fa-exchange-alt"></i>
+      <h3>Track Transactions</h3>
+      <p>Record and categorize your transactions effortlessly. CIYW makes it easy to stay organized and in control of your finances.</p>
+    </div>
+    <div class="feature">
+      <i class="fas fa-piggy-bank"></i>
+      <h3>Set Budgets</h3>
+      <p>Establish realistic budgets for various spending categories. CIYW helps you stick to your financial goals and avoid overspending.</p>
+    </div>
+  </section>
 
-  <ciyw-table
-    [type]="tableType.HomeUserInvoices"
-    [total]="graphQLInvoices?.totalCount ?? 0"
-    [dataSource]="dataSource"
-    [isBusy]="isBusy"
-    (filterChanged)="filterChanged($event)"
-  ></ciyw-table>
-
-
-</ng-container>
+  <section class="tariffs" *ngIf="!!tariffs">
+    <h2>Choose Your Plan</h2>
+    <div class="tariff" *ngFor="let tariff of tariffs.entities; let i=index" [ngClass]="{'selected': tariff.id === user?.tariffId}">
+      <h3>{{ tariff.name }}</h3>
+      <p>{{ tariff.description }}</p>
+      <ul>
+        <li>Transaction Tracking</li>
+        <li>Basic Reports</li>
+      </ul>
+      <p class="price">$4.99/month</p>
+    </div>
+  </section>
+</main>

@@ -1,28 +1,6 @@
-<h1 class="t-align-center">Login to Finance Control</h1>
-<form *ngIf="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="auth-form-wrapper">
-      <div>
-        <mat-form-field>
-          <input matInput placeholder="Login" formControlName="login" />
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <input matInput placeholder="Email" formControlName="email" />
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <input matInput placeholder="Phone" formControlName="phone" />
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <input matInput type="password" placeholder="Password" formControlName="password" />
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="t-align-right">
-      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
-    </div>
-</form>
+<div class="auth-form-wrapper">
+  <ciyw-form-group
+    [formType]="formType.AUTH_LOGIN"
+    (onSubmitClicked)="auth($event)"
+  ></ciyw-form-group>
+</div>

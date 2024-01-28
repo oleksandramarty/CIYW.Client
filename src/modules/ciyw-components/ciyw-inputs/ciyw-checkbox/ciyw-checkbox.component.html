@@ -1,4 +1,4 @@
-<div *ngIf="controlGroup" [formGroup]="controlGroup" [class]="wrapperClass">
+<div *ngIf="controlGroup && controlName" [formGroup]="controlGroup" [class]="wrapperClass">
   <mat-checkbox [formControlName]="controlName">{{ label }}</mat-checkbox>
   <mat-hint
     *ngIf="!!hint"

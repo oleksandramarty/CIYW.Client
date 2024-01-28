@@ -9,6 +9,7 @@ import {AuthLoginComponent} from "../modules/areas/auth-area/auth-login/auth-log
 import {AuthSignUpComponent} from "../modules/areas/auth-area/auth-sign-up/auth-sign-up.component";
 import {AdminAreaComponent} from "../modules/areas/admin-area/admin-area/admin-area.component";
 import {AdminUsersComponent} from "../modules/areas/admin-area/admin-users/admin-users.component";
+import {InvoicesComponent} from "../modules/areas/personal-area/invoices/invoices.component";
 
 export const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'auth/login'},
@@ -17,6 +18,7 @@ export const routes: Routes = [
     component: PersonalAreaComponent,
     children: [
       {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+      {path: 'invoices', component: InvoicesComponent, canActivate: [AuthGuard]},
       // {path: '**', pathMatch: 'full', redirectTo: 'home'}
     ]
   },

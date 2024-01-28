@@ -20,11 +20,13 @@ import {MatSelectModule} from "@angular/material/select";
 import {CiywTableModule} from "../../ciyw-components/ciyw-table/ciyw-table.module";
 import {InvoiceDialogModule} from "./dialogs/invoice-dialog/invoice-dialog.module";
 import {AppRoutingModule} from "../../../kernel/app-routing.module";
+import {InvoicesComponent} from "./invoices/invoices.component";
 
 @NgModule({
   declarations: [
     PersonalAreaComponent,
     HomeComponent,
+    InvoicesComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -54,6 +56,7 @@ import {AppRoutingModule} from "../../../kernel/app-routing.module";
   exports: [
     PersonalAreaComponent,
     HomeComponent,
+    InvoicesComponent,
   ]
 })
 export class PersonalAreaModule {}

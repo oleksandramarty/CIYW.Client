@@ -5,7 +5,7 @@ import {
   AuthLoginQuery,
   IUserResponse,
   ITokenResponse,
-  IActiveUserResponse
+  IActiveUserResponse, FormTypeEnum
 } from "../../../../kernel/services/api-client";
 import {catchError, Subject, switchMap, take, takeUntil, tap, throwError} from "rxjs";
 import {handleApiError} from "../../../../kernel/helpers/rxjs.helper";
@@ -19,42 +19,23 @@ import {SignalRService} from "../../../../kernel/services/signalR.service";
   templateUrl: './auth-login.component.html',
   styleUrl: './auth-login.component.scss'
 })
-export class AuthLoginComponent implements OnInit, OnDestroy {
+export class AuthLoginComponent implements OnDestroy {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
-  public loginForm: FormGroup | undefined;
+  public formType = FormTypeEnum;
 
   constructor(
     private readonly store: Store,
     private readonly apiClient: ApiClient,
-    private readonly fb: FormBuilder,
     private readonly snackBar: MatSnackBar,
   ) {}
-
-  ngOnInit() {
-    this.createLoginForm();
-  }
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
 
-  private createLoginForm() {
-    this.loginForm = this.fb.group({
-      login: [''],
-      email: ['', [Validators.email]],
-      phone: ['', [Validators.pattern(/^\d{10}$/)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-    }, { validator: atLeastOne });
-  }
-
-  onSubmit() {
-    this.apiClient.auth_V1_Login({
-      login: this.loginForm?.value.login,
-      email: this.loginForm?.value.email,
-      phone: this.loginForm?.value.phone,
-      password: this.loginForm?.value.password,
-      rememberMe: false
+  auth(event: FormGroup) {
+    this.apiClient.auth_V1_Login({...event?.value
     } as AuthLoginQuery)
       .pipe(
         takeUntil(this.ngUnsubscribe),
@@ -73,15 +54,4 @@ export class AuthLoginComponent implements OnInit, OnDestroy {
         handleApiError(this.snackBar)
       ).subscribe();
   }
-}
-
-function atLeastOne(control: AbstractControl): ValidatorFn | { atLeastOne: boolean | undefined } | null{
-  const login = control?.get('login')?.value;
-  const email = control?.get('email')?.value;
-  const phone = control?.get('phone')?.value;
-
-  if (!login && !email && !phone) {
-    return { atLeastOne: true };
-  }
-  return null;
 }

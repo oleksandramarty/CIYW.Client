@@ -1,5 +1,5 @@
 <div [class]="wrapperClass" [ngClass]="{'d-block': !inline, 'd-inline': inline, 'mb-10': !!okHint}">
-  <mat-form-field *ngIf="controlGroup" [formGroup]="controlGroup">
+  <mat-form-field *ngIf="controlGroup && !!controlName" [formGroup]="controlGroup">
 
     <mat-label *ngIf="label || placeholder">{{label ?? placeholder}}</mat-label>
 

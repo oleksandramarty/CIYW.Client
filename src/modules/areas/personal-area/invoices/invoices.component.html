@@ -1,0 +1,18 @@
+<ng-container *ngIf="user">
+  <h1>Invoice History</h1>
+
+  <div class="mb-20">
+    <p><strong>User Name:</strong> {{ user.firstName }} {{user.lastName}}</p>
+    <p *ngIf="balance"><strong>Balance:</strong> {{ balance.amount || 0 | currency: balance.isoCode }}</p>
+  </div>
+
+  <ciyw-table
+    [type]="tableType.HomeUserInvoices"
+    [total]="graphQLInvoices?.totalCount ?? 0"
+    [dataSource]="dataSource"
+    [isBusy]="isBusy"
+    (filterChanged)="filterChanged($event)"
+  ></ciyw-table>
+
+
+</ng-container>

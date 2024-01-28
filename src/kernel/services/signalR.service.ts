@@ -20,7 +20,7 @@ export class SignalRService {
     }
     const tokenValue = this.token;
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`${environment.apiUrl}/hub`, {
+      .withUrl(`${environment.apiUrl}/hubs/messages`, {
         logger: 6, //None
         accessTokenFactory: () => {
           return tokenValue;

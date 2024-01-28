@@ -138,7 +138,6 @@ export class GraphQLService {
           createdRangeTo: query.createdRange?.dateTo,
           updatedRangeFrom: query.updatedRange?.dateFrom,
           updatedRangeTo: query.updatedRange?.dateTo,
-          categoryIds: query.categoryIds?.ids,
           currencyIds: query.currencyIds?.ids,
           roleIds: query.roleIds?.ids,
           tariffIds: query.tariffIds?.ids,

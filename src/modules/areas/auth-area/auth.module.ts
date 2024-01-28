@@ -14,6 +14,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {AppRoutingModule} from "../../../kernel/app-routing.module";
+import {CiywFormGroupModule} from "../../ciyw-components/ciyw-form-group/ciyw-form-group.module";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,8 @@ import {AppRoutingModule} from "../../../kernel/app-routing.module";
     MatFormFieldModule,
     MatCardModule,
     MatButtonModule,
+
+    CiywFormGroupModule,
   ],
   exports: [
     AuthComponent,

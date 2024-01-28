@@ -4,7 +4,8 @@
   <div class="flex-container t-align-center h-064 w-100" *ngIf="(isAuthorized$ | async) && !!user">
 
     <div class="menu-wrapper w-100">
-      <div class="menu-item-wrapper" (click)="goto('home')">Invoices</div>
+      <div class="menu-item-wrapper" (click)="goto('home')">Home</div>
+      <div class="menu-item-wrapper" (click)="goto('invoices')">Invoices</div>
       <div class="menu-item-wrapper" *ngIf="(isAdmin$ | async)" (click)="goto('admin/users')">Users</div>
     </div>
 

@@ -52,7 +52,7 @@ export class TableUserColumns extends TableEditableColumns implements ITableUser
   public static Map(users: IListWithIncludeHelper<IUserType> | undefined, avatars: IListWithIncludeHelper<IImageDataResponse> | undefined): TableUserColumns[] {
     return !!users?.entities ? users!.entities.map(item => {
 
-      const index = avatars?.entities?.findIndex(x => x.userId === item.id) ?? -1;
+      const index = avatars?.entities?.findIndex(x => x.entityId === item.id) ?? -1;
 
       const temp = {
         avatar: TableItemHelper.CreateTableImageItem(!!avatars?.entities && index > -1 ? avatars.entities[index] as IImageDataResponse : undefined),

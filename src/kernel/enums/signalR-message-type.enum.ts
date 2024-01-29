@@ -1,4 +1,7 @@
 export enum SignalRMessageTypeEnum {
-  MessageToAllActiveUsers = 'MessageToAllActiveUsers',
-  MessageToUser = 'MessageToUser',
+  MessageToAllActiveUsers = 'MessageToAllActiveUsersAsync',
+  MessageToUser = 'MessageToUserAsync',
+  AddToChat = 'AddToChatAsync',
+  RemoveFromChat = 'RemoveFromChatAsync',
+  SendToChat = 'SendToChatAsync',
 }

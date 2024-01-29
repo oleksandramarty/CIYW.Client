@@ -21,6 +21,7 @@ import {CiywTableModule} from "../../ciyw-components/ciyw-table/ciyw-table.modul
 import {InvoiceDialogModule} from "./dialogs/invoice-dialog/invoice-dialog.module";
 import {AppRoutingModule} from "../../../kernel/app-routing.module";
 import {InvoicesComponent} from "./invoices/invoices.component";
+import {ChatModule} from "./chat/chat.module";
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import {InvoicesComponent} from "./invoices/invoices.component";
 
     CiywTableModule,
     InvoiceDialogModule,
+    ChatModule,
   ],
   exports: [
     PersonalAreaComponent,

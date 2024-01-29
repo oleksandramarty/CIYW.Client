@@ -7,6 +7,7 @@
       <div class="menu-item-wrapper" (click)="goto('home')">Home</div>
       <div class="menu-item-wrapper" (click)="goto('invoices')">Invoices</div>
       <div class="menu-item-wrapper" *ngIf="(isAdmin$ | async)" (click)="goto('admin/users')">Users</div>
+      <div class="menu-item-wrapper" (click)="goto('chat')">Chat</div>
     </div>
 
     <div *ngIf="avatar" class="d-flex flex-item m-10">
